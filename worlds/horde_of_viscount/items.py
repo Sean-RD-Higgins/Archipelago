@@ -765,7 +765,7 @@ def get_random_filler_item_name(world: APQuestWorld) -> str:
     # IMPORTANT: Whenever you need to use a random generator, you must use world.random.
     # This ensures that generating with the same generator seed twice yields the same output.
     # DO NOT use a bare random object from Python's built-in random module.
-    if world.random.randint(0, 99) < world.options.trap_chance:
+    if world.random.randint(0, 99) < world.options.bad_equip_chance:
         maxTrapIndex = len(TRAP_ITEM_NAME_LIST)
         trapIndex = world.random.randint(0, maxTrapIndex)
         return TRAP_ITEM_NAME_LIST[trapIndex]
@@ -810,7 +810,7 @@ def create_all_items(world: APQuestWorld) -> None:
     # Some items may only exist if the player enables certain options.
     # In our case, If the hammer option is enabled, the sixth item is the Hammer.
     # Otherwise, we add a filler Confetti Cannon.
-    if world.options.hammer:
+    if world.options.subweapon_spawn:
         # Once again, it is important to stress that even though the Hammer doesn't always exist,
         # it must be present in the worlds item_name_to_id.
         # Whether it is actually in the itempool is determined purely by whether we create and add the item here.
@@ -878,7 +878,7 @@ def create_all_items(world: APQuestWorld) -> None:
     # They will be sent as soon as they connect for the first time (depending on your client's item handling flag).
     # Players can add precollected items themselves via the generic "start_inventory" option.
     # If you want to add your own precollected items, you can do so via world.push_precollected().
-    if world.options.start_with_one_confetti_cannon:
+    if world.options.hub_sub_fill:
         # We're adding a filler item, but you can also add progression items to the player's precollected inventory.
         starting_confetti_cannon = world.create_item("Confetti Cannon")
         world.push_precollected(starting_confetti_cannon)

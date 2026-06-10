@@ -20,8 +20,7 @@ from Options import Choice, OptionGroup, PerGameCommonOptions, Range, Toggle
 # If you want a toggle to be on by default, you can use the "DefaultOnToggle" class instead of the "Toggle" class.
 class HardMode(Toggle):
     """
-    In hard mode, the basic enemy and the final boss will have more health.
-    The Health Upgrades become progression, as they are now required to beat the final boss.
+    In hard mode, you will NOT have Sub Refill; only Sub FreeFill.
     """
 
     # The docstring of an option is used as the description on the website and in the template yaml.
@@ -30,57 +29,100 @@ class HardMode(Toggle):
     display_name = "Hard Mode"
 
 
-class Hammer(Toggle):
+class SubweaponSpawn(Toggle):
     """
-    Adds another item to the itempool: The Hammer.
-    The top middle chest will now be locked behind a breakable wall, requiring the Hammer.
-    """
-
-    display_name = "Hammer"
-
-
-class ExtraStartingChest(Toggle):
-    """
-    Adds an extra chest in the bottom left, making room for an extra Confetti Cannon.
+    A handful of a subweapon type can spawn randomly in chests.
+    This will make the map run generally much easier.
     """
 
-    display_name = "Extra Starting Chest"
+    display_name = "Subweapon Spawn"
 
 
-class TrapChance(Range):
+class HealHub(Toggle):
     """
-    Percentage chance that any given Confetti Cannon will be replaced by a Math Trap.
+    Arrival to the main hub room will fully heal you.
     """
 
-    display_name = "Trap Chance"
+    display_name = "Hub Heal"
+
+
+class HubSubFill(Toggle):
+    """
+    Arrival to the main hub room will free refill your held subweapons
+    """
+
+    display_name = "Hub Sub Fill"
+
+
+class HubFoodFill(Toggle):
+    """
+    Arrival to the main hub room will free refill your held food
+    """
+
+    display_name = "Hub Food Fill"
+
+class WhipRank2(Toggle):
+    """
+    Start a run with a Rank 2 weapon
+    """
+
+    display_name = "Whip Rank 2"
+
+class WhipRank3(Toggle):
+    """
+    Start a run with a Rank 3 weapon
+    """
+
+    display_name = "Whip Rank 3"
+
+class DropsPlus(Toggle):
+    """
+    Increases the amount of drops you get when you pick up a bundle from chests.
+    """
+
+    display_name = "Drops +"
+
+
+# A Range is a numeric option with a min and max value. This will be represented by a slider on the website.
+class ChestChoice(Range):
+    """
+    Increases the amount of item options you get when opening a chest.
+    """
+
+    display_name = "Chest Choice +"
+
+    range_start = 1
+    range_end = 3
+
+    # Range options must define an explicit default value.
+    default = 1
+
+class BadEquipChance(Range):
+    """
+    Percentage chance that any given filler item will end up as a detrimental Equip.
+    """
+
+    display_name = "Bad Equip Chance"
 
     range_start = 0
     range_end = 100
     default = 0
 
 
-class StartWithOneConfettiCannon(Toggle):
-    """
-    Start with a confetti cannon already in your inventory.
-    Why? Because you deserve it. You get to celebrate yourself without doing any work first.
-    """
-
-    display_name = "Start With One Confetti Cannon"
-
 
 # A Range is a numeric option with a min and max value. This will be represented by a slider on the website.
-class ConfettiExplosiveness(Range):
+class ArcadeTokenFill(Range):
     """
     How much confetti each use of a confetti cannon will fire.
     """
 
-    display_name = "Confetti Explosiveness"
+    display_name = "Arcade Token Fill"
 
     range_start = 0
-    range_end = 10
+    range_end = 99
 
     # Range options must define an explicit default value.
-    default = 3
+    default = 0
 
 
 # A Choice is an option with multiple discrete choices. This will be represented by a dropdown on the website.
@@ -91,17 +133,40 @@ class PlayerSprite(Choice):
 
     display_name = "Player Sprite"
 
-    option_human = 0
-    option_duck = 1
-    option_horse = 2
-    option_cat = 3
+    option_whipp = 0
+    option_whipp_light = 1
+    option_whipp_dark = 2
+    option_whipp_classic = 3
 
     # Choice options must define an explicit default value.
-    default = option_human
+    default = option_whipp
 
-    # For choices, you can also define aliases.
-    # For example, we could make it so "player_sprite: kitty" resolves to "player_sprite: cat" like this:
-    alias_kitty = option_cat
+# A Choice is an option with multiple discrete choices. This will be represented by a dropdown on the website.
+class ChestsRequired(Choice):
+    """
+    Sets the amount of chests per room required to complete it.
+    """
+
+    display_name = "Chests Required"
+
+    option_all = 0
+    option_1 = 1
+    option_2 = 2
+    option_3 = 3
+
+    # Choice options must define an explicit default value.
+    default = option_2
+
+class MapSize(Range):
+    """
+    The amount of room tiles horizontally of the map. The same number will be used for how many tiles vertically there will be on the map.
+    """
+
+    display_name = "Bad Equip Chance"
+
+    range_start = 0
+    range_end = 100
+    default = 0
 
 
 # We must now define a dataclass inheriting from PerGameCommonOptions that we put all our options in.
@@ -109,44 +174,85 @@ class PlayerSprite(Choice):
 @dataclass
 class APQuestOptions(PerGameCommonOptions):
     hard_mode: HardMode
-    hammer: Hammer
-    extra_starting_chest: ExtraStartingChest
-    start_with_one_confetti_cannon: StartWithOneConfettiCannon
-    trap_chance: TrapChance
-    confetti_explosiveness: ConfettiExplosiveness
+    subweapon_spawn: SubweaponSpawn
+    heal_hub: HealHub
+    hub_sub_fill: HubSubFill
+    hub_food_fill: HubFoodFill
+    whip_rank2: WhipRank2
+    whip_rank3: WhipRank3
+    drops_plus: DropsPlus
+    chest_choice: ChestChoice
+    bad_equip_chance: BadEquipChance
+    arcade_token_fill: ArcadeTokenFill
     player_sprite: PlayerSprite
+    chests_required: ChestsRequired
+    map_size: MapSize
 
 
 # If we want to group our options by similar type, we can do so as well. This looks nice on the website.
 option_groups = [
     OptionGroup(
-        "Gameplay Options",
-        [HardMode, Hammer, ExtraStartingChest, StartWithOneConfettiCannon, TrapChance],
+        "Gameplay",
+        [HardMode, MapSize, SubweaponSpawn, ChestsRequired],
     ),
     OptionGroup(
-        "Aesthetic Options",
-        [ConfettiExplosiveness, PlayerSprite],
+        "Boons",
+        [HealHub, HubSubFill, HubFoodFill, WhipRank2, WhipRank3, DropsPlus, ChestChoice, BadEquipChance, ArcadeTokenFill],
+    ),
+    OptionGroup(
+        "Vanity",
+        [PlayerSprite],
     ),
 ]
 
 # Finally, we can define some option presets if we want the player to be able to quickly choose a specific "mode".
 option_presets = {
-    "boring": {
+    "easy": {
         "hard_mode": False,
-        "hammer": False,
-        "extra_starting_chest": False,
-        "start_with_one_confetti_cannon": False,
-        "trap_chance": 0,
-        "confetti_explosiveness": ConfettiExplosiveness.range_start,
-        "player_sprite": PlayerSprite.option_human,
+        "subweapon_spawn": True,
+        "heal_hub": True,
+        "hub_sub_fill": True,
+        "hub_food_fill": True,
+        "whip_rank2": True,
+        "whip_rank3": True,
+        "drops_plus": True,
+        "chest_choice": 3,
+        "bad_equip_chance": 0,
+        "arcade_token_fill": ArcadeTokenFill.range_end,
+        "player_sprite": PlayerSprite.option_whipp,
+        "chests_required": 1,
+        "map_size": 6,
     },
-    "the true way to play": {
+    "normal": {
+        "hard_mode": False,
+        "subweapon_spawn": False,
+        "heal_hub": False,
+        "hub_sub_fill": False,
+        "hub_food_fill": False,
+        "whip_rank2": False,
+        "whip_rank3": False,
+        "drops_plus": False,
+        "chest_choice": 2,
+        "bad_equip_chance": 10,
+        "arcade_token_fill": ArcadeTokenFill.range_end,
+        "player_sprite": PlayerSprite.option_whipp,
+        "chests_required": 3,
+        "map_size": 9,
+    },
+    "hard": {
         "hard_mode": True,
-        "hammer": True,
-        "extra_starting_chest": True,
-        "start_with_one_confetti_cannon": True,
-        "trap_chance": 50,
-        "confetti_explosiveness": ConfettiExplosiveness.range_end,
-        "player_sprite": PlayerSprite.option_duck,
+        "subweapon_spawn": False,
+        "heal_hub": False,
+        "hub_sub_fill": False,
+        "hub_food_fill": False,
+        "whip_rank2": False,
+        "whip_rank3": False,
+        "drops_plus": False,
+        "chest_choice": 1,
+        "bad_equip_chance": 50,
+        "arcade_token_fill": ArcadeTokenFill.range_start,
+        "player_sprite": PlayerSprite.option_whipp,
+        "chests_required": 0,
+        "map_size": 16,
     },
 }

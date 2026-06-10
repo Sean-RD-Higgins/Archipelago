@@ -35,7 +35,7 @@ def create_all_regions(world: APQuestWorld) -> None:
 
     # Some regions may only exist if the player enables certain options.
     # In our case, the Hammer locks the top middle chest in its own room if the hammer option is enabled.
-    if world.options.hammer:
+    if world.options.subweapon_spawn:
         top_middle_room = Region("Top Middle Room", world.player, world.multiworld)
         regions.append(top_middle_room)
 
@@ -74,6 +74,6 @@ def connect_regions(world: APQuestWorld) -> None:
     # Some Entrances may only exist if the player enables certain options.
     # In our case, the Hammer locks the top middle chest in its own room if the hammer option is enabled.
     # In this case, we previously created an extra "Top Middle Room" region that we now need to connect to Overworld.
-    if world.options.hammer:
+    if world.options.subweapon_spawn:
         top_middle_room = world.get_region("Top Middle Room")
         overworld.connect(top_middle_room, "Overworld to Top Middle Room")

@@ -79,7 +79,7 @@ def create_regular_locations(world: APQuestWorld) -> None:
     # Locations may be in different regions depending on the player's options.
     # In our case, the hammer option puts the Top Middle Chest into its own room called Top Middle Room.
     top_middle_room_locations = get_location_names_with_ids(["Top Middle Chest"])
-    if world.options.hammer:
+    if world.options.subweapon_spawn:
         top_middle_room = world.get_region("Top Middle Room")
         top_middle_room.add_locations(top_middle_room_locations, APQuestLocation)
     else:
@@ -87,7 +87,7 @@ def create_regular_locations(world: APQuestWorld) -> None:
 
     # Locations may exist only if the player enables certain options.
     # In our case, the extra_starting_chest option adds the Bottom Left Extra Chest location.
-    if world.options.extra_starting_chest:
+    if world.options.heal_hub:
         # Once again, it is important to stress that even though the Bottom Left Extra Chest location doesn't always
         # exist, it must still always be present in the world's location_name_to_id.
         # Whether the location actually exists in the seed is purely determined by whether we create and add it here.

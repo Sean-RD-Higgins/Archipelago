@@ -48,7 +48,7 @@ def set_all_entrance_rules(world: APQuestWorld) -> None:
     # Some entrance rules may only apply if the player enabled certain options.
     # In our case, if the hammer option is enabled, we need to add the Hammer requirement to the Entrance from
     # Overworld to the Top Middle Room.
-    if world.options.hammer:
+    if world.options.subweapon_spawn:
         overworld_to_top_middle_room = world.get_entrance("Overworld to Top Middle Room")
         can_smash_brick = Has("Hammer")
         world.set_rule(overworld_to_top_middle_room, can_smash_brick)
