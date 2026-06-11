@@ -6,7 +6,7 @@ from worlds.AutoWorld import World
 
 # Imports of your world's files must be relative.
 from . import items, locations, regions, rules, web_world
-from . import options as apquest_options  # rename due to a name conflict with World.options
+from . import options as hov_options  # rename due to a name conflict with World.options
 
 # APQuest will go through all the parts of the world api one step at a time,
 # with many examples and comments across multiple files.
@@ -22,24 +22,27 @@ from . import options as apquest_options  # rename due to a name conflict with W
 # This implementation in particular has the following additional files, each covering one topic:
 # regions.py, locations.py, rules.py, items.py, options.py and web_world.py.
 # It is recommended that you read these in that specific order, then come back to the world class.
-class APQuestWorld(World):
+class HoVWorld(World):
     """
-    APQuest is a minimal 8bit-era inspired adventure game with grid-like movement.
-    Good games don't need more than six checks.
+    A metroidvania with: Both arcade and exploration areas - Use finite subweapons for advanced movement 
+    - Difficulty from casual up to souls-bourne-ring - Customize with equipment - Build your Town 
+    - Complete Quests - Having trouble on a stage? There are infinite lives; no game overs here!
+    Right now only the Map Rando mode has AP support.
+    Max Complexity: 10
     """
 
     # The docstring should contain a description of the game, to be displayed on the WebHost.
 
     # You must override the "game" field to say the name of the game.
-    game = "APQuest"
+    game = "Horde of Viscount"
 
     # The WebWorld is a definition class that governs how this world will be displayed on the website.
-    web = web_world.APQuestWebWorld()
+    web = web_world.HoVWebWorld()
 
     # This is how we associate the options defined in our options.py with our world.
     # (Note: options.py has been imported as "apquest_options" at the top of this file to avoid a name conflict)
-    options_dataclass = apquest_options.APQuestOptions
-    options: apquest_options.APQuestOptions  # Common mistake: This has to be a colon (:), not an equals sign (=).
+    options_dataclass = hov_options.HoVOptions
+    options: hov_options.HoVOptions  # Common mistake: This has to be a colon (:), not an equals sign (=).
 
     # Our world class must have a static location_name_to_id and item_name_to_id defined.
     # We define these in regions.py and items.py respectively, so we just set them here.
@@ -48,7 +51,7 @@ class APQuestWorld(World):
 
     # There is always one region that the generator starts from & assumes you can always go back to.
     # This defaults to "Menu", but you can change it by overriding origin_region_name.
-    origin_region_name = "Overworld"
+    origin_region_name = "RogueHubRoom"
 
     # Our world class must have certain functions ("steps") that get called during generation.
     # The main ones are: create_regions, set_rules, create_items.
@@ -82,5 +85,5 @@ class APQuestWorld(World):
     def fill_slot_data(self) -> Mapping[str, Any]:
         # If you need access to the player's chosen options on the client side, there is a helper for that.
         return self.options.as_dict(
-            "hard_mode", "hammer", "extra_starting_chest", "confetti_explosiveness", "player_sprite"
+             "hard_mode", "subweapon_spawn", "heal_hub", "hub_sub_fill", "hub_food_fill", "whip_rank2", "whip_rank3", "drops_plus", "chest_choice", "bad_equip_chance", "arcade_token_fill", "player_sprite", "chests_required", "map_size",
         )
