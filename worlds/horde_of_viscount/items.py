@@ -750,7 +750,7 @@ PROGRESSION_ITEM_NAME_LIST = [
 
 # Each Item instance must correctly report the "game" it belongs to.
 # To make this simple, it is common practice to subclass the basic Item class and override the "game" field.
-class APQuestItem(Item):
+class HoVItem(Item):
     game = "Horde of Viscount"
 
 
@@ -775,7 +775,7 @@ def get_random_filler_item_name(world: HoVWorld) -> str:
     return FILLER_ITEM_NAME_LIST[fillerIndex]
 
 
-def create_item_with_correct_classification(world: HoVWorld, name: str) -> APQuestItem:
+def create_item_with_correct_classification(world: HoVWorld, name: str) -> HoVItem:
     # Our world class must have a create_item() function that can create any of our items by name at any time.
     # So, we make this helper function that creates the item by name with the correct classification.
     # Note: This function's content could just be the contents of world.create_item in world.py directly,
@@ -787,7 +787,7 @@ def create_item_with_correct_classification(world: HoVWorld, name: str) -> APQue
     if  name in HARDMODE_FILLER_LIST and world.options.hard_mode:
         classification = ItemClassification.filler
 
-    return APQuestItem(name, classification, ITEM_NAME_TO_ID[name], world.player)
+    return HoVItem(name, classification, ITEM_NAME_TO_ID[name], world.player)
 
 
 # With those two helper functions defined, let's now get to actually creating and submitting our itempool.
