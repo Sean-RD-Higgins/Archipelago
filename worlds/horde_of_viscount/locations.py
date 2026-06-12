@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from BaseClasses import ItemClassification, Location
+from BaseClasses import ItemClassification, Location, Region
 
 from . import items
 
@@ -287,8 +287,276 @@ LOCATION_NAME_TO_ID = {
 }
 
 location_name_to_region_name = {
-    # TODO - 
-    
+	"Abandon Town - Center Proletariat Chest 1": "Abandon Town",
+	"Abandon Town - Center Proletariat Chest 2": "Abandon Town",
+	"Abandon Town - Center Proletariat Chest 3": "Abandon Town",
+	"Abandon Town - Center Bourgeoisie Chest 1": "Abandon Town",
+	"Abandon Town - Center Bourgeoisie Chest 2": "Abandon Town",
+	"Abandon Town - Center Bourgeoisie Chest 3": "Abandon Town",
+	"Abandon Town - East Proletariat Chest 1": "Abandon Town",
+	"Abandon Town - East Proletariat Chest 2": "Abandon Town",
+	"Abandon Town - East Proletariat Chest 3": "Abandon Town",
+	"Abandon Town - East Bourgeoisie Chest 1": "Abandon Town",
+	"Abandon Town - East Bourgeoisie Chest 2": "Abandon Town",
+	"Abandon Town - East Bourgeoisie Chest 3": "Abandon Town",
+	"Abandon Town - East Sky Chest 1": "Abandon Town",
+	"Abandon Town - East Sky Chest 2": "Abandon Town",
+	"Abandon Town - East Sky Chest 3": "Abandon Town",
+	"Abandon Town - Abandoned Town Chest 1": "Abandon Town",
+	"Abandon Town - Abandoned Town Chest 2": "Abandon Town",
+	"Abandon Town - Abandoned Town Chest 3": "Abandon Town",
+	"Abandon Town - East Entrance Chest 1": "Abandon Town",
+	"Abandon Town - East Entrance Chest 2": "Abandon Town",
+	"Abandon Town - East Entrance Chest 3": "Abandon Town",
+	"Abandon Town - Hidden Chest 1": "Abandon Town",
+	"Abandon Town - Hidden Chest 2": "Abandon Town",
+	"Abandon Town - Hidden Chest 3": "Abandon Town",
+	"Abandon Town - Cold Nest Chest 1": "Abandon Town",
+	"Abandon Town - Cold Nest Chest 2": "Abandon Town",
+	"Abandon Town - Cold Nest Chest 3": "Abandon Town",
+	"Abandon Town - Cold Nest Chest 4": "Abandon Town",
+	"Abandon Town - Cold Nest Chest 5": "Abandon Town",
+	"Abandon Town - Cold Nest Chest 6": "Abandon Town",
+	"Abandon Town - Cold Nest Chest 7": "Abandon Town",
+	"Abandon Town - Cold Nest Chest 8": "Abandon Town",
+	"Abandon Town - Cold Nest Chest 9": "Abandon Town",
+	"Abandon Town - Cold Nest Chest 10": "Abandon Town",
+	"Abandon Town - Cold Nest Chest 11": "Abandon Town",
+	"Abandon Town - Cold Nest Chest 12": "Abandon Town",
+	"Abandon Town - Aqueduct Chest 1": "Abandon Town",
+	"Abandon Town - Aqueduct Chest 2": "Abandon Town",
+	"Abandon Town - Aqueduct Chest 3": "Abandon Town",
+	"Abandon Town - Cold Tunnel Chest 1": "Abandon Town",
+	"Abandon Town - Cold Tunnel Chest 2": "Abandon Town",
+	"Abandon Town - Cold Tunnel Chest 3": "Abandon Town",
+	"Abandon Town - Drain Chest 1": "Abandon Town",
+	"Abandon Town - Drain Chest 2": "Abandon Town",
+	"Abandon Town - Drain Chest 3": "Abandon Town",
+	"Abandon Town - West Proletariat Chest 1": "Abandon Town",
+	"Abandon Town - West Proletariat Chest 2": "Abandon Town",
+	"Abandon Town - West Proletariat Chest 3": "Abandon Town",
+	"Abandon Town - West Bourgeoisie Chest 1": "Abandon Town",
+	"Abandon Town - West Bourgeoisie Chest 2": "Abandon Town",
+	"Abandon Town - West Bourgeoisie Chest 3": "Abandon Town",
+	"Abandon Town - West Sky Chest 1": "Abandon Town",
+	"Abandon Town - West Sky Chest 2": "Abandon Town",
+	"Abandon Town - West Sky Chest 3": "Abandon Town",
+    "Axe Challenge 3 Chest 1": "World Map East",
+	"Bomb Challenge 3 Chest 1": "Tepid Volcano",
+	"GrimeBone Fort Chest 1": "World Map East",
+	"GrimeBone Fort Chest 2": "World Map East",
+	"GrimeBone Fort Chest 3": "World Map East",
+	"Caltrop Challenge 3 Chest 1": "World Map East",
+	"Kingdom Castle - Battlements Chest 1": "Kingdom Castle",
+	"Kingdom Castle - Kingdom Castle Chest 1": "Kingdom Castle",
+	"Kingdom Castle - Kingdom Castle Chest 2": "Kingdom Castle",
+	"Kingdom Castle - Kingdom Castle Chest 3": "Kingdom Castle",
+    "Kingdom Castle - Columns Chest 1": "Kingdom Castle",
+	"Kingdom Castle - Columns Chest 2": "Kingdom Castle",
+	"Kingdom Castle - Columns Chest 3": "Kingdom Castle",
+	"Kingdom Castle - Overhang Chest 1": "Kingdom Castle",
+	"Kingdom Castle - Overhang Chest 2": "Kingdom Castle",
+	"Kingdom Castle - Great Hall Chest 1": "Kingdom Castle",
+	"Kingdom Castle - Barbican Chest 1": "Kingdom Castle",
+	"Kingdom Castle - Hidden Hidden Storage Chest 1": "Kingdom Castle",
+	"Kingdom Castle - Hidden Hidden Storage Chest 2": "Kingdom Castle",
+	"Kingdom Castle - Hidden Hidden Storage Chest 3": "Kingdom Castle",
+	"Kingdom Castle - Hidden Storage Chest 1": "Kingdom Castle",
+	"Kingdom Castle - Hidden Storage Chest 2": "Kingdom Castle",
+	"Kingdom Castle - Hidden Storage Chest 3": "Kingdom Castle",
+	"Kingdom Castle - Hidden Storage Chest 4": "Kingdom Castle",
+	"Kingdom Castle - Hidden Storage Chest 5": "Kingdom Castle",
+	"Kingdom Castle - Hidden Storage Chest 6": "Kingdom Castle",
+	"Kingdom Castle - Kitchen Chest 1": "Kingdom Castle",
+	"Kingdom Castle - Kitchen Chest 2": "Kingdom Castle",
+	"Kingdom Castle - Kitchen Chest 3": "Kingdom Castle",
+	"Kingdom Castle - Machicolations Chest 1": "Kingdom Castle",
+	"Kingdom Castle - Portcullis Room Chest 1": "Kingdom Castle",
+	"Kingdom Castle - Portcullis Room Chest 2": "Kingdom Castle",
+	"Kingdom Castle - Portcullis Room Chest 3": "Kingdom Castle",
+	"Kingdom Castle - Ramparts Chest 1": "Kingdom Castle",
+	"Kingdom Castle - Rear Tower Chest 1": "Kingdom Castle",
+	"Kingdom Castle - Rear Tower Chest 2": "Kingdom Castle",
+	"Kingdom Castle - Castle Break Room Chest 1": "Kingdom Castle",
+	"Kingdom Castle - Lone Tower Chest 1": "Kingdom Castle",
+	"Kingdom Castle - Lone Tower Chest 2": "Kingdom Castle",
+	"Kingdom Castle - Lone Tower Chest 3": "Kingdom Castle",
+	"Kingdom Castle - Lone Tower Chest 4": "Kingdom Castle",
+	"Kingdom Castle - Lone Tower Chest 5": "Kingdom Castle",
+	"Kingdom Castle - Lone Tower Chest 6": "Kingdom Castle",
+	"Kingdom Castle - Top Ramparts Chest 1": "Kingdom Castle",
+	"Kingdom Castle - Tower Chest 1": "Kingdom Castle",
+	"Kingdom Castle - Tower Chest 2": "Kingdom Castle",
+	"Kingdom Castle - Tower Chest 3": "Kingdom Castle",
+	"Cleat Challenge 3 Chest 1": "World Map East",
+	"Cliffside Climb - Elevator Chest 1": "Cliffside Climb",
+	"Cliffside Climb - Cliffside Climb Chest 1": "Cliffside Climb",
+	"Cliffside Climb - Hidden Chest 1": "Cliffside Climb",
+	"Cliffside Climb - Hidden Chest 2": "Cliffside Climb",
+	"Cliffside Climb - Hidden Chest 3": "Cliffside Climb",
+	"Cliffside Climb - Stealth Underneath Chest 1": "Cliffside Climb",
+	"Cliffside Climb - Shining Exit Chest 1": "Cliffside Climb",
+	"Cliffside Climb - Shining Exit Chest 2": "Cliffside Climb",
+	"Cliffside Climb - Shining Exit Chest 3": "Cliffside Climb",
+	"Cliffside Climb - Cliff Exit Chest 1": "Cliffside Climb",
+	"Cliffside Climb - Cliff Exit Chest 2": "Cliffside Climb",
+	"Cliffside Climb - Cliff Exit Chest 3": "Cliffside Climb",
+	"Cliffside Climb - Cliffside Campsite Chest 1": "Cliffside Climb",
+	"Cliffside Climb - Cliffside Entrance Chest 1": "Cliffside Climb",
+	"Cliffside Climb - Scalable Cliff Chest 1": "Cliffside Climb",
+	"Cliffside Climb - Curving Exit Chest 1": "Cliffside Climb",
+	"Cliffside Climb - Precipice Edge Chest 1": "Cliffside Climb",
+	"Cliffside Climb - Small Underpass Chest 1": "Cliffside Climb",
+	"Cliffside Climb - Spiked Underpass Chest 1": "Cliffside Climb",
+	"Cliffside Climb - Wide Respite Chest 1": "Cliffside Climb",
+	"Cliffside Climb - Topside Entrance Chest 1": "Cliffside Climb",
+	"Cliffside Climb - Clifftop Chest 1": "Cliffside Climb",
+	"Cliffside Climb - Entrance Underpass Chest 1": "Cliffside Climb",
+	"Cliffside Climb - Underpass Chest 1": "Cliffside Climb",
+	"Credits Peak Chest 1": "Viscount Lab",
+	"Credits Peak Chest 2": "Viscount Lab",
+	"Crimson Cove Chest 1": "Viscount Manor",
+	"Crimson Cove 2 Chest 1": "Viscount Manor",
+	"Crimson Cove 3 Chest 1": "Viscount Manor",
+    "Deadland Road Chest 1": "World Map NorthWest",
+	"Deadland Road 2 Chest 1": "World Map NorthWest",
+	"Deadland Road 3 Chest 1": "World Map NorthWest",
+	"Dusty Beach Chest 1": "Castle Town",
+	"Dusty Beach 2 Chest 1": "Castle Town",
+	"Dusty Beach 3 Chest 1": "Castle Town",
+	"Iron Rock Mt Chest 1": "World Map East",
+	"Iron Rock Mt 2 Chest 1": "World Map East",
+	"Iron Rock Mt 3 Chest 1": "World Map East",
+	"Knife Challenge 3 Chest 1": "World Map NorthWest",
+	"Credits Overlook Chest 1": "Viscount Lab",
+	"Larval Forest Chest 1": "World Map NorthWest",
+	"Larval Forest 2 Chest 1": "World Map NorthWest",
+    "Larval Forest 3 Chest 1": "World Map NorthWest",
+	"Larval Forest 3 Chest 2": "World Map NorthWest",
+	"Larval Forest 3 Chest 3": "World Map NorthWest",
+	"Viscount Manor - Bottom Path to Attic Chest 1": "Viscount Manor",
+	"Viscount Manor - Around Middle Chest 1": "Viscount Manor",
+	"Viscount Manor - Around Middle Chest 2": "Viscount Manor",
+	"Viscount Manor - Around Middle Chest 3": "Viscount Manor",
+	"Viscount Manor - Path to Attic Chest 1": "Viscount Manor",
+	"Viscount Manor - Attic Entrance Chest 1": "Viscount Manor",
+	"Viscount Manor - Left Attic Chest 1": "Viscount Manor",
+	"Viscount Manor - Middle Attic Chest 1": "Viscount Manor",
+	"Viscount Manor - Right Attic Chest 1": "Viscount Manor",
+	"Viscount Manor - Attic Exit Chest 1": "Viscount Manor",
+	"Viscount Manor - Top Lab Entrance Chest 1": "Viscount Manor",
+	"Viscount Manor - Right Barbed Hallway Chest 1": "Viscount Manor",
+	"Viscount Manor - Right Barbed Hallway Chest 2": "Viscount Manor",
+	"Viscount Manor - Left Barbed Hallway Chest 1": "Viscount Manor",
+	"Viscount Manor - Barbed Hidden Room Chest 1": "Viscount Manor",
+	"Viscount Manor - Barbed Hidden Room Chest 2": "Viscount Manor",
+	"Viscount Manor - Barbed Hidden Room Chest 3": "Viscount Manor",
+	"Viscount Manor - Manor Barricade Chest 1": "Viscount Manor",
+	"Viscount Manor - Center Barricade Chest 1": "Viscount Manor",
+	"Viscount Manor - Right Barricade Chest 1": "Viscount Manor",
+	"Viscount Manor - Manor Containment Chest 1": "Viscount Manor",
+	"Viscount Manor - Containment Chest 1": "Viscount Manor",
+	"Viscount Manor - Lab Bottom Cache Chest 1": "Viscount Manor",
+	"Viscount Manor - Lab Bottom Cache Chest 2": "Viscount Manor",
+	"Viscount Manor - Lab Bottom Cache Chest 3": "Viscount Manor",
+	"Viscount Manor - Center Barricade Stud Path Chest 1": "Viscount Manor",
+	"Viscount Manor - Testing Room Entrance Chest 1": "Viscount Manor",
+	"Viscount Manor - Testing Room Entrance Chest 2": "Viscount Manor",
+	"Viscount Manor - Testing Room Entrance Chest 3": "Viscount Manor",
+	"Viscount Manor - Manor Center Underbelly Chest 1": "Viscount Manor",
+	"Viscount Manor - Manor Center Underbelly Chest 2": "Viscount Manor",
+	"Viscount Manor - Manor Center Underbelly Chest 3": "Viscount Manor",
+	"Viscount Manor - Manor Right Underbelly Chest 1": "Viscount Manor",
+	"Viscount Manor - Manor Right Underbelly Chest 2": "Viscount Manor",
+	"Viscount Manor - Manor Right Underbelly Chest 3": "Viscount Manor",
+	"Viscount Manor - Manor Left Underbelly Chest 1": "Viscount Manor",
+	"Viscount Manor - Manor Cache Chest 1": "Viscount Manor",
+	"Viscount Manor - Manor Cache Chest 2": "Viscount Manor",
+	"Viscount Manor - Crimson Cove Entrance Chest 1": "Viscount Manor",
+	"Viscount Manor - Left Barricade Stud Path Chest 1": "Viscount Manor",
+	"Viscount Manor - Lower Hallway to Lab Chest 1": "Viscount Manor",
+	"Viscount Manor - Hallway to Lab Chest 1": "Viscount Manor",
+	"Viscount Manor - Hallway to Lab Chest 2": "Viscount Manor",
+	"Viscount Manor - Hallway to Lab Chest 3": "Viscount Manor",
+	"Viscount Manor - Path Hidden Chest 1": "Viscount Manor",
+	"Viscount Manor - Path Hidden Chest 2": "Viscount Manor",
+	"Viscount Manor - Path Hidden Chest 3": "Viscount Manor",
+	"Viscount Manor - Right Barricade Stud Path Chest 1": "Viscount Manor",
+	"Viscount Manor - Right Barricade Stud Path Chest 2": "Viscount Manor",
+	"Viscount Manor - Lab Top Cache Chest 1": "Viscount Manor",
+	"Viscount Manor - Lab Top Cache Chest 2": "Viscount Manor",
+	"Viscount Manor - Lab Top Cache Chest 3": "Viscount Manor",
+	"Mushroom Cloud Chest 1": "Castle Town",
+	"Mushroom Cloud 2 Chest 1": "Castle Town",
+	"Mushroom Cloud 3 Chest 1": "Castle Town",
+	"Quenchy Desert Chest 1": "Tepid Volcano",
+	"Quenchy Desert 2 Chest 1": "Tepid Volcano",
+	"Quenchy Desert 2 Chest 2": "Tepid Volcano",
+	"Quenchy Desert 3 Chest 1": "Tepid Volcano",
+	"Quenchy Desert 3 Chest 2": "Tepid Volcano",
+	"Stormcloud Crater Chest 1": "Tepid Volcano",
+	"Stormcloud Crater 2 Chest 1": "Tepid Volcano",
+	"Stormcloud Crater 3 Chest 1": "Tepid Volcano",
+	"Town Gate Chest 1": "Castle Town",
+	"Town Gate Chest 2": "Castle Town",
+	"Town Gate Chest 3": "Castle Town",
+	"Toxic Jungle Chest 1": "World Map East",
+	"Toxic Jungle 2 Chest 1": "World Map East",
+	"Toxic Jungle 3 Chest 1": "World Map East",
+	"Viscount Manor Chest 1": "Viscount Manor",
+	"Viscount Manor Chest 2": "Viscount Manor",
+	"Tepid Volcano - Volcano Campsite Chest 1": "Tepid Volcano",
+	"Tepid Volcano - Volcano Campsite Chest 2": "Tepid Volcano",
+	"Tepid Volcano - Upper Entrance Chest 1": "Tepid Volcano",
+	"Tepid Volcano - Crater Exit Chest 1": "Tepid Volcano",
+	"Tepid Volcano - Crater Exit Chest 2": "Tepid Volcano",
+	"Tepid Volcano - Crater Chest 1": "Tepid Volcano",
+	"Tepid Volcano - Crater Under Chest 1": "Tepid Volcano",
+	"Tepid Volcano - Crater Under Chest 2": "Tepid Volcano",
+	"Tepid Volcano - Crater Under Chest 3": "Tepid Volcano",
+	"Tepid Volcano - Lava Drain Chest 1": "Tepid Volcano",
+	"Tepid Volcano - Lava Drain Chest 2": "Tepid Volcano",
+	"Tepid Volcano - Eastern Foot Chest 1": "Tepid Volcano",
+	"Tepid Volcano - Eastern Foot Chest 2": "Tepid Volcano",
+	"Tepid Volcano - Fluffy Clouds 3 Chest 1": "Tepid Volcano",
+	"Tepid Volcano - Fluffy Clouds 3 Chest 2": "Tepid Volcano",
+	"Tepid Volcano - Entryway Chest 1": "Tepid Volcano",
+	"Tepid Volcano - Entryway Chest 2": "Tepid Volcano",
+	"Tepid Volcano - Volcano Foot Camp Chest 1": "Tepid Volcano",
+	"Tepid Volcano - Volcano Foot Camp Chest 2": "Tepid Volcano",
+	"Tepid Volcano - Volcano Foot Camp Chest 3": "Tepid Volcano",
+	"Tepid Volcano - Volcano Foot Camp Chest 4": "Tepid Volcano",
+	"Tepid Volcano - Tepid Volcano Chest 1": "Tepid Volcano",
+	"Tepid Volcano - Hopping Left Chest 1": "Tepid Volcano",
+	"Tepid Volcano - Hopping Center-Left Chest 1": "Tepid Volcano",
+	"Tepid Volcano - Hopping Center-Right Chest 1": "Tepid Volcano",
+	"Tepid Volcano - Hopping Right Chest 1": "Tepid Volcano",
+	"Tepid Volcano - Lava Fall Bottom Chest 1": "Tepid Volcano",
+	"Tepid Volcano - Lava Fall Bottom Chest 2": "Tepid Volcano",
+	"Tepid Volcano - Lava Fall Bottom Chest 3": "Tepid Volcano",
+	"Tepid Volcano - Lava Fall Center Chest 1": "Tepid Volcano",
+	"Tepid Volcano - Left Corner Chest 1": "Tepid Volcano",
+	"Tepid Volcano - West Topside Chest 1": "Tepid Volcano",
+	"Tepid Volcano - West Topside Chest 2": "Tepid Volcano",
+	"Tepid Volcano - Scaling Wall Chest 1": "Tepid Volcano",
+	"Tepid Volcano - Lava Rain Bottom Chest 1": "Tepid Volcano",
+	"Tepid Volcano - Lava Rain Center Chest 1": "Tepid Volcano",
+	"Tepid Volcano - Bottom Cave Chest 1": "Tepid Volcano",
+	"Tepid Volcano - Bottom Cave Chest 2": "Tepid Volcano",
+	"Tepid Volcano - Side Cavern Chest 1": "Tepid Volcano",
+	"Tepid Volcano - Side Vent Chest 1": "Tepid Volcano",
+	"Tepid Volcano - Side Vent Chest 2": "Tepid Volcano",
+	"Tepid Volcano - Side Vent Chest 3": "Tepid Volcano",
+	"Tepid Volcano - Throat Chest 1": "Tepid Volcano",
+	"Tepid Volcano - Throat Chest 2": "Tepid Volcano",
+	"Tepid Volcano - Throat Chest 3": "Tepid Volcano",
+	"Tepid Volcano - Top Hole Chest 1": "Tepid Volcano",
+	"Tepid Volcano - Top Open Chest 1": "Tepid Volcano",
+	"Tepid Volcano - East Topside Chest 1": "Tepid Volcano",
+	"Tepid Volcano - Top Entrance Chest 1": "Tepid Volcano",
+	"Tepid Volcano - Vein Chest 1": "Tepid Volcano",
+	"Tepid Volcano - Vein Chest 2": "Tepid Volcano",
+	"Tepid Volcano - Vent Chest 1": "Tepid Volcano",
 	"Wing Challenge 3 Chest 1": "Castle Town",
 }
 
@@ -312,65 +580,52 @@ def create_all_locations(world: HoVWorld) -> None:
     create_regular_locations(world)
     create_events(world)
 
+class HoVRegionSet:
+	world_map_north_west: Region
+	world_map_east: Region
+	world_map_south_central: Region
+	world_map_west: Region
+	world_map_southwest: Region
+	world_map_south: Region
+	abandon_town: Region
+	cliffside_climb: Region
+	castle_town: Region
+	kingdom_castle: Region
+	tepid_volcano: Region
+	viscount_manor: Region
+	viscount_lab: Region
+	map_rando_rogue_world: Region
+
+def get_region_set(world: HoVWorld) -> HoVRegionSet:
+	hoVRegionSet = HoVRegionSet()
+	hoVRegionSet.world_map_north_west = world.get_region("World Map NorthWest")
+	hoVRegionSet.world_map_east = world.get_region("World Map East")
+	hoVRegionSet.world_map_south_central = world.get_region("World Map South Central")
+	hoVRegionSet.world_map_west = world.get_region("World Map West")
+	hoVRegionSet.world_map_southwest = world.get_region("World Map South West")
+	hoVRegionSet.world_map_south = world.get_region("World Map South")
+	hoVRegionSet.abandon_town = world.get_region("Abandon Town")
+	hoVRegionSet.cliffside_climb = world.get_region("Cliffside Climb")
+	hoVRegionSet.castle_town = world.get_region("Castle Town")
+	hoVRegionSet.kingdom_castle = world.get_region("Kingdom Castle")
+	hoVRegionSet.tepid_volcano = world.get_region("Tepid Volcano")
+	hoVRegionSet.viscount_manor = world.get_region("Viscount Manor")
+	hoVRegionSet.viscount_lab = world.get_region("Viscount Lab")
+	hoVRegionSet.map_rando_rogue_world = world.get_region("Rogue Hub Room")
+	return hoVRegionSet
+
 
 def create_regular_locations(world: HoVWorld) -> None:
     # Finally, we need to put the Locations ("checks") into their regions.
     # Once again, before we do anything, we can grab our regions we created by using world.get_region()
-    world_map_north_west = world.get_region("World Map NorthWest")
-    world_map_east = world.get_region("World Map East")
-    world_map_south_central = world.get_region("World Map South Central")
-    world_map_west = world.get_region("World Map West")
-    world_map_southwest = world.get_region("World Map South West")
-    world_map_south = world.get_region("World Map South")
-    abandon_town = world.get_region("Abandon Town")
-    cliffside_climb = world.get_region("Cliffside Climb")
-    castle_town = world.get_region("Castle Town")
-    kingdom_castle = world.get_region("Kingdom Castle")
-    tepid_volcano = world.get_region("Tepid Volcano")
-    viscount_manor = world.get_region("Viscount Manor")
-    viscount_lab = world.get_region("Viscount Lab")
-
-    # TODO - Add the location_name to region_name map
 
     # You can then add them to the region.
-    for location_name in world.location_name_to_id.keys:
+    for location_name in world.location_name_to_id.keys():
         region_name = world.location_name_to_region_name[location_name]
-        world.get_region(region_name).locations.append(HoVLocation(
-            world.player, location_name, world.location_name_to_id[location_name], world_map_north_west
+        regionInstance = world.get_region(region_name)
+        regionInstance.locations.append(HoVLocation(
+            world.player, location_name, world.location_name_to_id[location_name]
         ))
-
-    # A simpler way to do this is by using the region.add_locations helper.
-    # For this, you need to have a dict of location names to their IDs (i.e. a subset of location_name_to_id)
-    # Aha! So that's why we made that "get_location_names_with_ids" helper method earlier.
-    # You also need to pass your overridden Location class.
-    bottom_right_room_locations = get_location_names_with_ids(
-        ["Bottom Right Room Left Chest", "Bottom Right Room Right Chest"]
-    )
-    world_map_west.add_locations(bottom_right_room_locations, HoVLocation)
-
-    top_left_room_locations = get_location_names_with_ids(["Top Left Room Chest"])
-    world_map_east.add_locations(top_left_room_locations, HoVLocation)
-
-    right_room_locations = get_location_names_with_ids(["Right Room Enemy Drop"])
-    world_map_southwest.add_locations(right_room_locations, HoVLocation)
-
-    # Locations may be in different regions depending on the player's options.
-    # In our case, the hammer option puts the Top Middle Chest into its own room called Top Middle Room.
-    top_middle_room_locations = get_location_names_with_ids(["Top Middle Chest"])
-    if world.options.subweapon_spawn:
-        top_middle_room = world.get_region("Top Middle Room")
-        top_middle_room.add_locations(top_middle_room_locations, HoVLocation)
-    else:
-        world_map_north_west.add_locations(top_middle_room_locations, HoVLocation)
-
-    # Locations may exist only if the player enables certain options.
-    # In our case, the extra_starting_chest option adds the Bottom Left Extra Chest location.
-    if world.options.heal_hub:
-        # Once again, it is important to stress that even though the Bottom Left Extra Chest location doesn't always
-        # exist, it must still always be present in the world's location_name_to_id.
-        # Whether the location actually exists in the seed is purely determined by whether we create and add it here.
-        bottom_left_extra_chest = get_location_names_with_ids(["Bottom Left Extra Chest"])
-        world_map_north_west.add_locations(bottom_left_extra_chest, HoVLocation)
 
 
 def create_events(world: HoVWorld) -> None:
@@ -381,12 +636,11 @@ def create_events(world: HoVWorld) -> None:
     # It is treated during generation like any other location, but then it is discarded.
     # This location cannot be "sent" and its item cannot be "received", but the item can be used in logic rules.
     # Since we are creating more locations and adding them to regions, we need to grab those regions again first.
-    top_left_room = world.get_region("Top Left Room")
-    final_boss_room = world.get_region("Final Boss Room")
+    hoVRegionSet = get_region_set(world)
 
     # One way to create an event is simply to use one of the normal methods of creating a location.
-    button_in_top_left_room = HoVLocation(world.player, "Top Left Room Button", None, top_left_room)
-    top_left_room.locations.append(button_in_top_left_room)
+    rogue_hub_spawn_event = HoVLocation(world.player, "Rogue Hub Spawn")
+    hoVRegionSet.map_rando_rogue_world.locations.append(rogue_hub_spawn_event)
 
     # We then need to put an event item onto the location.
     # An event item is an item whose code is "None" (same as the event location's address),
@@ -396,16 +650,16 @@ def create_events(world: HoVWorld) -> None:
     # it is common practice to create the item when creating the location.
     # Since locations also have to be finalized after world.create_regions(), which runs before world.create_items(),
     # we'll create both the event location and the event item in our locations.py code.
-    button_item = items.HoVItem("Top Left Room Button Pressed", ItemClassification.progression, None, world.player)
-    button_in_top_left_room.place_locked_item(button_item)
+    #button_item = items.HoVItem("Top Left Room Button Pressed", ItemClassification.progression, None, world.player)
+    #rogue_hub_spawn_event.place_locked_item(button_item)
 
     # A way simpler way to do create an event location/item pair is by using the region.create_event helper.
     # Luckily, we have another event we want to create: The Victory event.
     # We will use this event to track whether the player can win the game.
     # The Victory event is a completely optional abstraction - This will be discussed more in set_rules().
-    final_boss_room.add_event(
-        "All Chests Opened", "Victory", location_type=HoVLocation, item_type=items.HoVItem
-    )
+    # hoVRegionSet.map_rando_rogue_world.add_event(
+    #     "All Chests Opened", "Victory", location_type=HoVLocation, item_type=items.HoVItem
+    # )
 
     # If you create all your regions and locations line-by-line like this,
     # the length of your create_regions might get out of hand.
