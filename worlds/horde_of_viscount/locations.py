@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from BaseClasses import ItemClassification, Location, Region
+from worlds.horde_of_viscount.regions import get_region_set
 
 from . import items
 
@@ -579,40 +580,6 @@ def get_location_names_with_ids(location_names: list[str]) -> dict[str, int | No
 def create_all_locations(world: HoVWorld) -> None:
     create_regular_locations(world)
     create_events(world)
-
-class HoVRegionSet:
-	world_map_north_west: Region
-	world_map_east: Region
-	world_map_south_central: Region
-	world_map_west: Region
-	world_map_southwest: Region
-	world_map_south: Region
-	abandon_town: Region
-	cliffside_climb: Region
-	castle_town: Region
-	kingdom_castle: Region
-	tepid_volcano: Region
-	viscount_manor: Region
-	viscount_lab: Region
-	map_rando_rogue_world: Region
-
-def get_region_set(world: HoVWorld) -> HoVRegionSet:
-	hoVRegionSet = HoVRegionSet()
-	hoVRegionSet.world_map_north_west = world.get_region("World Map NorthWest")
-	hoVRegionSet.world_map_east = world.get_region("World Map East")
-	hoVRegionSet.world_map_south_central = world.get_region("World Map South Central")
-	hoVRegionSet.world_map_west = world.get_region("World Map West")
-	hoVRegionSet.world_map_southwest = world.get_region("World Map South West")
-	hoVRegionSet.world_map_south = world.get_region("World Map South")
-	hoVRegionSet.abandon_town = world.get_region("Abandon Town")
-	hoVRegionSet.cliffside_climb = world.get_region("Cliffside Climb")
-	hoVRegionSet.castle_town = world.get_region("Castle Town")
-	hoVRegionSet.kingdom_castle = world.get_region("Kingdom Castle")
-	hoVRegionSet.tepid_volcano = world.get_region("Tepid Volcano")
-	hoVRegionSet.viscount_manor = world.get_region("Viscount Manor")
-	hoVRegionSet.viscount_lab = world.get_region("Viscount Lab")
-	hoVRegionSet.map_rando_rogue_world = world.get_region("Rogue Hub Room")
-	return hoVRegionSet
 
 
 def create_regular_locations(world: HoVWorld) -> None:
