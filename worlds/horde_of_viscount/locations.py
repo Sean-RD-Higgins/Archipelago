@@ -10,6 +10,862 @@ from . import items
 if TYPE_CHECKING:
     from .world import HoVWorld
 
+LOCATION_ROOM_ID_LIST = [
+	"StartRoom",
+	"MainMenuRoom",
+	"TemplateStage1Room",
+	"DemoRoom",
+	"WorldMapRoom",
+	"TutorialRoom",
+	"DeadlandRoad1Room",
+	"DeadlandRoad2Room",
+	"DeadlandRoad3Room",
+	"ToxicJungle1Room",
+	"ToxicJungle2Room",
+	"ToxicJungle3Room",
+	"LarvelForest1Room",
+	"LarvelForest2Room",
+	"LarvelForest3Room",
+	"IronRock1Room",
+	"IronRock2Room",
+	"IronRock3Room",
+	"BoneFortRoom",
+	"CorruptWoodsRoom",
+	"DustyBeach1Room",
+	"DustyBeach2Room",
+	"DustyBeach3Room",
+	"MushroomClouds1Room",
+	"MushroomClouds2Room",
+	"MushroomClouds3Room",
+	"QuenchyDesert1Room",
+	"QuenchyDesert2Room",
+	"QuenchyDesert3Room",
+	"CastleBridgeRoom",
+	"CastleFrontBarbicanRoom",
+	"EmptyRoom",
+	"CastlePortcullisRoom",
+	"CastleFoyerRoom",
+	"CastleTowerRoom",
+	"CastleRampartsRoom",
+	"CastleMachicolationsRoom",
+	"CastleBattlementsRoom",
+	"TownEntranceRoom",
+	"TownCenterRoom",
+	"TownGateRoom",
+	"CrimsonCove1Room",
+	"CrimsonCove2Room",
+	"CrimsonCove3Room",
+	"CastleKitchenRoom",
+	"CastleSaveRoom",
+	"CastleHiddenStorageRoom",
+	"CastleRearTowerRoom",
+	"CastleThroneRoom",
+	"VolcanoFootRoom",
+	"VolcanoTemplateDARKRoom",
+	"VolcanoCaveEntranceRoom",
+	"VolcanoEntrywayRoom",
+	"VolcanoVeinRoom",
+	"VolcanoThroatRoom",
+	"VolcanoSideVentRoom",
+	"VolcanoVentRoom",
+	"VolcanoCampsiteRoom",
+	"VolcanoTemplateLIGHTRoom",
+	"VolcanoTopSideRoom",
+	"VolcanoSideSideRoom",
+	"VolcanoSideBottomRoom",
+	"VolcanoEastSpaceRoom",
+	"VolcanoEastFootRoom",
+	"VolcanoEastSpace2Room",
+	"VolcanoEastSpace3Room",
+	"VolcanoFootCampRoom",
+	"VolcanoMansionGateRoom",
+	"ViscountManorHubRoom",
+	"TestStageRoom",
+	"FoeTestRoom",
+	"AbandonEntranceRoom",
+	"AbandonWestPoorRoom",
+	"AbandonCenterPoorRoom",
+	"AbandonEastPoorRoom",
+	"AbandonWestRichRoom",
+	"AbandonCenterRichRoom",
+	"AbandonEastRichRoom",
+	"AbandonWestSkyRoom",
+	"AbandonExitRoom",
+	"AbandonEastSkyRoom",
+	"AbandonWestDrainRoom",
+	"AbandonTunnelRoom",
+	"AbandonDropRoom",
+	"AbandonHiddenRoom",
+	"AbandonSewerRoom",
+	"AbandonNestRoom",
+	"CastleHiddenHiddenRoom",
+	"CastleColumnRoom",
+	"CastleDropRoom",
+	"CastleTopRampartsRoom",
+	"CastleSkyRoom",
+	"VolcanoLavaFallTopRoom",
+	"VolcanoLavaFallCenterRoom",
+	"VolcanoLavaFallBottomRoom",
+	"VolcanoLeftCornerRoom",
+	"VolcanoPlatformRoom",
+	"VolcanoTopTopEntranceRoom",
+	"VolcanoTopOpenRoom",
+	"VolcanoTopHoleRoom",
+	"VolcanoCraterRoom",
+	"VolcanoOpenRoom",
+	"VolcanoCaveTopEntranceRoom",
+	"VolcanoDrainRoom",
+	"VolcanoCraterExitRoom",
+	"VolcanoCraterUnderRoom",
+	"VolcanoHop1Room",
+	"VolcanoHop2Room",
+	"VolcanoHop3Room",
+	"VolcanoHop4Room",
+	"VolcanoRainBottomRoom",
+	"VolcanoRainCenterRoom",
+	"VolcanoRainPegRoom",
+	"CliffZemplateLightRoom",
+	"CliffZemplateDarkRoom",
+	"CliffEntranceRoom",
+	"CliffSideWallRoom",
+	"CliffSideEntranceRoom",
+	"CliffSkyWestTopSkyRoom",
+	"CliffTopsideLeftRoom",
+	"CliffTopsideMiddleRoom",
+	"CliffTopsideRightRoom",
+	"CliffSkyTopRightRoom",
+	"CliffBossEntranceRoom",
+	"CliffBossRoom",
+	"CliffUnderpassRoom",
+	"CliffUnderEntranceRoom",
+	"CliffSmallUnderpassRoom",
+	"CliffSpikeRoom",
+	"CliffFreeBossRightHitRoom",
+	"CliffPegBreakRoom",
+	"CliffSaveRoom",
+	"CliffElevatorRoom",
+	"CliffHiddenRoom",
+	"CliffFreeBossLeftHitRoom",
+	"CliffHideLeftRoom",
+	"CliffHideMiddleRoom",
+	"CliffHideUnderRoom",
+	"CliffHideRightRoom",
+	"CliffHideTopRoom",
+	"CliffMiddleExitRoom",
+	"CliffRightExitRoom",
+	"StormCloudCrater1Room",
+	"StormCloudCrater2Room",
+	"StormCloudCrater3Room",
+	"RogueHubRoom",
+	"ManorEntranceRoom",
+	"ManorIntroFight2Room",
+	"ManorRightPrePuzzleRoom",
+	"ManorCenterPrePuzzleRoom",
+	"ManorTopRightHiddenRoom",
+	"ManorLearnRoom",
+	"ManorHiddenRoom",
+	"ManorLeftPuzzleRoom",
+	"ManorCapsuleTopDropRoom",
+	"ManorAroundTop7Room",
+	"ManorBossExitRoom",
+	"ManorExitRoom",
+	"ManorBottomRightDropRoom",
+	"ManorCapsuleEntranceRoom",
+	"ManorBallHiddenRoom",
+	"ManorBlock1Room",
+	"ManorHubUnderRoom",
+	"ManorAroundTop1Room",
+	"ManorAroundTop2Room",
+	"ManorAroundTop3Room",
+	"ManorAroundTop4Room",
+	"ManorAroundTop5Room",
+	"ManorAroundTop6Room",
+	"ManorHiddenBottomRoom",
+	"ManorHiddenBottom2Room",
+	"ManorBottomCapsuleRoom",
+	"ManorBall2Room",
+	"ManorBlock3Room",
+	"ManorPathTopRoom",
+	"ManorPathHiddenRoom",
+	"ManorBlock2Room",
+	"ManorCenterPuzzleRoom",
+	"ManorRightPuzzleRoom",
+	"ManorBottomRightHiddenRoom",
+	"ManorLeftPrePuzzleRoom",
+	"ManorBall4Room",
+	"ManorPathBottomRoom",
+	"ManorBall1Room",
+	"ManorHiddenBottom3Room",
+	"ManorBossRushRoom",
+	"ManorTopCapsuleRoom",
+	"ManorMiddle1CapsuleRoom",
+	"ManorMiddle2CapsuleRoom",
+	"ManorMiddle3CapsuleRoom",
+	"ManorBall3Room",
+	"ManorIntroFightRoom",
+	"ManorPathCenterRoom",
+	"ManorAroundBottomRoom",
+	"ManorAroundMiddleRoom",
+	"LabViscountRoom",
+	"LabMutatedViscountRoom",
+	"LabLashaRoom",
+	"LabCreditsEntranceRoom",
+	"Knife1PuzzleRoom",
+	"Knife2PuzzleRoom",
+	"Knife3PuzzleRoom",
+	"Caltrop1PuzzleRoom",
+	"ZTemplatePuzzleRoom",
+	"Caltrop2PuzzleRoom",
+	"Caltrop3PuzzleRoom",
+	"Axe1PuzzleRoom",
+	"Axe2PuzzleRoom",
+	"Axe3PuzzleRoom",
+	"Cleat1PuzzleRoom",
+	"Cleat2PuzzleRoom",
+	"Cleat3PuzzleRoom",
+	"Bomb1PuzzleRoom",
+	"Bomb2PuzzleRoom",
+	"Bomb3PuzzleRoom",
+	"Wing1PuzzleRoom",
+	"Wing2PuzzleRoom",
+	"Wing3PuzzleRoom",
+	"Deadland2PuzzleRoom",
+	"Deadland3PuzzleRoom",
+	"Deadland1PuzzleRoom",
+	"SplashScreenDevRoom",
+	"SplashScreenMusicRoom",
+	"ControlSetRoom",
+	"AmonStageRoom",
+	"HixiStageRoom",
+	"CampfireRoom",
+	"CreditsParentRoom",
+	"TutorialV2Room",
+	"UpExitRoom",
+	"RightExitRoom",
+	"LeftExitRoom",
+	"DownExitRoom",
+	"UpLeftExitRoom",
+	"UpRightExitRoom",
+	"DownRightExitRoom",
+	"DownLeftExitRoom",
+	"AllButLeftExitRoom",
+	"AllButUpExitRoom",
+	"AllButRightExitRoom",
+	"AllButDownExitRoom",
+	"AllExitRoom",
+	"LeftRightExitRoom",
+	"UpDownExitRoom",
+]
+
+LOCATION_NAME_TO_ROOM_ID = {
+    "Abandon Town - Center Proletariat Chest 1": 73,
+	"Abandon Town - Center Proletariat Chest 2": 73,
+	"Abandon Town - Center Proletariat Chest 3": 73,
+
+
+	"Abandon Town - Center Bourgeoisie Chest 1": 76,
+	"Abandon Town - Center Bourgeoisie Chest 2": 76,
+	"Abandon Town - Center Bourgeoisie Chest 3": 76,
+
+
+	"Abandon Town - East Proletariat Chest 1": 74,
+	"Abandon Town - East Proletariat Chest 2": 74,
+	"Abandon Town - East Proletariat Chest 3": 74,
+
+
+	"Abandon Town - East Bourgeoisie Chest 1": 77,
+	"Abandon Town - East Bourgeoisie Chest 2": 77,
+	"Abandon Town - East Bourgeoisie Chest 3": 77,
+
+
+	"Abandon Town - East Sky Chest 1": 80,
+	"Abandon Town - East Sky Chest 2": 80,
+	"Abandon Town - East Sky Chest 3": 80,
+
+
+	"Abandon Town - Abandoned Town Chest 1": 71,
+	"Abandon Town - Abandoned Town Chest 2": 71,
+	"Abandon Town - Abandoned Town Chest 3": 71,
+
+
+	"Abandon Town - East Entrance Chest 1": 79,
+	"Abandon Town - East Entrance Chest 2": 79,
+	"Abandon Town - East Entrance Chest 3": 79,
+
+
+	"Abandon Town - Hidden Chest 1": 84,
+	"Abandon Town - Hidden Chest 2": 84,
+	"Abandon Town - Hidden Chest 3": 84,
+
+
+	"Abandon Town - Cold Nest Chest 1": 86,
+	"Abandon Town - Cold Nest Chest 2": 86,
+	"Abandon Town - Cold Nest Chest 3": 86,
+	"Abandon Town - Cold Nest Chest 4": 86,
+	"Abandon Town - Cold Nest Chest 5": 86,
+	"Abandon Town - Cold Nest Chest 6": 86,
+	"Abandon Town - Cold Nest Chest 7": 86,
+	"Abandon Town - Cold Nest Chest 8": 86,
+	"Abandon Town - Cold Nest Chest 9": 86,
+	"Abandon Town - Cold Nest Chest 10": 86,
+	"Abandon Town - Cold Nest Chest 11": 86,
+	"Abandon Town - Cold Nest Chest 12": 86,
+
+
+	"Abandon Town - Aqueduct Chest 1": 85,
+	"Abandon Town - Aqueduct Chest 2": 85,
+	"Abandon Town - Aqueduct Chest 3": 85,
+
+
+	"Abandon Town - Cold Tunnel Chest 1": 82,
+	"Abandon Town - Cold Tunnel Chest 2": 82,
+	"Abandon Town - Cold Tunnel Chest 3": 82,
+
+
+	"Abandon Town - Drain Chest 1": 81,
+	"Abandon Town - Drain Chest 2": 81,
+	"Abandon Town - Drain Chest 3": 81,
+
+
+	"Abandon Town - West Proletariat Chest 1": 72,
+	"Abandon Town - West Proletariat Chest 2": 72,
+	"Abandon Town - West Proletariat Chest 3": 72,
+
+
+	"Abandon Town - West Bourgeoisie Chest 1": 75,
+	"Abandon Town - West Bourgeoisie Chest 2": 75,
+	"Abandon Town - West Bourgeoisie Chest 3": 75,
+
+
+	"Abandon Town - West Sky Chest 1": 78,
+	"Abandon Town - West Sky Chest 2": 78,
+	"Abandon Town - West Sky Chest 3": 78,
+
+
+
+	"Axe Challenge 3 Chest 1": 208,
+
+
+	"Bomb Challenge 3 Chest 1": 214,
+
+
+	"GrimeBone Fort Chest 1": 18,
+	"GrimeBone Fort Chest 2": 18,
+	"GrimeBone Fort Chest 3": 18,
+
+
+	"Caltrop Challenge 3 Chest 1": 205,
+
+
+	"Kingdom Castle - Battlements Chest 1": 37,
+
+
+	"Kingdom Castle - Kingdom Castle Chest 1": 29,
+	"Kingdom Castle - Kingdom Castle Chest 2": 29,
+	"Kingdom Castle - Kingdom Castle Chest 3": 29,
+
+
+
+	"Kingdom Castle - Columns Chest 1": 88,
+	"Kingdom Castle - Columns Chest 2": 88,
+	"Kingdom Castle - Columns Chest 3": 88,
+
+
+	"Kingdom Castle - Overhang Chest 1": 89,
+	"Kingdom Castle - Overhang Chest 2": 89,
+
+
+	"Kingdom Castle - Great Hall Chest 1": 33,
+
+
+	"Kingdom Castle - Barbican Chest 1": 30,
+
+
+	"Kingdom Castle - Hidden Hidden Storage Chest 1": 87,
+	"Kingdom Castle - Hidden Hidden Storage Chest 2": 87,
+	"Kingdom Castle - Hidden Hidden Storage Chest 3": 87,
+
+
+	"Kingdom Castle - Hidden Storage Chest 1": 46,
+	"Kingdom Castle - Hidden Storage Chest 2": 46,
+	"Kingdom Castle - Hidden Storage Chest 3": 46,
+	"Kingdom Castle - Hidden Storage Chest 4": 46,
+	"Kingdom Castle - Hidden Storage Chest 5": 46,
+	"Kingdom Castle - Hidden Storage Chest 6": 46,
+
+
+	"Kingdom Castle - Kitchen Chest 1": 44,
+	"Kingdom Castle - Kitchen Chest 2": 44,
+	"Kingdom Castle - Kitchen Chest 3": 44,
+
+
+	"Kingdom Castle - Machicolations Chest 1": 36,
+
+
+	"Kingdom Castle - Portcullis Room Chest 1": 32,
+	"Kingdom Castle - Portcullis Room Chest 2": 32,
+	"Kingdom Castle - Portcullis Room Chest 3": 32,
+
+
+	"Kingdom Castle - Ramparts Chest 1": 35,
+
+
+	"Kingdom Castle - Rear Tower Chest 1": 47,
+	"Kingdom Castle - Rear Tower Chest 2": 47,
+
+
+	"Kingdom Castle - Castle Break Room Chest 1": 45,
+
+
+	"Kingdom Castle - Lone Tower Chest 1": 91,
+	"Kingdom Castle - Lone Tower Chest 2": 91,
+	"Kingdom Castle - Lone Tower Chest 3": 91,
+	"Kingdom Castle - Lone Tower Chest 4": 91,
+	"Kingdom Castle - Lone Tower Chest 5": 91,
+	"Kingdom Castle - Lone Tower Chest 6": 91,
+
+
+	"Kingdom Castle - Top Ramparts Chest 1": 90,
+
+
+	"Kingdom Castle - Tower Chest 1": 34,
+	"Kingdom Castle - Tower Chest 2": 34,
+	"Kingdom Castle - Tower Chest 3": 34,
+
+
+	"Cleat Challenge 3 Chest 1": 211,
+
+
+	"Cliffside Climb - Elevator Chest 1": 132,
+
+
+	"Cliffside Climb - Cliffside Climb Chest 1": 115,
+
+
+	"Cliffside Climb - Hidden Chest 1": 133,
+	"Cliffside Climb - Hidden Chest 2": 133,
+	"Cliffside Climb - Hidden Chest 3": 133,
+
+
+	"Cliffside Climb - Stealth Underneath Chest 1": 137,
+
+
+	"Cliffside Climb - Shining Exit Chest 1": 140,
+	"Cliffside Climb - Shining Exit Chest 2": 140,
+	"Cliffside Climb - Shining Exit Chest 3": 140,
+
+
+	"Cliffside Climb - Cliff Exit Chest 1": 141,
+	"Cliffside Climb - Cliff Exit Chest 2": 141,
+	"Cliffside Climb - Cliff Exit Chest 3": 141,
+
+
+	"Cliffside Climb - Cliffside Campsite Chest 1": 131,
+
+
+	"Cliffside Climb - Cliffside Entrance Chest 1": 117,
+
+
+	"Cliffside Climb - Scalable Cliff Chest 1": 116,
+
+
+	"Cliffside Climb - Curving Exit Chest 1": 122,
+
+
+	"Cliffside Climb - Precipice Edge Chest 1": 118,
+
+
+	"Cliffside Climb - Small Underpass Chest 1": 127,
+
+
+	"Cliffside Climb - Spiked Underpass Chest 1": 128,
+
+
+	"Cliffside Climb - Wide Respite Chest 1": 119,
+
+
+	"Cliffside Climb - Topside Entrance Chest 1": 120,
+
+
+	"Cliffside Climb - Clifftop Chest 1": 121,
+
+
+	"Cliffside Climb - Entrance Underpass Chest 1": 126,
+
+
+	"Cliffside Climb - Underpass Chest 1": 125,
+
+
+
+
+
+
+
+
+
+
+
+
+	"Credits Peak Chest 1": 227,
+	"Credits Peak Chest 2": 227,
+
+
+	"Crimson Cove Chest 1": 41,
+
+
+	"Crimson Cove 2 Chest 1": 42,
+
+
+	"Crimson Cove 3 Chest 1": 43,
+
+
+
+	"Deadland Road Chest 1": 6,
+
+
+	"Deadland Road 2 Chest 1": 7,
+
+
+	"Deadland Road 3 Chest 1": 8,
+
+
+	"Dusty Beach Chest 1": 20,
+
+
+	"Dusty Beach 2 Chest 1": 21,
+
+
+	"Dusty Beach 3 Chest 1": 22,
+
+
+	"Iron Rock Mt Chest 1": 15,
+
+
+	"Iron Rock Mt 2 Chest 1": 16,
+
+
+	"Iron Rock Mt 3 Chest 1": 17,
+
+
+	"Knife Challenge 3 Chest 1": 201,
+
+
+	"Credits Overlook Chest 1": 198,
+
+
+	"Larval Forest Chest 1": 12,
+
+
+	"Larval Forest 2 Chest 1": 13,
+
+
+
+	"Larval Forest 3 Chest 1": 14,
+	"Larval Forest 3 Chest 2": 14,
+	"Larval Forest 3 Chest 3": 14,
+
+
+	"Viscount Manor - Bottom Path to Attic Chest 1": 193,
+
+
+	"Viscount Manor - Around Middle Chest 1": 194,
+	"Viscount Manor - Around Middle Chest 2": 194,
+	"Viscount Manor - Around Middle Chest 3": 194,
+
+
+	"Viscount Manor - Path to Attic Chest 1": 163,
+
+
+	"Viscount Manor - Attic Entrance Chest 1": 164,
+
+
+	"Viscount Manor - Left Attic Chest 1": 165,
+
+
+	"Viscount Manor - Middle Attic Chest 1": 166,
+
+
+	"Viscount Manor - Right Attic Chest 1": 167,
+
+
+	"Viscount Manor - Attic Exit Chest 1": 168,
+
+
+	"Viscount Manor - Top Lab Entrance Chest 1": 155,
+
+
+	"Viscount Manor - Right Barbed Hallway Chest 1": 183,
+	"Viscount Manor - Right Barbed Hallway Chest 2": 183,
+
+
+	"Viscount Manor - Left Barbed Hallway Chest 1": 181,
+
+
+	"Viscount Manor - Barbed Hidden Room Chest 1": 160,
+	"Viscount Manor - Barbed Hidden Room Chest 2": 160,
+	"Viscount Manor - Barbed Hidden Room Chest 3": 160,
+
+
+	"Viscount Manor - Manor Barricade Chest 1": 161,
+
+
+	"Viscount Manor - Center Barricade Chest 1": 176,
+
+
+	"Viscount Manor - Right Barricade Chest 1": 173,
+
+
+	"Viscount Manor - Manor Containment Chest 1": 156,
+
+
+	"Viscount Manor - Containment Chest 1": 185,
+
+
+	"Viscount Manor - Lab Bottom Cache Chest 1": 179,
+	"Viscount Manor - Lab Bottom Cache Chest 2": 179,
+	"Viscount Manor - Lab Bottom Cache Chest 3": 179,
+
+
+	"Viscount Manor - Center Barricade Stud Path Chest 1": 149,
+
+
+	"Viscount Manor - Testing Room Entrance Chest 1": 157,
+	"Viscount Manor - Testing Room Entrance Chest 2": 157,
+	"Viscount Manor - Testing Room Entrance Chest 3": 157,
+
+
+	"Viscount Manor - Manor Center Underbelly Chest 1": 170,
+	"Viscount Manor - Manor Center Underbelly Chest 2": 170,
+	"Viscount Manor - Manor Center Underbelly Chest 3": 170,
+
+
+	"Viscount Manor - Manor Right Underbelly Chest 1": 184,
+	"Viscount Manor - Manor Right Underbelly Chest 2": 184,
+	"Viscount Manor - Manor Right Underbelly Chest 3": 184,
+
+
+	"Viscount Manor - Manor Left Underbelly Chest 1": 169,
+
+
+	"Viscount Manor - Manor Cache Chest 1": 152,
+	"Viscount Manor - Manor Cache Chest 2": 152,
+
+
+	"Viscount Manor - Crimson Cove Entrance Chest 1": 162,
+
+
+	"Viscount Manor - Left Barricade Stud Path Chest 1": 180,
+
+
+	"Viscount Manor - Lower Hallway to Lab Chest 1": 182,
+
+
+	"Viscount Manor - Hallway to Lab Chest 1": 192,
+	"Viscount Manor - Hallway to Lab Chest 2": 192,
+	"Viscount Manor - Hallway to Lab Chest 3": 192,
+
+
+	"Viscount Manor - Path Hidden Chest 1": 175,
+	"Viscount Manor - Path Hidden Chest 2": 175,
+	"Viscount Manor - Path Hidden Chest 3": 175,
+
+
+	"Viscount Manor - Right Barricade Stud Path Chest 1": 148,
+	"Viscount Manor - Right Barricade Stud Path Chest 2": 148,
+
+
+	"Viscount Manor - Lab Top Cache Chest 1": 150,
+	"Viscount Manor - Lab Top Cache Chest 2": 150,
+	"Viscount Manor - Lab Top Cache Chest 3": 150,
+
+
+	"Mushroom Cloud Chest 1": 23,
+
+
+	"Mushroom Cloud 2 Chest 1": 24,
+
+
+	"Mushroom Cloud 3 Chest 1": 25,
+
+
+	"Quenchy Desert Chest 1": 26,
+
+
+	"Quenchy Desert 2 Chest 1": 27,
+	"Quenchy Desert 2 Chest 2": 27,
+
+
+	"Quenchy Desert 3 Chest 1": 28,
+	"Quenchy Desert 3 Chest 2": 28,
+
+
+	"Stormcloud Crater Chest 1": 142,
+
+
+	"Stormcloud Crater 2 Chest 1": 143,
+
+
+	"Stormcloud Crater 3 Chest 1": 144,
+
+
+
+
+
+
+
+
+
+
+
+
+	"Town Gate Chest 1": 40,
+	"Town Gate Chest 2": 40,
+	"Town Gate Chest 3": 40,
+
+
+	"Toxic Jungle Chest 1": 9,
+
+
+	"Toxic Jungle 2 Chest 1": 10,
+
+
+	"Toxic Jungle 3 Chest 1": 11,
+
+
+	"Viscount Manor Chest 1": 68,
+	"Viscount Manor Chest 2": 68,
+
+
+	"Tepid Volcano - Volcano Campsite Chest 1": 57,
+	"Tepid Volcano - Volcano Campsite Chest 2": 57,
+
+
+	"Tepid Volcano - Upper Entrance Chest 1": 102,
+
+
+	"Tepid Volcano - Crater Exit Chest 1": 104,
+	"Tepid Volcano - Crater Exit Chest 2": 104,
+
+
+	"Tepid Volcano - Crater Chest 1": 100,
+
+
+	"Tepid Volcano - Crater Under Chest 1": 105,
+	"Tepid Volcano - Crater Under Chest 2": 105,
+	"Tepid Volcano - Crater Under Chest 3": 105,
+
+
+	"Tepid Volcano - Lava Drain Chest 1": 103,
+	"Tepid Volcano - Lava Drain Chest 2": 103,
+
+
+	"Tepid Volcano - Eastern Foot Chest 1": 63,
+	"Tepid Volcano - Eastern Foot Chest 2": 63,
+
+
+	"Tepid Volcano - Fluffy Clouds 3 Chest 1": 65,
+	"Tepid Volcano - Fluffy Clouds 3 Chest 2": 65,
+
+
+	"Tepid Volcano - Entryway Chest 1": 52,
+	"Tepid Volcano - Entryway Chest 2": 52,
+
+
+	"Tepid Volcano - Volcano Foot Camp Chest 1": 66,
+	"Tepid Volcano - Volcano Foot Camp Chest 2": 66,
+	"Tepid Volcano - Volcano Foot Camp Chest 3": 66,
+	"Tepid Volcano - Volcano Foot Camp Chest 4": 66,
+
+
+	"Tepid Volcano - Tepid Volcano Chest 1": 49,
+
+
+	"Tepid Volcano - Hopping Left Chest 1": 106,
+
+
+	"Tepid Volcano - Hopping Center-Left Chest 1": 107,
+
+
+	"Tepid Volcano - Hopping Center-Right Chest 1": 108,
+
+
+	"Tepid Volcano - Hopping Right Chest 1": 109,
+
+
+	"Tepid Volcano - Lava Fall Bottom Chest 1": 94,
+	"Tepid Volcano - Lava Fall Bottom Chest 2": 94,
+	"Tepid Volcano - Lava Fall Bottom Chest 3": 94,
+
+
+	"Tepid Volcano - Lava Fall Center Chest 1": 93,
+
+
+	"Tepid Volcano - Left Corner Chest 1": 95,
+
+
+	"Tepid Volcano - West Topside Chest 1": 101,
+	"Tepid Volcano - West Topside Chest 2": 101,
+
+
+	"Tepid Volcano - Scaling Wall Chest 1": 96,
+
+
+	"Tepid Volcano - Lava Rain Bottom Chest 1": 110,
+
+
+	"Tepid Volcano - Lava Rain Center Chest 1": 111,
+
+
+	"Tepid Volcano - Bottom Cave Chest 1": 61,
+	"Tepid Volcano - Bottom Cave Chest 2": 61,
+
+
+	"Tepid Volcano - Side Cavern Chest 1": 60,
+
+
+	"Tepid Volcano - Side Vent Chest 1": 55,
+	"Tepid Volcano - Side Vent Chest 2": 55,
+	"Tepid Volcano - Side Vent Chest 3": 55,
+
+
+
+
+
+
+
+
+
+
+
+
+	"Tepid Volcano - Throat Chest 1": 54,
+	"Tepid Volcano - Throat Chest 2": 54,
+	"Tepid Volcano - Throat Chest 3": 54,
+
+
+	"Tepid Volcano - Top Hole Chest 1": 99,
+
+
+	"Tepid Volcano - Top Open Chest 1": 98,
+
+
+	"Tepid Volcano - East Topside Chest 1": 59,
+
+
+	"Tepid Volcano - Top Entrance Chest 1": 97,
+
+
+	"Tepid Volcano - Vein Chest 1": 53,
+	"Tepid Volcano - Vein Chest 2": 53,
+
+
+	"Tepid Volcano - Vent Chest 1": 56,
+
+
+	"Wing Challenge 3 Chest 1": 217,
+
+}
+
 # Every location must have a unique integer ID associated with it.
 # We will have a lookup from location name to ID here that, in world.py, we will import and bind to the world class.
 # Even if a location doesn't exist on specific options, it must be present in this lookup.

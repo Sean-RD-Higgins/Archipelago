@@ -66,6 +66,9 @@ def set_all_entrance_rules(world: HoVWorld) -> None:
     # we'll re-set the "Overworld to Top Left Room" rule to a constant defined at the top of this file:
     world.set_rule(overworld_to_top_left_room, HAS_KEY)
 
+
+    world.set_rule(world.get_location(""), lambda state: state.can_reach_location("", world.player))
+
     # Beyond these structural advantages,
     # Rule Builder also allows the core AP code to do a lot of under-the-hood optimizations.
     # Rule Builder is quite comprehensive, and even if you have really esoteric rules,
