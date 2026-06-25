@@ -10,253 +10,6 @@ from . import items
 if TYPE_CHECKING:
     from .world import HoVWorld
 
-LOCATION_ROOM_ID_LIST = [
-	"StartRoom",
-	"MainMenuRoom",
-	"TemplateStage1Room",
-	"DemoRoom",
-	"WorldMapRoom",
-	"TutorialRoom",
-	"DeadlandRoad1Room",
-	"DeadlandRoad2Room",
-	"DeadlandRoad3Room",
-	"ToxicJungle1Room",
-	"ToxicJungle2Room",
-	"ToxicJungle3Room",
-	"LarvelForest1Room",
-	"LarvelForest2Room",
-	"LarvelForest3Room",
-	"IronRock1Room",
-	"IronRock2Room",
-	"IronRock3Room",
-	"BoneFortRoom",
-	"CorruptWoodsRoom",
-	"DustyBeach1Room",
-	"DustyBeach2Room",
-	"DustyBeach3Room",
-	"MushroomClouds1Room",
-	"MushroomClouds2Room",
-	"MushroomClouds3Room",
-	"QuenchyDesert1Room",
-	"QuenchyDesert2Room",
-	"QuenchyDesert3Room",
-	"CastleBridgeRoom",
-	"CastleFrontBarbicanRoom",
-	"EmptyRoom",
-	"CastlePortcullisRoom",
-	"CastleFoyerRoom",
-	"CastleTowerRoom",
-	"CastleRampartsRoom",
-	"CastleMachicolationsRoom",
-	"CastleBattlementsRoom",
-	"TownEntranceRoom",
-	"TownCenterRoom",
-	"TownGateRoom",
-	"CrimsonCove1Room",
-	"CrimsonCove2Room",
-	"CrimsonCove3Room",
-	"CastleKitchenRoom",
-	"CastleSaveRoom",
-	"CastleHiddenStorageRoom",
-	"CastleRearTowerRoom",
-	"CastleThroneRoom",
-	"VolcanoFootRoom",
-	"VolcanoTemplateDARKRoom",
-	"VolcanoCaveEntranceRoom",
-	"VolcanoEntrywayRoom",
-	"VolcanoVeinRoom",
-	"VolcanoThroatRoom",
-	"VolcanoSideVentRoom",
-	"VolcanoVentRoom",
-	"VolcanoCampsiteRoom",
-	"VolcanoTemplateLIGHTRoom",
-	"VolcanoTopSideRoom",
-	"VolcanoSideSideRoom",
-	"VolcanoSideBottomRoom",
-	"VolcanoEastSpaceRoom",
-	"VolcanoEastFootRoom",
-	"VolcanoEastSpace2Room",
-	"VolcanoEastSpace3Room",
-	"VolcanoFootCampRoom",
-	"VolcanoMansionGateRoom",
-	"ViscountManorHubRoom",
-	"TestStageRoom",
-	"FoeTestRoom",
-	"AbandonEntranceRoom",
-	"AbandonWestPoorRoom",
-	"AbandonCenterPoorRoom",
-	"AbandonEastPoorRoom",
-	"AbandonWestRichRoom",
-	"AbandonCenterRichRoom",
-	"AbandonEastRichRoom",
-	"AbandonWestSkyRoom",
-	"AbandonExitRoom",
-	"AbandonEastSkyRoom",
-	"AbandonWestDrainRoom",
-	"AbandonTunnelRoom",
-	"AbandonDropRoom",
-	"AbandonHiddenRoom",
-	"AbandonSewerRoom",
-	"AbandonNestRoom",
-	"CastleHiddenHiddenRoom",
-	"CastleColumnRoom",
-	"CastleDropRoom",
-	"CastleTopRampartsRoom",
-	"CastleSkyRoom",
-	"VolcanoLavaFallTopRoom",
-	"VolcanoLavaFallCenterRoom",
-	"VolcanoLavaFallBottomRoom",
-	"VolcanoLeftCornerRoom",
-	"VolcanoPlatformRoom",
-	"VolcanoTopTopEntranceRoom",
-	"VolcanoTopOpenRoom",
-	"VolcanoTopHoleRoom",
-	"VolcanoCraterRoom",
-	"VolcanoOpenRoom",
-	"VolcanoCaveTopEntranceRoom",
-	"VolcanoDrainRoom",
-	"VolcanoCraterExitRoom",
-	"VolcanoCraterUnderRoom",
-	"VolcanoHop1Room",
-	"VolcanoHop2Room",
-	"VolcanoHop3Room",
-	"VolcanoHop4Room",
-	"VolcanoRainBottomRoom",
-	"VolcanoRainCenterRoom",
-	"VolcanoRainPegRoom",
-	"CliffZemplateLightRoom",
-	"CliffZemplateDarkRoom",
-	"CliffEntranceRoom",
-	"CliffSideWallRoom",
-	"CliffSideEntranceRoom",
-	"CliffSkyWestTopSkyRoom",
-	"CliffTopsideLeftRoom",
-	"CliffTopsideMiddleRoom",
-	"CliffTopsideRightRoom",
-	"CliffSkyTopRightRoom",
-	"CliffBossEntranceRoom",
-	"CliffBossRoom",
-	"CliffUnderpassRoom",
-	"CliffUnderEntranceRoom",
-	"CliffSmallUnderpassRoom",
-	"CliffSpikeRoom",
-	"CliffFreeBossRightHitRoom",
-	"CliffPegBreakRoom",
-	"CliffSaveRoom",
-	"CliffElevatorRoom",
-	"CliffHiddenRoom",
-	"CliffFreeBossLeftHitRoom",
-	"CliffHideLeftRoom",
-	"CliffHideMiddleRoom",
-	"CliffHideUnderRoom",
-	"CliffHideRightRoom",
-	"CliffHideTopRoom",
-	"CliffMiddleExitRoom",
-	"CliffRightExitRoom",
-	"StormCloudCrater1Room",
-	"StormCloudCrater2Room",
-	"StormCloudCrater3Room",
-	"RogueHubRoom",
-	"ManorEntranceRoom",
-	"ManorIntroFight2Room",
-	"ManorRightPrePuzzleRoom",
-	"ManorCenterPrePuzzleRoom",
-	"ManorTopRightHiddenRoom",
-	"ManorLearnRoom",
-	"ManorHiddenRoom",
-	"ManorLeftPuzzleRoom",
-	"ManorCapsuleTopDropRoom",
-	"ManorAroundTop7Room",
-	"ManorBossExitRoom",
-	"ManorExitRoom",
-	"ManorBottomRightDropRoom",
-	"ManorCapsuleEntranceRoom",
-	"ManorBallHiddenRoom",
-	"ManorBlock1Room",
-	"ManorHubUnderRoom",
-	"ManorAroundTop1Room",
-	"ManorAroundTop2Room",
-	"ManorAroundTop3Room",
-	"ManorAroundTop4Room",
-	"ManorAroundTop5Room",
-	"ManorAroundTop6Room",
-	"ManorHiddenBottomRoom",
-	"ManorHiddenBottom2Room",
-	"ManorBottomCapsuleRoom",
-	"ManorBall2Room",
-	"ManorBlock3Room",
-	"ManorPathTopRoom",
-	"ManorPathHiddenRoom",
-	"ManorBlock2Room",
-	"ManorCenterPuzzleRoom",
-	"ManorRightPuzzleRoom",
-	"ManorBottomRightHiddenRoom",
-	"ManorLeftPrePuzzleRoom",
-	"ManorBall4Room",
-	"ManorPathBottomRoom",
-	"ManorBall1Room",
-	"ManorHiddenBottom3Room",
-	"ManorBossRushRoom",
-	"ManorTopCapsuleRoom",
-	"ManorMiddle1CapsuleRoom",
-	"ManorMiddle2CapsuleRoom",
-	"ManorMiddle3CapsuleRoom",
-	"ManorBall3Room",
-	"ManorIntroFightRoom",
-	"ManorPathCenterRoom",
-	"ManorAroundBottomRoom",
-	"ManorAroundMiddleRoom",
-	"LabViscountRoom",
-	"LabMutatedViscountRoom",
-	"LabLashaRoom",
-	"LabCreditsEntranceRoom",
-	"Knife1PuzzleRoom",
-	"Knife2PuzzleRoom",
-	"Knife3PuzzleRoom",
-	"Caltrop1PuzzleRoom",
-	"ZTemplatePuzzleRoom",
-	"Caltrop2PuzzleRoom",
-	"Caltrop3PuzzleRoom",
-	"Axe1PuzzleRoom",
-	"Axe2PuzzleRoom",
-	"Axe3PuzzleRoom",
-	"Cleat1PuzzleRoom",
-	"Cleat2PuzzleRoom",
-	"Cleat3PuzzleRoom",
-	"Bomb1PuzzleRoom",
-	"Bomb2PuzzleRoom",
-	"Bomb3PuzzleRoom",
-	"Wing1PuzzleRoom",
-	"Wing2PuzzleRoom",
-	"Wing3PuzzleRoom",
-	"Deadland2PuzzleRoom",
-	"Deadland3PuzzleRoom",
-	"Deadland1PuzzleRoom",
-	"SplashScreenDevRoom",
-	"SplashScreenMusicRoom",
-	"ControlSetRoom",
-	"AmonStageRoom",
-	"HixiStageRoom",
-	"CampfireRoom",
-	"CreditsParentRoom",
-	"TutorialV2Room",
-	"UpExitRoom",
-	"RightExitRoom",
-	"LeftExitRoom",
-	"DownExitRoom",
-	"UpLeftExitRoom",
-	"UpRightExitRoom",
-	"DownRightExitRoom",
-	"DownLeftExitRoom",
-	"AllButLeftExitRoom",
-	"AllButUpExitRoom",
-	"AllButRightExitRoom",
-	"AllButDownExitRoom",
-	"AllExitRoom",
-	"LeftRightExitRoom",
-	"UpDownExitRoom",
-]
-
 LOCATION_NAME_TO_ROOM_ID = {
     "Abandon Town - Center Proletariat Chest 1": 73,
 	"Abandon Town - Center Proletariat Chest 2": 73,
@@ -864,6 +617,616 @@ LOCATION_NAME_TO_ROOM_ID = {
 
 	"Wing Challenge 3 Chest 1": 217,
 
+}
+
+ROOM_ID_TO_LOCATION_NAME_LIST = {
+    "AbandonCenterPoorRoom": [
+        "Abandon Town - Center Proletariat Chest 1",
+        "Abandon Town - Center Proletariat Chest 2",
+        "Abandon Town - Center Proletariat Chest 3",
+    ],
+    "AbandonCenterRichRoom": [
+        "Abandon Town - Center Bourgeoisie Chest 1",
+        "Abandon Town - Center Bourgeoisie Chest 2",
+        "Abandon Town - Center Bourgeoisie Chest 3",
+    ],
+    "AbandonEastPoorRoom": [
+        "Abandon Town - East Proletariat Chest 1",
+        "Abandon Town - East Proletariat Chest 2",
+        "Abandon Town - East Proletariat Chest 3",
+    ],
+    "AbandonEastRichRoom": [
+        "Abandon Town - East Bourgeoisie Chest 1",
+        "Abandon Town - East Bourgeoisie Chest 2",
+        "Abandon Town - East Bourgeoisie Chest 3",
+    ],
+    "AbandonEastSkyRoom": [
+        "Abandon Town - East Sky Chest 1",
+        "Abandon Town - East Sky Chest 2",
+        "Abandon Town - East Sky Chest 3",
+    ],
+    "AbandonEntranceRoom": [
+        "Abandon Town - Abandoned Town Chest 1",
+        "Abandon Town - Abandoned Town Chest 2",
+        "Abandon Town - Abandoned Town Chest 3",
+    ],
+    "AbandonExitRoom": [
+        "Abandon Town - East Entrance Chest 1",
+        "Abandon Town - East Entrance Chest 2",
+        "Abandon Town - East Entrance Chest 3",
+    ],
+    "AbandonHiddenRoom": [
+        "Abandon Town - Hidden Chest 1",
+        "Abandon Town - Hidden Chest 2",
+        "Abandon Town - Hidden Chest 3",
+    ],
+    "AbandonNestRoom": [
+        "Abandon Town - Cold Nest Chest 1",
+        "Abandon Town - Cold Nest Chest 2",
+        "Abandon Town - Cold Nest Chest 3",
+        "Abandon Town - Cold Nest Chest 4",
+        "Abandon Town - Cold Nest Chest 5",
+        "Abandon Town - Cold Nest Chest 6",
+        "Abandon Town - Cold Nest Chest 7",
+        "Abandon Town - Cold Nest Chest 8",
+        "Abandon Town - Cold Nest Chest 9",
+        "Abandon Town - Cold Nest Chest 10",
+        "Abandon Town - Cold Nest Chest 11",
+        "Abandon Town - Cold Nest Chest 12",
+    ],
+    "AbandonSewerRoom": [
+        "Abandon Town - Aqueduct Chest 1",
+        "Abandon Town - Aqueduct Chest 2",
+        "Abandon Town - Aqueduct Chest 3",
+    ],
+    "AbandonTunnelRoom": [
+        "Abandon Town - Cold Tunnel Chest 1",
+        "Abandon Town - Cold Tunnel Chest 2",
+        "Abandon Town - Cold Tunnel Chest 3",
+    ],
+    "AbandonWestDrainRoom": [
+        "Abandon Town - Drain Chest 1",
+        "Abandon Town - Drain Chest 2",
+        "Abandon Town - Drain Chest 3",
+    ],
+    "AbandonWestPoorRoom": [
+        "Abandon Town - West Proletariat Chest 1",
+        "Abandon Town - West Proletariat Chest 2",
+        "Abandon Town - West Proletariat Chest 3",
+    ],
+    "AbandonWestRichRoom": [
+        "Abandon Town - West Bourgeoisie Chest 1",
+        "Abandon Town - West Bourgeoisie Chest 2",
+        "Abandon Town - West Bourgeoisie Chest 3",
+    ],
+    "AbandonWestSkyRoom": [
+        "Abandon Town - West Sky Chest 1",
+        "Abandon Town - West Sky Chest 2",
+        "Abandon Town - West Sky Chest 3",
+    ],
+
+    "Axe3PuzzleRoom": [
+        "Axe Challenge 3 Chest 1",
+    ],
+    "Bomb3PuzzleRoom": [
+        "Bomb Challenge 3 Chest 1",
+    ],
+    "BoneFortRoom": [
+        "GrimeBone Fort Chest 1",
+        "GrimeBone Fort Chest 2",
+        "GrimeBone Fort Chest 3",
+    ],
+    "Caltrop3PuzzleRoom": [
+        "Caltrop Challenge 3 Chest 1",
+    ],
+    "CastleBattlementsRoom": [
+        "Kingdom Castle - Battlements Chest 1",
+    ],
+    "CastleBridgeRoom": [
+        "Kingdom Castle - Kingdom Castle Chest 1",
+        "Kingdom Castle - Kingdom Castle Chest 2",
+        "Kingdom Castle - Kingdom Castle Chest 3",
+    ],
+
+    "CastleColumnRoom": [
+        "Kingdom Castle - Columns Chest 1",
+        "Kingdom Castle - Columns Chest 2",
+        "Kingdom Castle - Columns Chest 3",
+    ],
+    "CastleDropRoom": [
+        "Kingdom Castle - Overhang Chest 1",
+        "Kingdom Castle - Overhang Chest 2",
+    ],
+    "CastleFoyerRoom": [
+        "Kingdom Castle - Great Hall Chest 1",
+    ],
+    "CastleFrontBarbicanRoom": [
+        "Kingdom Castle - Barbican Chest 1",
+    ],
+    "CastleHiddenHiddenRoom": [
+        "Kingdom Castle - Hidden Hidden Storage Chest 1",
+        "Kingdom Castle - Hidden Hidden Storage Chest 2",
+        "Kingdom Castle - Hidden Hidden Storage Chest 3",
+    ],
+    "CastleHiddenStorageRoom": [
+        "Kingdom Castle - Hidden Storage Chest 1",
+        "Kingdom Castle - Hidden Storage Chest 2",
+        "Kingdom Castle - Hidden Storage Chest 3",
+        "Kingdom Castle - Hidden Storage Chest 4",
+        "Kingdom Castle - Hidden Storage Chest 5",
+        "Kingdom Castle - Hidden Storage Chest 6",
+    ],
+    "CastleKitchenRoom": [
+        "Kingdom Castle - Kitchen Chest 1",
+        "Kingdom Castle - Kitchen Chest 2",
+        "Kingdom Castle - Kitchen Chest 3",
+    ],
+    "CastleMachicolationsRoom": [
+        "Kingdom Castle - Machicolations Chest 1",
+    ],
+    "CastlePortcullisRoom": [
+        "Kingdom Castle - Portcullis Room Chest 1",
+        "Kingdom Castle - Portcullis Room Chest 2",
+        "Kingdom Castle - Portcullis Room Chest 3",
+    ],
+    "CastleRampartsRoom": [
+        "Kingdom Castle - Ramparts Chest 1",
+    ],
+    "CastleRearTowerRoom": [
+        "Kingdom Castle - Rear Tower Chest 1",
+        "Kingdom Castle - Rear Tower Chest 2",
+    ],
+    "CastleSaveRoom": [
+        "Kingdom Castle - Castle Break Room Chest 1",
+    ],
+    "CastleSkyRoom": [
+        "Kingdom Castle - Lone Tower Chest 1",
+        "Kingdom Castle - Lone Tower Chest 2",
+        "Kingdom Castle - Lone Tower Chest 3",
+        "Kingdom Castle - Lone Tower Chest 4",
+        "Kingdom Castle - Lone Tower Chest 5",
+        "Kingdom Castle - Lone Tower Chest 6",
+    ],
+    "CastleTopRampartsRoom": [
+        "Kingdom Castle - Top Ramparts Chest 1",
+    ],
+    "CastleTowerRoom": [
+        "Kingdom Castle - Tower Chest 1",
+        "Kingdom Castle - Tower Chest 2",
+        "Kingdom Castle - Tower Chest 3",
+    ],
+    "Cleat3PuzzleRoom": [
+        "Cleat Challenge 3 Chest 1",
+    ],
+    "CliffElevatorRoom": [
+        "Cliffside Climb - Elevator Chest 1",
+    ],
+    "CliffEntranceRoom": [
+        "Cliffside Climb - Cliffside Climb Chest 1",
+    ],
+    "CliffHiddenRoom": [
+        "Cliffside Climb - Hidden Chest 1",
+        "Cliffside Climb - Hidden Chest 2",
+        "Cliffside Climb - Hidden Chest 3",
+    ],
+    "CliffHideUnderRoom": [
+        "Cliffside Climb - Stealth Underneath Chest 1",
+    ],
+    "CliffMiddleExitRoom": [
+        "Cliffside Climb - Shining Exit Chest 1",
+        "Cliffside Climb - Shining Exit Chest 2",
+        "Cliffside Climb - Shining Exit Chest 3",
+    ],
+    "CliffRightExitRoom": [
+        "Cliffside Climb - Cliff Exit Chest 1",
+        "Cliffside Climb - Cliff Exit Chest 2",
+        "Cliffside Climb - Cliff Exit Chest 3",
+    ],
+    "CliffSaveRoom": [
+        "Cliffside Climb - Cliffside Campsite Chest 1",
+    ],
+    "CliffSideEntranceRoom": [
+        "Cliffside Climb - Cliffside Entrance Chest 1",
+    ],
+    "CliffSideWallRoom": [
+        "Cliffside Climb - Scalable Cliff Chest 1",
+    ],
+    "CliffSkyTopRightRoom": [
+        "Cliffside Climb - Curving Exit Chest 1",
+    ],
+    "CliffSkyWestTopSkyRoom": [
+        "Cliffside Climb - Precipice Edge Chest 1",
+    ],
+    "CliffSmallUnderpassRoom": [
+        "Cliffside Climb - Small Underpass Chest 1",
+    ],
+    "CliffSpikeRoom": [
+        "Cliffside Climb - Spiked Underpass Chest 1",
+    ],
+    "CliffTopsideLeftRoom": [
+        "Cliffside Climb - Wide Respite Chest 1",
+    ],
+    "CliffTopsideMiddleRoom": [
+        "Cliffside Climb - Topside Entrance Chest 1",
+    ],
+    "CliffTopsideRightRoom": [
+        "Cliffside Climb - Clifftop Chest 1",
+    ],
+    "CliffUnderEntranceRoom": [
+        "Cliffside Climb - Entrance Underpass Chest 1",
+    ],
+    "CliffUnderpassRoom": [
+        "Cliffside Climb - Underpass Chest 1",
+    ],
+
+
+
+
+
+
+
+
+
+
+    "CreditsParentRoom": [
+        "Credits Peak Chest 1",
+        "Credits Peak Chest 2",
+    ],
+    "CrimsonCove1Room": [
+        "Crimson Cove Chest 1",
+    ],
+    "CrimsonCove2Room": [
+        "Crimson Cove 2 Chest 1",
+    ],
+    "CrimsonCove3Room": [
+        "Crimson Cove 3 Chest 1",
+    ],
+
+    "DeadlandRoad1Room": [
+        "Deadland Road Chest 1",
+    ],
+    "DeadlandRoad2Room": [
+        "Deadland Road 2 Chest 1",
+    ],
+    "DeadlandRoad3Room": [
+        "Deadland Road 3 Chest 1",
+    ],
+    "DustyBeach1Room": [
+        "Dusty Beach Chest 1",
+    ],
+    "DustyBeach2Room": [
+        "Dusty Beach 2 Chest 1",
+    ],
+    "DustyBeach3Room": [
+        "Dusty Beach 3 Chest 1",
+    ],
+    "IronRock1Room": [
+        "Iron Rock Mt Chest 1",
+    ],
+    "IronRock2Room": [
+        "Iron Rock Mt 2 Chest 1",
+    ],
+    "IronRock3Room": [
+        "Iron Rock Mt 3 Chest 1",
+    ],
+    "Knife3PuzzleRoom": [
+        "Knife Challenge 3 Chest 1",
+    ],
+    "LabCreditsEntranceRoom": [
+        "Credits Overlook Chest 1",
+    ],
+    "LarvelForest1Room": [
+        "Larval Forest Chest 1",
+    ],
+    "LarvelForest2Room": [
+        "Larval Forest 2 Chest 1",
+    ],
+
+    "LarvelForest3Room": [
+        "Larval Forest 3 Chest 1",
+        "Larval Forest 3 Chest 2",
+        "Larval Forest 3 Chest 3",
+    ],
+    "ManorAroundBottomRoom": [
+        "Viscount Manor - Bottom Path to Attic Chest 1",
+    ],
+    "ManorAroundMiddleRoom": [
+        "Viscount Manor - Around Middle Chest 1",
+        "Viscount Manor - Around Middle Chest 2",
+        "Viscount Manor - Around Middle Chest 3",
+    ],
+    "ManorAroundTop1Room": [
+        "Viscount Manor - Path to Attic Chest 1",
+    ],
+    "ManorAroundTop2Room": [
+        "Viscount Manor - Attic Entrance Chest 1",
+    ],
+    "ManorAroundTop3Room": [
+        "Viscount Manor - Left Attic Chest 1",
+    ],
+    "ManorAroundTop4Room": [
+        "Viscount Manor - Middle Attic Chest 1",
+    ],
+    "ManorAroundTop5Room": [
+        "Viscount Manor - Right Attic Chest 1",
+    ],
+    "ManorAroundTop6Room": [
+        "Viscount Manor - Attic Exit Chest 1",
+    ],
+    "ManorAroundTop7Room": [
+        "Viscount Manor - Top Lab Entrance Chest 1",
+    ],
+    "ManorBall1Room": [
+        "Viscount Manor - Right Barbed Hallway Chest 1",
+        "Viscount Manor - Right Barbed Hallway Chest 2",
+    ],
+    "ManorBall4Room": [
+        "Viscount Manor - Left Barbed Hallway Chest 1",
+    ],
+    "ManorBallHiddenRoom": [
+        "Viscount Manor - Barbed Hidden Room Chest 1",
+        "Viscount Manor - Barbed Hidden Room Chest 2",
+        "Viscount Manor - Barbed Hidden Room Chest 3",
+    ],
+    "ManorBlock1Room": [
+        "Viscount Manor - Manor Barricade Chest 1",
+    ],
+    "ManorBlock2Room": [
+        "Viscount Manor - Center Barricade Chest 1",
+    ],
+    "ManorBlock3Room": [
+        "Viscount Manor - Right Barricade Chest 1",
+    ],
+    "ManorBossExitRoom": [
+        "Viscount Manor - Manor Containment Chest 1",
+    ],
+    "ManorBossRushRoom": [
+        "Viscount Manor - Containment Chest 1",
+    ],
+    "ManorBottomRightHiddenRoom": [
+        "Viscount Manor - Lab Bottom Cache Chest 1",
+        "Viscount Manor - Lab Bottom Cache Chest 2",
+        "Viscount Manor - Lab Bottom Cache Chest 3",
+    ],
+    "ManorCenterPrePuzzleRoom": [
+        "Viscount Manor - Center Barricade Stud Path Chest 1",
+    ],
+    "ManorExitRoom": [
+        "Viscount Manor - Testing Room Entrance Chest 1",
+        "Viscount Manor - Testing Room Entrance Chest 2",
+        "Viscount Manor - Testing Room Entrance Chest 3",
+    ],
+    "ManorHiddenBottom2Room": [
+        "Viscount Manor - Manor Center Underbelly Chest 1",
+        "Viscount Manor - Manor Center Underbelly Chest 2",
+        "Viscount Manor - Manor Center Underbelly Chest 3",
+    ],
+    "ManorHiddenBottom3Room": [
+        "Viscount Manor - Manor Right Underbelly Chest 1",
+        "Viscount Manor - Manor Right Underbelly Chest 2",
+        "Viscount Manor - Manor Right Underbelly Chest 3",
+    ],
+    "ManorHiddenBottomRoom": [
+        "Viscount Manor - Manor Left Underbelly Chest 1",
+    ],
+    "ManorHiddenRoom": [
+        "Viscount Manor - Manor Cache Chest 1",
+        "Viscount Manor - Manor Cache Chest 2",
+    ],
+    "ManorHubUnderRoom": [
+        "Viscount Manor - Crimson Cove Entrance Chest 1",
+    ],
+    "ManorLeftPrePuzzleRoom": [
+        "Viscount Manor - Left Barricade Stud Path Chest 1",
+    ],
+    "ManorPathBottomRoom": [
+        "Viscount Manor - Lower Hallway to Lab Chest 1",
+    ],
+    "ManorPathCenterRoom": [
+        "Viscount Manor - Hallway to Lab Chest 1",
+        "Viscount Manor - Hallway to Lab Chest 2",
+        "Viscount Manor - Hallway to Lab Chest 3",
+    ],
+    "ManorPathHiddenRoom": [
+        "Viscount Manor - Path Hidden Chest 1",
+        "Viscount Manor - Path Hidden Chest 2",
+        "Viscount Manor - Path Hidden Chest 3",
+    ],
+    "ManorRightPrePuzzleRoom": [
+        "Viscount Manor - Right Barricade Stud Path Chest 1",
+        "Viscount Manor - Right Barricade Stud Path Chest 2",
+    ],
+    "ManorTopRightHiddenRoom": [
+        "Viscount Manor - Lab Top Cache Chest 1",
+        "Viscount Manor - Lab Top Cache Chest 2",
+        "Viscount Manor - Lab Top Cache Chest 3",
+    ],
+    "MushroomClouds1Room": [
+        "Mushroom Cloud Chest 1",
+    ],
+    "MushroomClouds2Room": [
+        "Mushroom Cloud 2 Chest 1",
+    ],
+    "MushroomClouds3Room": [
+        "Mushroom Cloud 3 Chest 1",
+    ],
+    "QuenchyDesert1Room": [
+        "Quenchy Desert Chest 1",
+    ],
+    "QuenchyDesert2Room": [
+        "Quenchy Desert 2 Chest 1",
+        "Quenchy Desert 2 Chest 2",
+    ],
+    "QuenchyDesert3Room": [
+        "Quenchy Desert 3 Chest 1",
+        "Quenchy Desert 3 Chest 2",
+    ],
+    "StormCloudCrater1Room": [
+        "Stormcloud Crater Chest 1",
+    ],
+    "StormCloudCrater2Room": [
+        "Stormcloud Crater 2 Chest 1",
+    ],
+    "StormCloudCrater3Room": [
+        "Stormcloud Crater 3 Chest 1",
+    ],
+
+
+
+
+
+
+
+
+
+
+    "TownGateRoom": [
+        "Town Gate Chest 1",
+        "Town Gate Chest 2",
+        "Town Gate Chest 3",
+    ],
+    "ToxicJungle1Room": [
+        "Toxic Jungle Chest 1",
+    ],
+    "ToxicJungle2Room": [
+        "Toxic Jungle 2 Chest 1",
+    ],
+    "ToxicJungle3Room": [
+        "Toxic Jungle 3 Chest 1",
+    ],
+    "ViscountManorHubRoom": [
+        "Viscount Manor Chest 1",
+        "Viscount Manor Chest 2",
+    ],
+    "VolcanoCampsiteRoom": [
+        "Tepid Volcano - Volcano Campsite Chest 1",
+        "Tepid Volcano - Volcano Campsite Chest 2",
+    ],
+    "VolcanoCaveTopEntranceRoom": [
+        "Tepid Volcano - Upper Entrance Chest 1",
+    ],
+    "VolcanoCraterExitRoom": [
+        "Tepid Volcano - Crater Exit Chest 1",
+        "Tepid Volcano - Crater Exit Chest 2",
+    ],
+    "VolcanoCraterRoom": [
+        "Tepid Volcano - Crater Chest 1",
+    ],
+    "VolcanoCraterUnderRoom": [
+        "Tepid Volcano - Crater Under Chest 1",
+        "Tepid Volcano - Crater Under Chest 2",
+        "Tepid Volcano - Crater Under Chest 3",
+    ],
+    "VolcanoDrainRoom": [
+        "Tepid Volcano - Lava Drain Chest 1",
+        "Tepid Volcano - Lava Drain Chest 2",
+    ],
+    "VolcanoEastFootRoom": [
+        "Tepid Volcano - Eastern Foot Chest 1",
+        "Tepid Volcano - Eastern Foot Chest 2",
+    ],
+    "VolcanoEastSpace3Room": [
+        "Tepid Volcano - Fluffy Clouds 3 Chest 1",
+        "Tepid Volcano - Fluffy Clouds 3 Chest 2",
+    ],
+    "VolcanoEntrywayRoom": [
+        "Tepid Volcano - Entryway Chest 1",
+        "Tepid Volcano - Entryway Chest 2",
+    ],
+    "VolcanoFootCampRoom": [
+        "Tepid Volcano - Volcano Foot Camp Chest 1",
+        "Tepid Volcano - Volcano Foot Camp Chest 2",
+        "Tepid Volcano - Volcano Foot Camp Chest 3",
+        "Tepid Volcano - Volcano Foot Camp Chest 4",
+    ],
+    "VolcanoFootRoom": [
+        "Tepid Volcano - Tepid Volcano Chest 1",
+    ],
+    "VolcanoHop1Room": [
+        "Tepid Volcano - Hopping Left Chest 1",
+    ],
+    "VolcanoHop2Room": [
+        "Tepid Volcano - Hopping Center-Left Chest 1",
+    ],
+    "VolcanoHop3Room": [
+        "Tepid Volcano - Hopping Center-Right Chest 1",
+    ],
+    "VolcanoHop4Room": [
+        "Tepid Volcano - Hopping Right Chest 1",
+    ],
+    "VolcanoLavaFallBottomRoom": [
+        "Tepid Volcano - Lava Fall Bottom Chest 1",
+        "Tepid Volcano - Lava Fall Bottom Chest 2",
+        "Tepid Volcano - Lava Fall Bottom Chest 3",
+    ],
+    "VolcanoLavaFallCenterRoom": [
+        "Tepid Volcano - Lava Fall Center Chest 1",
+    ],
+    "VolcanoLeftCornerRoom": [
+        "Tepid Volcano - Left Corner Chest 1",
+    ],
+    "VolcanoOpenRoom": [
+        "Tepid Volcano - West Topside Chest 1",
+        "Tepid Volcano - West Topside Chest 2",
+    ],
+    "VolcanoPlatformRoom": [
+        "Tepid Volcano - Scaling Wall Chest 1",
+    ],
+    "VolcanoRainBottomRoom": [
+        "Tepid Volcano - Lava Rain Bottom Chest 1",
+    ],
+    "VolcanoRainCenterRoom": [
+        "Tepid Volcano - Lava Rain Center Chest 1",
+    ],
+    "VolcanoSideBottomRoom": [
+        "Tepid Volcano - Bottom Cave Chest 1",
+        "Tepid Volcano - Bottom Cave Chest 2",
+    ],
+    "VolcanoSideSideRoom": [
+        "Tepid Volcano - Side Cavern Chest 1",
+    ],
+    "VolcanoSideVentRoom": [
+        "Tepid Volcano - Side Vent Chest 1",
+        "Tepid Volcano - Side Vent Chest 2",
+        "Tepid Volcano - Side Vent Chest 3",
+    ],
+
+
+
+
+
+
+
+
+
+
+    "VolcanoThroatRoom": [
+        "Tepid Volcano - Throat Chest 1",
+        "Tepid Volcano - Throat Chest 2",
+        "Tepid Volcano - Throat Chest 3",
+    ],
+    "VolcanoTopHoleRoom": [
+        "Tepid Volcano - Top Hole Chest 1",
+    ],
+    "VolcanoTopOpenRoom": [
+        "Tepid Volcano - Top Open Chest 1",
+    ],
+    "VolcanoTopSideRoom": [
+        "Tepid Volcano - East Topside Chest 1",
+    ],
+    "VolcanoTopTopEntranceRoom": [
+        "Tepid Volcano - Top Entrance Chest 1",
+    ],
+    "VolcanoVeinRoom": [
+        "Tepid Volcano - Vein Chest 1",
+        "Tepid Volcano - Vein Chest 2",
+    ],
+    "VolcanoVentRoom": [
+        "Tepid Volcano - Vent Chest 1",
+    ],
+    "Wing3PuzzleRoom": [
+        "Wing Challenge 3 Chest 1",
+	],
 }
 
 # Every location must have a unique integer ID associated with it.

@@ -7,6 +7,14 @@ from BaseClasses import Item, ItemClassification
 if TYPE_CHECKING:
     from .world import HoVWorld
 
+SUBWEAPON = {
+    "BOMB": "Launch Bomb",
+    "CALTROP": "Backflip Caltrop",
+    "AXE": "Climbing Axe",
+    "KNIFE": "Dash Knife",
+    "WINGS": "Jump Wing",
+    "CLEATS": "Pogo Cleats"
+}
     	
 # Every item must have a unique integer ID associated with it.
 # We will have a lookup from item name to ID here that, in world.py, we will import and bind to the world class.
@@ -281,6 +289,11 @@ ITEM_NAME_TO_ID = {
     "Whip Durable B": 4_188,
     "Chest Breaker": 4_189,
     "Full Whip Sling": 4_190,
+}
+EQUIP = {
+    "WHIP_DURABLE_A": "Whip Durable A",
+    "WHIP_DURABLE_B": "Whip Durable B",
+    "CHEST_BREAKER": "Chest Breaker"
 }
 
 # Items should have a defined default classification.
