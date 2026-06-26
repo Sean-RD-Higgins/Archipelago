@@ -871,6 +871,7 @@ ROOM_ID_TO_LOCATION_NAME_LIST = {
     "CreditsParentRoom": [
         "Credits Peak Chest 1",
         "Credits Peak Chest 2",
+        "Credits Peak Event"
     ],
     "CrimsonCove1Room": [
         "Crimson Cove Chest 1",
@@ -1825,7 +1826,7 @@ def create_events(world: HoVWorld) -> None:
     hoVRegionSet = get_region_set(world)
 
     # One way to create an event is simply to use one of the normal methods of creating a location.
-    rogue_hub_spawn_event = HoVLocation(world.player, "Rogue Hub Spawn")
+    rogue_hub_spawn_event = HoVLocation(world.player, "Rogue Hub")
     hoVRegionSet.map_rando_rogue_world.locations.append(rogue_hub_spawn_event)
 
     # We then need to put an event item onto the location.

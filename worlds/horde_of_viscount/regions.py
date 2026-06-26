@@ -102,15 +102,25 @@ def connect_regions(world: HoVWorld) -> None:
         nextRegion = hoVRegionSet.list[i + 1]
 
 		# An even easier way is to use the region.connect helper.
-        region.connect(nextRegion, region.name + " to " + nextRegion.name, EntranceType.TWO_WAY)
+        region.connect(nextRegion, 
+			region.name + " to " + nextRegion.name, 
+			EntranceType.TWO_WAY)
 
-    # Fill in the misc connections that aren't just "next region in the list".
-    hoVRegionSet.world_map_north_west.connect(hoVRegionSet.world_map_west, hoVRegionSet.world_map_north_west.name + " to " + hoVRegionSet.world_map_west.name, 
-                                              EntranceType.TWO_WAY, lambda state: state.has("Feather", world.player))
-    hoVRegionSet.world_map_north_west.connect(hoVRegionSet.world_map_east, hoVRegionSet.world_map_north_west.name + " to " + hoVRegionSet.world_map_east.name + " (Metal)", 
-                                              EntranceType.TWO_WAY, lambda state: state.has("Metal", world.player))
-    hoVRegionSet.world_map_north_west.connect(hoVRegionSet.world_map_east, hoVRegionSet.world_map_north_west.name + " to " + hoVRegionSet.world_map_east.name + " (Bone)", 
-                                              EntranceType.TWO_WAY, lambda state: state.has("Bone", world.player))
-    hoVRegionSet.world_map_south_central.connect(hoVRegionSet.world_map_south, hoVRegionSet.world_map_south_central.name + " to " + hoVRegionSet.world_map_south.name, 
-                                              EntranceType.TWO_WAY, lambda state: state.has("Mutagen", world.player))
+    # Fill in the misc connections that aren't just "next region in the list".s
+    hoVRegionSet.world_map_north_west.connect(
+          hoVRegionSet.world_map_west, 
+              hoVRegionSet.world_map_north_west.name + " to " + hoVRegionSet.world_map_west.name, 
+					EntranceType.TWO_WAY, lambda state: state.has("Feather", world.player))
+    hoVRegionSet.world_map_north_west.connect(
+          hoVRegionSet.world_map_east, 
+              hoVRegionSet.world_map_north_west.name + " to " + hoVRegionSet.world_map_east.name + " (Metal)", 
+					EntranceType.TWO_WAY, lambda state: state.has("Metal", world.player))
+    hoVRegionSet.world_map_north_west.connect(
+          hoVRegionSet.world_map_east, 
+              hoVRegionSet.world_map_north_west.name + " to " + hoVRegionSet.world_map_east.name + " (Bone)", 
+					EntranceType.TWO_WAY, lambda state: state.has("Bone", world.player))
+    hoVRegionSet.world_map_south_central.connect(
+          hoVRegionSet.world_map_south, 
+              hoVRegionSet.world_map_south_central.name + " to " + hoVRegionSet.world_map_south.name, 
+					EntranceType.TWO_WAY, lambda state: state.has("Mutagen", world.player))
     
