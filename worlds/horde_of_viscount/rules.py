@@ -762,7 +762,7 @@ def set_all_location_rules(world: HoVWorld) -> None:
     roomMetadata[CastlePortcullisRoom].northSubweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP, SUBWEAPON.AXE];
     roomMetadata[CastleRampartsRoom].northSubweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP];
     if "CastleRampartsRoom Axe" in techEnabled:
-        roomMetadata[CastleRampartsRoom].subweaponRequiredList.append(SUBWEAPON.AXE);
+        roomMetadata[CastleRampartsRoom].northSubweaponRequiredList.append(SUBWEAPON.AXE);
     
     roomMetadata[CastleBattlementsRoom].northSubweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP];
     roomMetadata[CastleFoyerRoom].northSubweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP];
@@ -876,8 +876,7 @@ def set_all_location_rules(world: HoVWorld) -> None:
         roomMetadata[roomId].isChestBreakRequired = True
 
     roomMetadata[VolcanoRainPegRoom].isRandomizerRoom = False
-    
-    
+        
     # Now apply the game map rando logic rules into AP rules
     for roomMetadataItem in roomMetadata:
         
@@ -908,7 +907,9 @@ def set_all_location_rules(world: HoVWorld) -> None:
                 northSubweaponRule = Has(*[SUBWEAPON[subweapon] for subweapon in roomMetadataItem.northSubweaponRequiredList])
                 for subweapon in roomMetadataItem.northSubweaponRequiredList[1:]:
                     northSubweaponRule = northSubweaponRule | Has(SUBWEAPON[subweapon])
-                world.set_rule(location, northSubweaponRule)
+                # TODO add North Exit Rules
+                # I can bring the castle maps matrix in and have it reference it as the ENTRANCE to the upper one.
+                #world.set_rule(location, northSubweaponRule)
 
             # Some rooms have floating chests, which can only be opened by equipping the Chest Breaker EQUIP
             if roomMetadataItem.isChestBreakRequired:

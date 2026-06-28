@@ -1779,6 +1779,8 @@ location_name_to_region_name = {
 	"Tepid Volcano - Vein Chest 2": "Tepid Volcano",
 	"Tepid Volcano - Vent Chest 1": "Tepid Volcano",
 	"Wing Challenge 3 Chest 1": "Castle Town",
+    
+	"Credits Peak Event": "Viscount Lab"
 }
 
 # Each Location instance must correctly report the "game" it belongs to.
@@ -1825,9 +1827,8 @@ def create_events(world: HoVWorld) -> None:
     # Since we are creating more locations and adding them to regions, we need to grab those regions again first.
     hoVRegionSet = get_region_set(world)
 
-    # One way to create an event is simply to use one of the normal methods of creating a location.
-    rogue_hub_spawn_event = HoVLocation(world.player, "Rogue Hub")
-    hoVRegionSet.map_rando_rogue_world.locations.append(rogue_hub_spawn_event)
+    # One way to create an event is simply to use one of the normal methods of creating a location.    
+    hoVRegionSet.viscount_lab.locations.append(HoVLocation(world.player, "Credits Peak Event"))
 
     # We then need to put an event item onto the location.
     # An event item is an item whose code is "None" (same as the event location's address),

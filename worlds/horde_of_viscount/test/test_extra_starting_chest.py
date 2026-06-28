@@ -1,11 +1,11 @@
-from .bases import APQuestTestBase
+from .bases import HoVTestBase
 
 
 # Sometimes, you might want to test something with a specific option disabled, then with it enabled.
 # For this purpose, we'll just have two different TestCase classes.
-class TestExtraStartingChestOff(APQuestTestBase):
+class TestExtraStartingItemsOff(HoVTestBase):
     options = {
-        "extra_starting_chest": False,
+        "arcade_token_fill": False,
     }
 
     # Hmm... This is just default options again.
@@ -21,9 +21,9 @@ class TestExtraStartingChestOff(APQuestTestBase):
         self.assertRaises(KeyError, self.world.get_location, "Bottom Left Extra Chest")
 
 
-class TestExtraStartingChestOn(APQuestTestBase):
+class TestExtraStartingItemsOn(HoVTestBase):
     options = {
-        "extra_starting_chest": True,
+        "arcade_token_fill": True,
     }
 
     # In this case, running the default tests is acceptable, since this is a unique options combination.

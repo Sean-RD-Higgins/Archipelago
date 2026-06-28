@@ -1,7 +1,7 @@
-from .bases import APQuestTestBase
+from .bases import HoVTestBase
 
 
-class TestHardMode(APQuestTestBase):
+class TestHardMode(HoVTestBase):
     options = {
         "hard_mode": True,
     }

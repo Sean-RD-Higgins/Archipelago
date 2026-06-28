@@ -1,9 +1,13 @@
-from .bases import APQuestTestBase
+from worlds.horde_of_viscount.items import SUBWEAPON
+from worlds.horde_of_viscount.locations import LOCATION_NAME_TO_ID, ROOM_ID_TO_LOCATION_NAME_LIST
+from worlds.horde_of_viscount.rules import AbandonExitRoom, AbandonWestDrainRoom, CastleBridgeRoom, CastleHiddenStorageRoom, CastleKitchenRoom, CastleMachicolationsRoom, CastleRampartsRoom, CreditsParentRoom
+
+from .bases import HoVTestBase
 
 
 # When writing a test, you'll first need to subclass unittest.TestCase.
 # In our case, we'll subclass the APQuestTestBase we defined in bases.py.
-class TestEasyModeLogic(APQuestTestBase):
+class TestEasyModeLogic(HoVTestBase):
     # Our test base is a subclass of WorldTestBase.
     # WorldTestBase takes a dict of options and sets up a multiworld for you with a single world of your game.
     # The world will have the options you specified.
@@ -28,17 +32,23 @@ class TestEasyModeLogic(APQuestTestBase):
         # For example, we could check that the two early chests are already accessible despite us having no items.
         # For the sake of structure, let's have every test item in its own subtest.
         with self.subTest("Test checks accessible with nothing"):
-            bottom_left_chest = self.world.get_location("Bottom Left Chest")
-            top_middle_chest = self.world.get_location("Top Middle Chest")
+            
+            bottom_left_chest = self.world.get_location(
+                ROOM_ID_TO_LOCATION_NAME_LIST[CastleBridgeRoom][0]
+            )
+            top_middle_chest = self.world.get_location(
+                ROOM_ID_TO_LOCATION_NAME_LIST[CastleRampartsRoom][0]
+            )
 
             # Since access rules have a "state" argument, we must pass our current CollectionState.
             # Helpfully, since we're in a WorldTestBase, we can just use "self.multiworld.state".
             self.assertTrue(bottom_left_chest.can_reach(self.multiworld.state))
             self.assertTrue(top_middle_chest.can_reach(self.multiworld.state))
 
-        # Next, let's test that the top left room location requires the key to unlock the door.
-        with self.subTest("Test key is required to get top left chest"):
-            top_left_room_chest = self.world.get_location("Top Left Room Chest")
+        with self.subTest("Test Wings is required to get CastleRampartsRoom chest"):
+            top_left_room_chest = self.world.get_location(
+                ROOM_ID_TO_LOCATION_NAME_LIST[CastleRampartsRoom][0]
+            )
 
             # Right now, this location should *not* be accessible, as we don't have the key yet.
             self.assertFalse(top_left_room_chest.can_reach(self.multiworld.state))
@@ -47,24 +57,23 @@ class TestEasyModeLogic(APQuestTestBase):
             # For this, there is a handy helper function to collect items from the itempool.
             # Keep in mind that while test functions are sectioned off from one another, subtests are not.
             # Collecting this here means that the state will have the Key for all future subtests in this function.
-            self.collect_by_name("Key")
+            self.collect_by_name(SUBWEAPON.WINGS)
 
             # The top left room chest should now be accessible.
             self.assertTrue(top_left_room_chest.can_reach(self.multiworld.state))
 
-        # Next, let's test that you need the sword to access locations that require it (bush room and enemies).
-        with self.subTest("Test sword is required for enemy and bush locations"):
+        with self.subTest("Bomb is required for some castle and abandon town areaas"):
             # Manually checking the dependency in the previous function was a bit of a hassle, wasn't it?
             # Now we are checking four locations. It would be even longer as a result.
             # Well, there is another option. It's the assertAccessDependency function of WorldTestBase.
             self.assertAccessDependency(
                 [
-                    "Bottom Right Room Right Chest",
-                    "Bottom Right Room Left Chest",
-                    "Right Room Enemy Drop",
-                    "Final Boss Defeated",  # Reminder: APQuest's victory condition uses this event location
+                    ROOM_ID_TO_LOCATION_NAME_LIST[AbandonWestDrainRoom],
+                    ROOM_ID_TO_LOCATION_NAME_LIST[AbandonExitRoom],
+                    ROOM_ID_TO_LOCATION_NAME_LIST[CastleHiddenStorageRoom],
+                    ROOM_ID_TO_LOCATION_NAME_LIST[CastleKitchenRoom],
                 ],
-                [["Sword"]],
+                [[SUBWEAPON.BOMB]],
             )
 
             # The assertAccessDependency function is a bit complicated, so let's discuss what it does.
@@ -75,32 +84,34 @@ class TestEasyModeLogic(APQuestTestBase):
             # In our case, we only care about one item. But sometimes, we care about multiple items at once.
             # This is why we pass a list of lists. We'll discuss this more when we test hard mode logic.
 
-        # Let's do one more test: That the key is required for the Button.
         with self.subTest("Test that the Key is required to activate the Button"):
-            # The Button is not the only thing that depends on the Key.
-            # As explained above, the locations list must be exhaustive.
-            # Thus, we would have to add the "Top Left Room Chest" as well.
-            # However, we can set "only_check_listed" if we only want the Top Left Room Button location to be checked.
             self.assertAccessDependency(
-                ["Top Left Room Button"],
-                [["Key"]],
+                [                    
+                    ROOM_ID_TO_LOCATION_NAME_LIST[CreditsParentRoom],
+                ],
+                [[
+                    SUBWEAPON.BOMB
+                ]],
                 only_check_listed=True,
             )
 
-    def test_easy_mode_health_upgrades(self) -> None:
+    def test_easy_mode_useful_not_progression(self) -> None:
         # For our second test, let's make sure that we have two Health Upgrades with the correct classification.
 
         # We can find the Health Upgrades in the itempool like this:
-        health_upgrades = self.get_items_by_name("Health Upgrade")
+        useful_item_list = self.get_items_by_name([
+            "Charcoal"
+            "Mutagen"
+        ])
 
         # First, let's verify there's two of them.
-        with self.subTest("Test that there are two Health Upgrades in the pool"):
-            self.assertEqual(len(health_upgrades), 2)
+        with self.subTest("Test that there are two items in the pool"):
+            self.assertEqual(len(useful_item_list), 2)
 
         # Then, let's verify that they have the useful classification and NOT the progression classification.
-        with self.subTest("Test that the Health Upgrades in the pool are useful, but not progression."):
+        with self.subTest("Test that the item2 in the pool are useful, but not progression."):
             # To check whether an item has a certain classification, you can use the following helper properties:
             # item.filler, item.trap, item.useful and... item.advancement. No, not item.progression...
             # (Just go with it, AP is old and has had many name changes over the years :D)
-            self.assertTrue(all(health_upgrade.useful for health_upgrade in health_upgrades))
-            self.assertFalse(any(health_upgrade.advancement for health_upgrade in health_upgrades))
+            self.assertTrue(all(useful_item.useful for useful_item in useful_item_list))
+            self.assertFalse(any(useful_item.advancement for useful_item in useful_item_list))

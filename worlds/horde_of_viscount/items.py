@@ -820,15 +820,6 @@ def create_all_items(world: HoVWorld) -> None:
     # TODO handle options
 
 
-    # Some items may only exist if the player enables certain options.
-    # In our case, If the hammer option is enabled, the sixth item is the Hammer.
-    # Otherwise, we add a filler Confetti Cannon.
-    if world.options.subweapon_spawn:
-        # Once again, it is important to stress that even though the Hammer doesn't always exist,
-        # it must be present in the worlds item_name_to_id.
-        # Whether it is actually in the itempool is determined purely by whether we create and add the item here.
-        itempool.append(world.create_item("Hammer"))
-
     # Archipelago requires that each world submits as many locations as it submits items.
     # This is where we can use our filler and trap items.
     # APQuest has two of these: The Confetti Cannon and the Math Trap.
@@ -891,7 +882,7 @@ def create_all_items(world: HoVWorld) -> None:
     # They will be sent as soon as they connect for the first time (depending on your client's item handling flag).
     # Players can add precollected items themselves via the generic "start_inventory" option.
     # If you want to add your own precollected items, you can do so via world.push_precollected().
-    if world.options.hub_sub_fill:
+    if world.options.arcade_token_fill:
         # We're adding a filler item, but you can also add progression items to the player's precollected inventory.
-        starting_confetti_cannon = world.create_item("Confetti Cannon")
-        world.push_precollected(starting_confetti_cannon)
+        arcade_token = world.create_item("Arcade Token")
+        world.push_precollected(arcade_token)

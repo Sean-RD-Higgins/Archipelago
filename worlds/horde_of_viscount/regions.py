@@ -85,11 +85,6 @@ def create_all_regions(world: HoVWorld) -> None:
 						hoVRegionSet.world_map_south, hoVRegionSet.viscount_manor, hoVRegionSet.viscount_lab, 
 						hoVRegionSet.map_rando_rogue_world]
 
-    # Some regions may only exist if the player enables certain options.
-    # In our case, hardmode will not have the map rando.
-	if world.options.hard_mode:
-		hoVRegionSet.list.remove(hoVRegionSet.map_rando_rogue_world)
-
     # We now need to add these regions to multiworld.regions so that AP knows about their existence.
 	world.multiworld.regions += hoVRegionSet.list
 
