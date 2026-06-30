@@ -68,10 +68,10 @@ class TestEasyModeLogic(HoVTestBase):
             # Well, there is another option. It's the assertAccessDependency function of WorldTestBase.
             self.assertAccessDependency(
                 [
-                    ROOM_ID_TO_LOCATION_NAME_LIST[AbandonWestDrainRoom],
-                    ROOM_ID_TO_LOCATION_NAME_LIST[AbandonExitRoom],
-                    ROOM_ID_TO_LOCATION_NAME_LIST[CastleHiddenStorageRoom],
-                    ROOM_ID_TO_LOCATION_NAME_LIST[CastleKitchenRoom],
+                    ROOM_ID_TO_LOCATION_NAME_LIST[AbandonWestDrainRoom][0],
+                    ROOM_ID_TO_LOCATION_NAME_LIST[AbandonExitRoom][0],
+                    ROOM_ID_TO_LOCATION_NAME_LIST[CastleHiddenStorageRoom][0],
+                    ROOM_ID_TO_LOCATION_NAME_LIST[CastleKitchenRoom][0],
                 ],
                 [[SUBWEAPON.BOMB]],
             )
@@ -84,10 +84,10 @@ class TestEasyModeLogic(HoVTestBase):
             # In our case, we only care about one item. But sometimes, we care about multiple items at once.
             # This is why we pass a list of lists. We'll discuss this more when we test hard mode logic.
 
-        with self.subTest("Test that the Key is required to activate the Button"):
+        with self.subTest("Test that the Bomb is required to access the final area chest"):
             self.assertAccessDependency(
                 [                    
-                    ROOM_ID_TO_LOCATION_NAME_LIST[CreditsParentRoom],
+                    ROOM_ID_TO_LOCATION_NAME_LIST[CreditsParentRoom][0],
                 ],
                 [[
                     SUBWEAPON.BOMB

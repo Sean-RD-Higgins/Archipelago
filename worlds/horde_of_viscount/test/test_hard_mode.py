@@ -22,25 +22,12 @@ class TestHardMode(HoVTestBase):
         # This is because "Right Room Enemy Drop" is beatable without "Shield" - You can use "Health Upgrade" instead.
         # However, we can call assertAccessDependency with *both* items like this:
 
-        with self.subTest("Test that you need either Shield or Health Upgrade to beat the Right Room Enemy"):
-            self.assertAccessDependency(
-                ["Right Room Enemy Drop"],
-                [["Shield"], ["Health Upgrade"]],
-                only_check_listed=True,
-            )
+        with self.subTest("Test that Whip Durable B in Item Pool"):
+            whip_durable_b_in_itempool = self.get_items_by_name("Whip Durable B")
 
-        # This tests that:
-        # 1. No Shield & No Health Upgrades   ->   Right Room Enemy Drop is not reachable.
-        # 2. Shield & No Health Upgrades      ->   Right Room Enemy Drop is reachable.
-        # 3. No Shield & All Health Upgrades  ->   Right Room Enemy Drop is reachable.
+            # ... instead of checking that the len() is 1, we can run this absolutely beautiful statement instead:
+            self.assertTrue(len(whip_durable_b_in_itempool) == 0)
 
-        # Note: Every other item that isn't the Shield nor a Health Upgrade is collected into state.
-        # This even includes pre-placed items, which notably includes any event location/item pairs you created.
-        # In our case, it means we don't have to mention the Sword. By omitting it, it's assumed that we have it.
-
-        # This explains why the possible_items parameter is a list, but not why it's a list of lists.
-        # Let's look at the Final Boss Location. This location requires Sword, Shield, and both Health Upgrades.
-        # We could implement it like this:
         with self.subTest("Test that the final boss isn't beatable without Sword, Shield, and both Health Upgrades"):
             self.assertAccessDependency(
                 ["Final Boss Defeated"],

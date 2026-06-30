@@ -1,9 +1,12 @@
+from worlds.horde_of_viscount.locations import ROOM_ID_TO_LOCATION_NAME_LIST
+from worlds.horde_of_viscount.rules import AbandonEntranceRoom, CastleBridgeRoom
+
 from .bases import HoVTestBase
 
 
-class TestHammerOff(HoVTestBase):
+class TestWhipRank2Off(HoVTestBase):
     options = {
-        "hammer": False,
+        "Whip Rank 2": False,
     }
 
     # Once again, this is just default settings, so running the default tests would be wasteful.
@@ -11,11 +14,11 @@ class TestHammerOff(HoVTestBase):
 
     # The hammer option adds the Hammer item to the itempool.
     # Since the hammer option is off in this TestCase, we have to verify that the Hammer is *not* in the itempool.
-    def test_hammer_doesnt_exist(self) -> None:
+    def test_rank2_doesnt_exist(self) -> None:
         # An easy way to verify that an item is or is not in the itempool is by using WorldTestBase.get_items_by_name().
         # This will return a list of all matching items, which we can check for its length.
-        hammers_in_itempool = self.get_items_by_name("Hammer")
-        self.assertEqual(len(hammers_in_itempool), 0)
+        whip_rank_2_in_itempool = self.get_items_by_name("Whip Durable A")
+        self.assertEqual(len(whip_rank_2_in_itempool), 0)
 
     # If the hammer option is not enabled, the Top Middle Chest should just be accessible with nothing.
     def test_hammer_is_not_required_for_top_middle_chest(self) -> None:
@@ -24,20 +27,20 @@ class TestHammerOff(HoVTestBase):
         # The robust way to do this is to collect every item into the state except for the Hammer,
         # then assert that the location is reachable.
         # Luckily, there is a helper for this: "collect_all_but".
-        self.collect_all_but("Hammer")
+        self.collect_all_but("Whip Durable B")
 
         # Now, we manually check that the location is accessible using location.can_reach(state):
-        top_middle_chest_player_one = self.world.get_location("Top Middle Chest")
+        top_middle_chest_player_one = self.world.get_location(ROOM_ID_TO_LOCATION_NAME_LIST[CastleBridgeRoom][0])
         self.assertTrue(top_middle_chest_player_one.can_reach(self.multiworld.state))
 
 
 class TestHammerOn(HoVTestBase):
     options = {
-        "hammer": True,
+        "Whip Rank 2": True,
     }
 
     # When the hammer option is on, the Hammer should exist in the itempool. Let's verify that.
-    def test_hammer_exists(self) -> None:
+    def test_durable_exists(self) -> None:
         # Nothing new to say here, but I do want to take this opportunity to teach you some Python magic. :D
         # In Python, when you check for the truth value of something that isn't a bool,
         # it will be implicitly converted to a bool automatically.
@@ -46,10 +49,10 @@ class TestHammerOn(HoVTestBase):
         # bool([]) -> False
         # bool([1, 2, 3]) -> True
         # So, after grabbing all instances of the Hammer item from the itempool as a list ...
-        hammers_in_itempool = self.get_items_by_name("Hammer")
+        whip_duarble_in_itempool = self.get_items_by_name("Whip Durable B")
 
         # ... instead of checking that the len() is 1, we can run this absolutely beautiful statement instead:
-        self.assertTrue(hammers_in_itempool)
+        self.assertTrue(whip_duarble_in_itempool)
 
         # I love Python <3
 
