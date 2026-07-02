@@ -518,24 +518,16 @@ def set_all_rules(world: HoVWorld) -> None:
 def set_all_entrance_rules(world: HoVWorld) -> None:
     regionSet = get_region_set(world)
 
-    regionSet.world_map_north_west
+# TODO - set all locations to the regions
 
-    # First, we need to actually grab our entrances. Luckily, there is a helper method for this.
-    overworld_to_bottom_right_room = world.get_entrance("Overworld to Bottom Right Room")
-    overworld_to_top_left_room = world.get_entrance("Overworld to Top Left Room")
-    right_room_to_final_boss_room = world.get_entrance("Right Room to Final Boss Room")
+    # Iterate through each room ID and set the rules for the corresponding locations in the world.
+    region = regionSet.world_map_north_west
+    roomId = WorldMapRoom
+    locationList = LOCATION_ROOM_ID_TO_NAME[roomId]
+    for locationName in locationList:
+        location = world.get_location(locationName)
+        world.set_rule(location, lambda state: state.can_reach_region(region, world.player))
 
-    # Conditions can also depend on event items.
-    button_pressed = Has("Top Left Room Button Pressed")
-    world.set_rule(right_room_to_final_boss_room, button_pressed)
-
-    # So far, we've been using "Has" from the Rule Builder to make our rules.
-    # There is another way to make rules that you will see in a lot of older worlds.
-    # A rule can just be a function that takes a "state" argument and returns a bool.
-    # As a demonstration of what that looks like, let's do it with our final Entrance rule:
-    world.set_rule(overworld_to_top_left_room, lambda state: state.has("Key", world.player))
-
-    world.set_rule(world.get_location(""), lambda state: state.can_reach_location("", world.player))
 
 
 class RoomMetadata:

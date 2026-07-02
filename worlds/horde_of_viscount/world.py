@@ -27,8 +27,6 @@ class HoVWorld(World):
     A metroidvania with: Both arcade and exploration areas - Use finite subweapons for advanced movement 
     - Difficulty from casual up to souls-bourne-ring - Customize with equipment - Build your Town 
     - Complete Quests - Having trouble on a stage? There are infinite lives; no game overs here!
-    Right now only the Map Rando mode has AP support.
-    Max Complexity: 10
     """
 
     # The docstring should contain a description of the game, to be displayed on the WebHost.
@@ -51,7 +49,7 @@ class HoVWorld(World):
 
     # There is always one region that the generator starts from & assumes you can always go back to.
     # This defaults to "Menu", but you can change it by overriding origin_region_name.
-    origin_region_name = "RogueHubRoom"
+    origin_region_name = "WorldMapRoom"
 
     # Our world class must have certain functions ("steps") that get called during generation.
     # The main ones are: create_regions, set_rules, create_items.
