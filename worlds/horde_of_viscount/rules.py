@@ -505,29 +505,8 @@ LOCATION_ROOM_ID_LIST = [
 
 
 def set_all_rules(world: HoVWorld) -> None:
-    # In order for AP to generate an item layout that is actually possible for the player to complete,
-    # we need to define rules for our Entrances and Locations.
-    # Note: Regions do not have rules, the Entrances connecting them do!
-    # We'll do entrances first, then locations, and then finally we set our victory condition.
-
-    set_all_entrance_rules(world)
     set_all_location_rules(world)
     set_completion_condition(world)
-
-
-def set_all_entrance_rules(world: HoVWorld) -> None:
-    regionSet = get_region_set(world)
-
-# TODO - set all locations to the regions
-
-    # Iterate through each room ID and set the rules for the corresponding locations in the world.
-    region = regionSet.world_map_north_west
-    roomId = WorldMapRoom
-    locationList = LOCATION_ROOM_ID_TO_NAME[roomId]
-    for locationName in locationList:
-        location = world.get_location(locationName)
-        world.set_rule(location, lambda state: state.can_reach_region(region, world.player))
-
 
 
 class RoomMetadata:
