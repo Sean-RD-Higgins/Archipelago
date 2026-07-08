@@ -703,18 +703,19 @@ def set_all_location_rules(world: HoVWorld) -> None:
     # TODO - Add all available hardmode tech
     techEnabled = [];
     
-    roomMetadata[AbandonEntranceRoom].subweaponRequiredList = [SUBWEAPON.KNIFE, SUBWEAPON.BOMB, SUBWEAPON.WINGS];
-    roomMetadata[AbandonEntranceRoom].subweaponsRequireAll = True;
-    roomMetadata[AbandonEastPoorRoom].subweaponRequiredList = [SUBWEAPON.KNIFE, SUBWEAPON.BOMB, SUBWEAPON.WINGS];
-    roomMetadata[AbandonCenterPoorRoom].subweaponRequiredList = [SUBWEAPON.KNIFE, SUBWEAPON.BOMB, SUBWEAPON.WINGS];
-    roomMetadata[AbandonEastSkyRoom].subweaponRequiredList = [SUBWEAPON.KNIFE, SUBWEAPON.BOMB, SUBWEAPON.WINGS, SUBWEAPON.CALTROP];
-    roomMetadata[AbandonWestPoorRoom].subweaponRequiredList = [SUBWEAPON.KNIFE, SUBWEAPON.BOMB, SUBWEAPON.WINGS, SUBWEAPON.CALTROP];
-    roomMetadata[AbandonWestDrainRoom].subweaponRequiredList = [SUBWEAPON.BOMB];
-    roomMetadata[AbandonWestSkyRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.CALTROP];
-    roomMetadata[AbandonWestSkyRoom].subweaponsRequireAll = True;
-    roomMetadata[AbandonTunnelRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.KNIFE];
-    roomMetadata[AbandonTunnelRoom].subweaponsRequireAll = True;
-    roomMetadata[AbandonTunnelRoom].isChestBreakRequired = True;
+    roomMetadata[AbandonEntranceRoom].subweaponRequiredList = [SUBWEAPON.KNIFE, SUBWEAPON.BOMB, SUBWEAPON.WINGS]
+    roomMetadata[AbandonEntranceRoom].subweaponsRequireAll = True
+    roomMetadata[AbandonEastPoorRoom].subweaponRequiredList = [SUBWEAPON.KNIFE, SUBWEAPON.BOMB, SUBWEAPON.WINGS]
+    roomMetadata[AbandonCenterPoorRoom].subweaponRequiredList = [SUBWEAPON.KNIFE, SUBWEAPON.BOMB, SUBWEAPON.WINGS]
+    roomMetadata[AbandonEastSkyRoom].subweaponRequiredList = [SUBWEAPON.KNIFE, SUBWEAPON.BOMB, SUBWEAPON.WINGS, SUBWEAPON.CALTROP]
+    roomMetadata[AbandonWestPoorRoom].subweaponRequiredList = [SUBWEAPON.KNIFE, SUBWEAPON.BOMB, SUBWEAPON.WINGS, SUBWEAPON.CALTROP]
+    roomMetadata[AbandonWestDrainRoom].subweaponRequiredList = [SUBWEAPON.BOMB]
+    roomMetadata[AbandonWestSkyRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.CALTROP]
+    roomMetadata[AbandonWestSkyRoom].subweaponsRequireAll = True
+    roomMetadata[AbandonTunnelRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.KNIFE]
+    roomMetadata[AbandonTunnelRoom].subweaponsRequireAll = True
+    roomMetadata[AbandonTunnelRoom].isChestBreakRequired = True
+    roomMetadata[AbandonNestRoom].subweaponRequiredList = [SUBWEAPON.BOMB]
     
     roomMetadata[CastleHiddenHiddenRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP, SUBWEAPON.AXE];
     roomMetadata[CastleKitchenRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP];
