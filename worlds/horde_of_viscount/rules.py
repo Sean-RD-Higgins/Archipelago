@@ -548,19 +548,19 @@ def set_all_location_rules(world: HoVWorld) -> None:
     roomMetadata[CliffZemplateLightRoom] =  RoomMetadata(CliffZemplateLightRoom, WorldMapRoom, WorldMapRoom, None, True, False, False, False)
     roomMetadata[EmptyRoom] =  RoomMetadata(EmptyRoom, WorldMapRoom, WorldMapRoom, None, True, False, False, False)
 
-    roomMetadata[CorruptWoodsRoom] = RoomMetadata(CorruptWoodsRoom, CorruptWoodsRoom, WorldMapRoom, None, True, False, True, False);
-    roomMetadata[BoneFortRoom] = RoomMetadata(BoneFortRoom, BoneFortRoom, WorldMapRoom, None, True, False, True, False);
-    roomMetadata[AmonStageRoom] =  RoomMetadata(AmonStageRoom, AmonStageRoom, WorldMapRoom, None, True, False, True, False);
-    roomMetadata[AmonStageRoom].isPuzzleRoom = True;
-    roomMetadata[AmonStageRoom].maxLoot = 1;
-    roomMetadata[HixiStageRoom] =  RoomMetadata(HixiStageRoom, HixiStageRoom, WorldMapRoom, None, True, False, True, False);
-    roomMetadata[AmonStageRoom].isPuzzleRoom = True;
-    roomMetadata[HixiStageRoom].maxLoot = 1;
+    roomMetadata[CorruptWoodsRoom] = RoomMetadata(CorruptWoodsRoom, CorruptWoodsRoom, WorldMapRoom, None, True, False, True, False)
+    roomMetadata[BoneFortRoom] = RoomMetadata(BoneFortRoom, BoneFortRoom, WorldMapRoom, None, True, False, True, False)
+    roomMetadata[AmonStageRoom] =  RoomMetadata(AmonStageRoom, AmonStageRoom, WorldMapRoom, None, True, False, True, False)
+    roomMetadata[AmonStageRoom].isPuzzleRoom = True
+    roomMetadata[AmonStageRoom].maxLoot = 1
+    roomMetadata[HixiStageRoom] =  RoomMetadata(HixiStageRoom, HixiStageRoom, WorldMapRoom, None, True, False, True, False)
+    roomMetadata[AmonStageRoom].isPuzzleRoom = True
+    roomMetadata[HixiStageRoom].maxLoot = 1
 
-    roomMetadata[ViscountManorHubRoom] =  RoomMetadata(ViscountManorHubRoom, ViscountManorHubRoom, ViscountManorHubRoom, None, False, True, False, False);
-    roomMetadata[RogueHubRoom] =  RoomMetadata(RogueHubRoom, RogueHubRoom, RogueHubRoom, None, False, False, False, False);
-    roomMetadata[CampfireRoom] =  RoomMetadata(CampfireRoom, CampfireRoom, WorldMapRoom, None, False, True, False, False);
-    roomMetadata[CreditsParentRoom] =  RoomMetadata(CreditsParentRoom, CreditsParentRoom, LabCreditsEntranceRoom, None, False, False, False, False);
+    roomMetadata[ViscountManorHubRoom] =  RoomMetadata(ViscountManorHubRoom, ViscountManorHubRoom, ViscountManorHubRoom, None, False, True, False, False)
+    roomMetadata[RogueHubRoom] =  RoomMetadata(RogueHubRoom, RogueHubRoom, RogueHubRoom, None, False, False, False, False)
+    roomMetadata[CampfireRoom] =  RoomMetadata(CampfireRoom, CampfireRoom, WorldMapRoom, None, False, True, False, False)
+    roomMetadata[CreditsParentRoom] =  RoomMetadata(CreditsParentRoom, CreditsParentRoom, LabCreditsEntranceRoom, None, False, False, False, False)
 
     WORLD_ID = {
         "WORLD_MAP": 0,
@@ -572,7 +572,7 @@ def set_all_location_rules(world: HoVWorld) -> None:
         "MISTIQUE_MINES": 6,
         "VISCOUNT_MANOR": 7,
         "VISCOUNT_LABS": 8
-    };
+    }
 
     # All of viscount manor, by default, will require at least 1 of these 3 subweapons.
     for roomId in [ 
@@ -609,7 +609,7 @@ def set_all_location_rules(world: HoVWorld) -> None:
         [Wing1PuzzleRoom, None, TownEntranceRoom],
         [Wing2PuzzleRoom, None, TownEntranceRoom],
         [Wing3PuzzleRoom, None, TownEntranceRoom],
-    ];
+    ]
     for pair in simplePairs:
         roomId = pair[0]
         musicId = pair[1]
@@ -689,19 +689,19 @@ def set_all_location_rules(world: HoVWorld) -> None:
         CrimsonCove3Room, StormCloudCrater1Room, StormCloudCrater2Room, StormCloudCrater3Room
     ]
     for i in range(len(doubleJumpRequiredList)):
-        roomId = doubleJumpRequiredList[i];
-        roomMetadata[roomId].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.CALTROP, SUBWEAPON.BOMB];
+        roomId = doubleJumpRequiredList[i]
+        roomMetadata[roomId].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.CALTROP, SUBWEAPON.BOMB]
     
     cleatAndJumpRequiredList = [
         AbandonSewerRoom, ViscountManorHubRoom, ManorEntranceRoom, 
     ]
     for i in range(len(cleatAndJumpRequiredList)):
-        roomId = cleatAndJumpRequiredList[i];
-        roomMetadata[roomId].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.CLEATS];
-        roomMetadata[roomId].subweaponsRequireAll = True;
+        roomId = cleatAndJumpRequiredList[i]
+        roomMetadata[roomId].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.CLEATS]
+        roomMetadata[roomId].subweaponsRequireAll = True
     
     # TODO - Add all available hardmode tech
-    techEnabled = [];
+    techEnabled = []
     
     roomMetadata[AbandonEntranceRoom].subweaponRequiredList = [SUBWEAPON.KNIFE, SUBWEAPON.BOMB, SUBWEAPON.WINGS]
     roomMetadata[AbandonEntranceRoom].subweaponsRequireAll = True
@@ -717,111 +717,111 @@ def set_all_location_rules(world: HoVWorld) -> None:
     roomMetadata[AbandonTunnelRoom].isChestBreakRequired = True
     roomMetadata[AbandonNestRoom].subweaponRequiredList = [SUBWEAPON.BOMB]
     
-    roomMetadata[CastleHiddenHiddenRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP, SUBWEAPON.AXE];
-    roomMetadata[CastleKitchenRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP];
-    roomMetadata[CastleRearTowerRoom].subweaponRequiredList = [SUBWEAPON.AXE, SUBWEAPON.BOMB, SUBWEAPON.CALTROP, SUBWEAPON.WINGS];
-    roomMetadata[CastleDropRoom].subweaponRequiredList = [SUBWEAPON.BOMB];
-    roomMetadata[CastleTopRampartsRoom].subweaponRequiredList = [SUBWEAPON.BOMB];
-    roomMetadata[CastleMachicolationsRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.CLEATS, SUBWEAPON.KNIFE];
-    roomMetadata[CastleMachicolationsRoom].subweaponsRequireAll = True;
-    roomMetadata[CastleMachicolationsRoom].northSubweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP];
-    roomMetadata[CastleBridgeRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB, SUBWEAPON.WINGS, SUBWEAPON.CALTROP];
-    roomMetadata[CastleFrontBarbicanRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB, SUBWEAPON.WINGS, SUBWEAPON.CALTROP];
-    roomMetadata[CastlePortcullisRoom].northSubweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP, SUBWEAPON.AXE];
-    roomMetadata[CastleRampartsRoom].northSubweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP];
+    roomMetadata[CastleHiddenHiddenRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP, SUBWEAPON.AXE]
+    roomMetadata[CastleKitchenRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP]
+    roomMetadata[CastleRearTowerRoom].subweaponRequiredList = [SUBWEAPON.AXE, SUBWEAPON.BOMB, SUBWEAPON.CALTROP, SUBWEAPON.WINGS]
+    roomMetadata[CastleDropRoom].subweaponRequiredList = [SUBWEAPON.BOMB]
+    roomMetadata[CastleTopRampartsRoom].subweaponRequiredList = [SUBWEAPON.BOMB]
+    roomMetadata[CastleMachicolationsRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.CLEATS, SUBWEAPON.KNIFE]
+    roomMetadata[CastleMachicolationsRoom].subweaponsRequireAll = True
+    roomMetadata[CastleMachicolationsRoom].northSubweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP]
+    roomMetadata[CastleBridgeRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB, SUBWEAPON.WINGS, SUBWEAPON.CALTROP]
+    roomMetadata[CastleFrontBarbicanRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB, SUBWEAPON.WINGS, SUBWEAPON.CALTROP]
+    roomMetadata[CastlePortcullisRoom].northSubweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP, SUBWEAPON.AXE]
+    roomMetadata[CastleRampartsRoom].northSubweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP]
     if "CastleRampartsRoom Axe" in techEnabled:
-        roomMetadata[CastleRampartsRoom].northSubweaponRequiredList.append(SUBWEAPON.AXE);
+        roomMetadata[CastleRampartsRoom].northSubweaponRequiredList.append(SUBWEAPON.AXE)
     
-    roomMetadata[CastleBattlementsRoom].northSubweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP];
-    roomMetadata[CastleFoyerRoom].northSubweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP];
-    roomMetadata[CastleHiddenStorageRoom].northSubweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB];
-    roomMetadata[CastleColumnRoom].subweaponRequiredList = [SUBWEAPON.BOMB];
+    roomMetadata[CastleBattlementsRoom].northSubweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP]
+    roomMetadata[CastleFoyerRoom].northSubweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP]
+    roomMetadata[CastleHiddenStorageRoom].northSubweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB]
+    roomMetadata[CastleColumnRoom].subweaponRequiredList = [SUBWEAPON.BOMB]
 
         
-    roomMetadata[CliffElevatorRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP];
+    roomMetadata[CliffElevatorRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP]
     if "CliffElevatorRoom Axe" in techEnabled:
-        roomMetadata[CliffElevatorRoom].subweaponRequiredList.append(SUBWEAPON.AXE);
+        roomMetadata[CliffElevatorRoom].subweaponRequiredList.append(SUBWEAPON.AXE)
 
-    roomMetadata[CliffTopsideRightRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.KNIFE, SUBWEAPON.CALTROP, SUBWEAPON.CLEATS];
-    roomMetadata[CliffSideEntranceRoom].subweaponRequiredList = [SUBWEAPON.KNIFE, SUBWEAPON.CALTROP];
-    roomMetadata[CliffHiddenRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.CALTROP, SUBWEAPON.BOMB];
-    roomMetadata[CliffHideTopRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP];
-    roomMetadata[CliffSideWallRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP];
-    roomMetadata[CliffSideEntranceRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.KNIFE, SUBWEAPON.BOMB, SUBWEAPON.CALTROP];
-    roomMetadata[CliffHideMiddleRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.AXE];
-    roomMetadata[CliffHideMiddleRoom].subweaponsRequireAll = True;
-    roomMetadata[CliffMiddleExitRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP];
-    roomMetadata[CliffEntranceRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB];
-    roomMetadata[CliffSideWallRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB];
-    roomMetadata[CliffSideEntranceRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB];
-    roomMetadata[CliffFreeBossLeftHitRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB];
-    roomMetadata[CliffUnderEntranceRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB];
-    roomMetadata[CliffHideLeftRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.AXE];
-    roomMetadata[CliffHideLeftRoom].subweaponsRequireAll = True;
-    roomMetadata[CliffSmallUnderpassRoom].northSubweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP];
-    roomMetadata[CliffHideUnderRoom].northSubweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP];
-    roomMetadata[CliffSpikeRoom].northSubweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP];
-    roomMetadata[CliffHideRightRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.AXE];
-    roomMetadata[CliffHideRightRoom].subweaponsRequireAll = True;
-    roomMetadata[CliffRightExitRoom].northSubweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP];
-    roomMetadata[CliffFreeBossRightHitRoom].northSubweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP];
+    roomMetadata[CliffTopsideRightRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.KNIFE, SUBWEAPON.CALTROP, SUBWEAPON.CLEATS]
+    roomMetadata[CliffSideEntranceRoom].subweaponRequiredList = [SUBWEAPON.KNIFE, SUBWEAPON.CALTROP]
+    roomMetadata[CliffHiddenRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.CALTROP, SUBWEAPON.BOMB]
+    roomMetadata[CliffHideTopRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP]
+    roomMetadata[CliffSideWallRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP]
+    roomMetadata[CliffSideEntranceRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.KNIFE, SUBWEAPON.BOMB, SUBWEAPON.CALTROP]
+    roomMetadata[CliffHideMiddleRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.AXE]
+    roomMetadata[CliffHideMiddleRoom].subweaponsRequireAll = True
+    roomMetadata[CliffMiddleExitRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP]
+    roomMetadata[CliffEntranceRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB]
+    roomMetadata[CliffSideWallRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB]
+    roomMetadata[CliffSideEntranceRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB]
+    roomMetadata[CliffFreeBossLeftHitRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB]
+    roomMetadata[CliffUnderEntranceRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB]
+    roomMetadata[CliffHideLeftRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.AXE]
+    roomMetadata[CliffHideLeftRoom].subweaponsRequireAll = True
+    roomMetadata[CliffSmallUnderpassRoom].northSubweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP]
+    roomMetadata[CliffHideUnderRoom].northSubweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP]
+    roomMetadata[CliffSpikeRoom].northSubweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP]
+    roomMetadata[CliffHideRightRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.AXE]
+    roomMetadata[CliffHideRightRoom].subweaponsRequireAll = True
+    roomMetadata[CliffRightExitRoom].northSubweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP]
+    roomMetadata[CliffFreeBossRightHitRoom].northSubweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP]
     
-    roomMetadata[VolcanoTopTopEntranceRoom].subweaponRequiredList = [SUBWEAPON.AXE, SUBWEAPON.BOMB, SUBWEAPON.WINGS];
+    roomMetadata[VolcanoTopTopEntranceRoom].subweaponRequiredList = [SUBWEAPON.AXE, SUBWEAPON.BOMB, SUBWEAPON.WINGS]
     
-    roomMetadata[VolcanoHop1Room].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.KNIFE, SUBWEAPON.CALTROP, SUBWEAPON.CLEATS];
-    roomMetadata[VolcanoHop2Room].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.KNIFE, SUBWEAPON.CALTROP, SUBWEAPON.CLEATS];
-    roomMetadata[VolcanoHop3Room].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.KNIFE, SUBWEAPON.CALTROP, SUBWEAPON.CLEATS];
-    roomMetadata[VolcanoHop4Room].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.KNIFE, SUBWEAPON.CALTROP, SUBWEAPON.CLEATS];
+    roomMetadata[VolcanoHop1Room].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.KNIFE, SUBWEAPON.CALTROP, SUBWEAPON.CLEATS]
+    roomMetadata[VolcanoHop2Room].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.KNIFE, SUBWEAPON.CALTROP, SUBWEAPON.CLEATS]
+    roomMetadata[VolcanoHop3Room].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.KNIFE, SUBWEAPON.CALTROP, SUBWEAPON.CLEATS]
+    roomMetadata[VolcanoHop4Room].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.KNIFE, SUBWEAPON.CALTROP, SUBWEAPON.CLEATS]
     if "VolcanoHop Rooms Damage Boost" in techEnabled:
-        roomMetadata[VolcanoHop1Room].subweaponRequiredList = [];
-        roomMetadata[VolcanoHop2Room].subweaponRequiredList = [];
-        roomMetadata[VolcanoHop3Room].subweaponRequiredList = [];
-        roomMetadata[VolcanoHop4Room].subweaponRequiredList = [];
+        roomMetadata[VolcanoHop1Room].subweaponRequiredList = []
+        roomMetadata[VolcanoHop2Room].subweaponRequiredList = []
+        roomMetadata[VolcanoHop3Room].subweaponRequiredList = []
+        roomMetadata[VolcanoHop4Room].subweaponRequiredList = []
     
      
-    roomMetadata[VolcanoOpenRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.CALTROP];
+    roomMetadata[VolcanoOpenRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.CALTROP]
     if "VolcanoOpenRoom Damage Boost" in techEnabled:
-        roomMetadata[VolcanoHop4Room].subweaponRequiredList = [SUBWEAPON.KNIFE];
+        roomMetadata[VolcanoHop4Room].subweaponRequiredList = [SUBWEAPON.KNIFE]
     
-    roomMetadata[VolcanoDrainRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.KNIFE, SUBWEAPON.CLEATS];
-    roomMetadata[VolcanoDrainRoom].subweaponsRequireAll = True;
-    roomMetadata[VolcanoSideSideRoom].subweaponRequiredList = [SUBWEAPON.BOMB];
-    roomMetadata[VolcanoSideVentRoom].subweaponRequiredList = [SUBWEAPON.BOMB];
-    roomMetadata[VolcanoSideBottomRoom].subweaponRequiredList = [SUBWEAPON.BOMB];
-    roomMetadata[VolcanoTopSideRoom].subweaponRequiredList = [SUBWEAPON.KNIFE, SUBWEAPON.BOMB, SUBWEAPON.WINGS];
-    roomMetadata[VolcanoTopSideRoom].subweaponRequiredList = [SUBWEAPON.KNIFE, SUBWEAPON.BOMB, SUBWEAPON.WINGS];
-    roomMetadata[VolcanoTopSideRoom].subweaponsRequireAll = True;
-    roomMetadata[VolcanoThroatRoom].subweaponRequiredList = [SUBWEAPON.BOMB, SUBWEAPON.WINGS];
-    roomMetadata[VolcanoLeftCornerRoom].subweaponRequiredList = [SUBWEAPON.CALTROP, SUBWEAPON.BOMB, SUBWEAPON.WINGS];
-    roomMetadata[VolcanoLeftCornerRoom].subweaponsRequireAll = True;
-    roomMetadata[VolcanoTopHoleRoom].subweaponRequiredList = [SUBWEAPON.AXE, SUBWEAPON.BOMB, SUBWEAPON.WINGS, SUBWEAPON.CALTROP];
-    roomMetadata[VolcanoEastFootRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB, SUBWEAPON.WINGS];
-    roomMetadata[VolcanoSideBottomRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB];
-    roomMetadata[VolcanoSideVentRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB];
-    roomMetadata[VolcanoThroatRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB];
-    roomMetadata[VolcanoSideSideRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB];
-    roomMetadata[VolcanoCraterUnderRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB, SUBWEAPON.WINGS, SUBWEAPON.CALTROP];
+    roomMetadata[VolcanoDrainRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.KNIFE, SUBWEAPON.CLEATS]
+    roomMetadata[VolcanoDrainRoom].subweaponsRequireAll = True
+    roomMetadata[VolcanoSideSideRoom].subweaponRequiredList = [SUBWEAPON.BOMB]
+    roomMetadata[VolcanoSideVentRoom].subweaponRequiredList = [SUBWEAPON.BOMB]
+    roomMetadata[VolcanoSideBottomRoom].subweaponRequiredList = [SUBWEAPON.BOMB]
+    roomMetadata[VolcanoTopSideRoom].subweaponRequiredList = [SUBWEAPON.KNIFE, SUBWEAPON.BOMB, SUBWEAPON.WINGS]
+    roomMetadata[VolcanoTopSideRoom].subweaponRequiredList = [SUBWEAPON.KNIFE, SUBWEAPON.BOMB, SUBWEAPON.WINGS]
+    roomMetadata[VolcanoTopSideRoom].subweaponsRequireAll = True
+    roomMetadata[VolcanoThroatRoom].subweaponRequiredList = [SUBWEAPON.BOMB, SUBWEAPON.WINGS]
+    roomMetadata[VolcanoLeftCornerRoom].subweaponRequiredList = [SUBWEAPON.CALTROP, SUBWEAPON.BOMB, SUBWEAPON.WINGS]
+    roomMetadata[VolcanoLeftCornerRoom].subweaponsRequireAll = True
+    roomMetadata[VolcanoTopHoleRoom].subweaponRequiredList = [SUBWEAPON.AXE, SUBWEAPON.BOMB, SUBWEAPON.WINGS, SUBWEAPON.CALTROP]
+    roomMetadata[VolcanoEastFootRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB, SUBWEAPON.WINGS]
+    roomMetadata[VolcanoSideBottomRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB]
+    roomMetadata[VolcanoSideVentRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB]
+    roomMetadata[VolcanoThroatRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB]
+    roomMetadata[VolcanoSideSideRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB]
+    roomMetadata[VolcanoCraterUnderRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB, SUBWEAPON.WINGS, SUBWEAPON.CALTROP]
     
-    roomMetadata[ManorCapsuleTopDropRoom].subweaponRequiredList = [SUBWEAPON.AXE];
-    roomMetadata[ManorAroundMiddleRoom].subweaponRequiredList = [SUBWEAPON.AXE, SUBWEAPON.BOMB, SUBWEAPON.WINGS, SUBWEAPON.CALTROP];
-    roomMetadata[ManorAroundMiddleRoom].subweaponsRequireAll = True;
-    roomMetadata[ManorHiddenBottomRoom].subweaponRequiredList = [SUBWEAPON.KNIFE, SUBWEAPON.WINGS];
-    roomMetadata[ManorHiddenBottomRoom].subweaponsRequireAll = True;
-    roomMetadata[ManorHiddenBottom2Room].subweaponRequiredList = [SUBWEAPON.AXE, SUBWEAPON.CALTROP];
-    roomMetadata[ManorHiddenBottom2Room].subweaponsRequireAll = True;
-    roomMetadata[ManorHiddenBottom3Room].subweaponRequiredList = [SUBWEAPON.CLEATS, SUBWEAPON.BOMB, SUBWEAPON.WINGS];
-    roomMetadata[ManorHiddenBottom3Room].subweaponsRequireAll = True;
-    roomMetadata[ManorIntroFightRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.KNIFE, SUBWEAPON.CALTROP];
-    roomMetadata[ManorIntroFightRoom].subweaponsRequireAll = True;
-    roomMetadata[ManorIntroFight2Room].isRandomizerRoom = False;
-    roomMetadata[ManorLearnRoom].subweaponRequiredList = [SUBWEAPON.CLEATS];
-    roomMetadata[ManorTopRightHiddenRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB, SUBWEAPON.WINGS];
-    roomMetadata[ManorRightPrePuzzleRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB];
+    roomMetadata[ManorCapsuleTopDropRoom].subweaponRequiredList = [SUBWEAPON.AXE]
+    roomMetadata[ManorAroundMiddleRoom].subweaponRequiredList = [SUBWEAPON.AXE, SUBWEAPON.BOMB, SUBWEAPON.WINGS, SUBWEAPON.CALTROP]
+    roomMetadata[ManorAroundMiddleRoom].subweaponsRequireAll = True
+    roomMetadata[ManorHiddenBottomRoom].subweaponRequiredList = [SUBWEAPON.KNIFE, SUBWEAPON.WINGS]
+    roomMetadata[ManorHiddenBottomRoom].subweaponsRequireAll = True
+    roomMetadata[ManorHiddenBottom2Room].subweaponRequiredList = [SUBWEAPON.AXE, SUBWEAPON.CALTROP]
+    roomMetadata[ManorHiddenBottom2Room].subweaponsRequireAll = True
+    roomMetadata[ManorHiddenBottom3Room].subweaponRequiredList = [SUBWEAPON.CLEATS, SUBWEAPON.BOMB, SUBWEAPON.WINGS]
+    roomMetadata[ManorHiddenBottom3Room].subweaponsRequireAll = True
+    roomMetadata[ManorIntroFightRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.KNIFE, SUBWEAPON.CALTROP]
+    roomMetadata[ManorIntroFightRoom].subweaponsRequireAll = True
+    roomMetadata[ManorIntroFight2Room].isRandomizerRoom = False
+    roomMetadata[ManorLearnRoom].subweaponRequiredList = [SUBWEAPON.CLEATS]
+    roomMetadata[ManorTopRightHiddenRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB, SUBWEAPON.WINGS]
+    roomMetadata[ManorRightPrePuzzleRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB]
     
     
-    roomMetadata[DeadlandRoad1Room].subweaponRequiredList = [SUBWEAPON.KNIFE];
-    roomMetadata[DeadlandRoad2Room].subweaponRequiredList = [SUBWEAPON.KNIFE];
-    roomMetadata[DeadlandRoad3Room].subweaponRequiredList = [SUBWEAPON.KNIFE];
+    roomMetadata[DeadlandRoad1Room].subweaponRequiredList = [SUBWEAPON.KNIFE]
+    roomMetadata[DeadlandRoad2Room].subweaponRequiredList = [SUBWEAPON.KNIFE]
+    roomMetadata[DeadlandRoad3Room].subweaponRequiredList = [SUBWEAPON.KNIFE]
     if "DeadlandRoad Rooms Damage Boost" in techEnabled:
         roomMetadata[DeadlandRoad1Room].subweaponRequiredList = []
         roomMetadata[DeadlandRoad2Room].subweaponRequiredList = []

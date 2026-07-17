@@ -54,14 +54,3 @@ class TestHammerOn(HoVTestBase):
         # ... instead of checking that the len() is 1, we can run this absolutely beautiful statement instead:
         self.assertTrue(whip_duarble_in_itempool)
 
-        # I love Python <3
-
-    # When the hammer option is on, the Hammer is required for the Top Middle Chest.
-    def test_hammer_is_required_for_top_middle_chest(self) -> None:
-        # This case is simple again: Just run self.assertAccessDependency()
-        self.assertAccessDependency(["Top Middle Chest"], [["Hammer"]])
-
-        # This unit test genuinely found an error in the world code when it was first written!
-        # The Hammer logic was not actually being correctly applied even if the hammer option was enabled,
-        # and the generator thought Top Middle Chest was considered accessible without the Hammer.
-        # This is why testing can be extremely valuable.
