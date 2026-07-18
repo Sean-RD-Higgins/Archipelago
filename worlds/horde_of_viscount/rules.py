@@ -717,6 +717,8 @@ def set_all_location_rules(world: HoVWorld) -> None:
     roomMetadata[AbandonTunnelRoom].isChestBreakRequired = True
     roomMetadata[AbandonNestRoom].subweaponRequiredList = [SUBWEAPON.BOMB]
     
+    roomMetadata[CastleSkyRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP, SUBWEAPON.KNIFE]
+    roomMetadata[CastleSkyRoom].subweaponsRequireAll = True
     roomMetadata[CastleHiddenHiddenRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP, SUBWEAPON.AXE]
     roomMetadata[CastleKitchenRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP]
     roomMetadata[CastleRearTowerRoom].subweaponRequiredList = [SUBWEAPON.AXE, SUBWEAPON.BOMB, SUBWEAPON.CALTROP, SUBWEAPON.WINGS]
