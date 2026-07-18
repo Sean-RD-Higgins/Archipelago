@@ -750,7 +750,6 @@ def set_all_location_rules(world: HoVWorld) -> None:
     roomMetadata[CliffSideEntranceRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.KNIFE, SUBWEAPON.BOMB, SUBWEAPON.CALTROP]
     roomMetadata[CliffHideMiddleRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.AXE]
     roomMetadata[CliffHideMiddleRoom].subweaponsRequireAll = True
-    roomMetadata[CliffMiddleExitRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP]
     roomMetadata[CliffEntranceRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB]
     roomMetadata[CliffSideWallRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB]
     roomMetadata[CliffSideEntranceRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB]
@@ -758,7 +757,15 @@ def set_all_location_rules(world: HoVWorld) -> None:
     roomMetadata[CliffUnderEntranceRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB]
     roomMetadata[CliffHideLeftRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.AXE]
     roomMetadata[CliffHideLeftRoom].subweaponsRequireAll = True
+    roomMetadata[CliffMiddleExitRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP]
+
+    roomMetadata[CliffSmallUnderpassRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.KNIFE]
+    roomMetadata[CliffSmallUnderpassRoom].subweaponsRequireAll = True
+    if "CliffSmallUnderpassRoom Caltrop" in techEnabled:
+        roomMetadata[CliffSmallUnderpassRoom].subweaponRequiredList = [SUBWEAPON.CALTROP]
+        roomMetadata[CliffSmallUnderpassRoom].subweaponsRequireAll = False    
     roomMetadata[CliffSmallUnderpassRoom].northSubweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP]
+
     roomMetadata[CliffHideUnderRoom].northSubweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP]
     roomMetadata[CliffSpikeRoom].northSubweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP]
     roomMetadata[CliffHideRightRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.AXE]
