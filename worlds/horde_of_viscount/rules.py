@@ -530,6 +530,23 @@ class RoomMetadata:
         subweaponsRequireAll = subweaponsRequireAll
         isFillerRoom = isFillerRoom
         northSubweaponRequiredList = []
+        hasChest = false
+
+def array_last(array):
+    return array[-1]
+
+def array_contains(array, value):
+    return value in array
+
+def array_push(techList, value):
+    techList.append(value)
+
+true = True
+undefined = None
+
+false = True
+
+
 
 def set_all_location_rules(world: HoVWorld) -> None:
     
@@ -703,6 +720,8 @@ def set_all_location_rules(world: HoVWorld) -> None:
     # TODO - Add all available hardmode tech
     techEnabled = []
     
+    techList = []
+    
     roomMetadata[AbandonEntranceRoom].subweaponRequiredList = [SUBWEAPON.KNIFE, SUBWEAPON.BOMB, SUBWEAPON.WINGS]
     roomMetadata[AbandonEntranceRoom].subweaponsRequireAll = True
     roomMetadata[AbandonEastPoorRoom].subweaponRequiredList = [SUBWEAPON.KNIFE, SUBWEAPON.BOMB, SUBWEAPON.WINGS]
@@ -712,9 +731,15 @@ def set_all_location_rules(world: HoVWorld) -> None:
     roomMetadata[AbandonWestDrainRoom].subweaponRequiredList = [SUBWEAPON.BOMB]
     roomMetadata[AbandonWestSkyRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.CALTROP]
     roomMetadata[AbandonWestSkyRoom].subweaponsRequireAll = True
-    roomMetadata[AbandonTunnelRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.KNIFE]
-    roomMetadata[AbandonTunnelRoom].subweaponsRequireAll = True
-    roomMetadata[AbandonTunnelRoom].isChestBreakRequired = True
+    roomMetadata[AbandonTunnelRoom].isRandomizerRoom = False
+    techList.append("AbandonTunnelRoom Knife Chest Breaker")
+    if techList[-1] in techEnabled:
+        roomMetadata[AbandonTunnelRoom].isRandomizerRoom = True
+        
+        roomMetadata[AbandonTunnelRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.KNIFE]
+        roomMetadata[AbandonTunnelRoom].subweaponsRequireAll = True
+        roomMetadata[AbandonTunnelRoom].isChestBreakRequired = True
+    
     roomMetadata[AbandonNestRoom].subweaponRequiredList = [SUBWEAPON.BOMB]
     
     roomMetadata[CastleSkyRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP, SUBWEAPON.KNIFE]
@@ -727,6 +752,15 @@ def set_all_location_rules(world: HoVWorld) -> None:
     roomMetadata[CastleMachicolationsRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.CLEATS, SUBWEAPON.KNIFE]
     roomMetadata[CastleMachicolationsRoom].subweaponsRequireAll = True
     roomMetadata[CastleMachicolationsRoom].northSubweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP]
+    roomMetadata[CastleMachicolationsRoom].isRandomizerRoom = false
+    array_push(techList, "CastleMachicolationsRoom Wing Knife")
+    if array_contains(techEnabled, array_last(techList)) :
+        roomMetadata[CastleMachicolationsRoom].isRandomizerRoom = true
+        
+        roomMetadata[CastleMachicolationsRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.CLEATS]
+        roomMetadata[CastleMachicolationsRoom].subweaponsRequireAll = true
+        roomMetadata[CastleMachicolationsRoom].northSubweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP]
+    
     roomMetadata[CastleBridgeRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB, SUBWEAPON.WINGS, SUBWEAPON.CALTROP]
     roomMetadata[CastleFrontBarbicanRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB, SUBWEAPON.WINGS, SUBWEAPON.CALTROP]
     roomMetadata[CastlePortcullisRoom].northSubweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.BOMB, SUBWEAPON.CALTROP, SUBWEAPON.AXE]
@@ -854,6 +888,103 @@ def set_all_location_rules(world: HoVWorld) -> None:
 
     roomMetadata[VolcanoRainPegRoom].isRandomizerRoom = False
         
+
+    # Has no chest
+    roomMetadata[StartRoom] = RoomMetadata(StartRoom, StartRoom, StartRoom, undefined, false, false, false, false, false, 0, false, false, false)
+    roomMetadata[MainMenuRoom] = RoomMetadata(StartRoom, StartRoom, StartRoom, undefined, false, false, false, false, false, 0, false, false, false)
+    roomMetadata[TemplateStage1Room] =RoomMetadata(StartRoom, StartRoom, StartRoom, undefined, false, false, false, false, false, 0, false, false, false)
+    roomMetadata[DemoRoom] =RoomMetadata(StartRoom, StartRoom, StartRoom, undefined, false, false, false, false, false, 0, false, false, false)
+    roomMetadata[WorldMapRoom].hasChest = false
+    roomMetadata[TutorialRoom].hasChest = false
+    roomMetadata[CorruptWoodsRoom].hasChest = false
+    roomMetadata[EmptyRoom].hasChest = false
+    roomMetadata[TownEntranceRoom].hasChest = false
+    roomMetadata[TownCenterRoom].hasChest = false
+    roomMetadata[CastleThroneRoom].hasChest = false
+    roomMetadata[VolcanoTemplateDARKRoom] =RoomMetadata(StartRoom, StartRoom, StartRoom, undefined, false, false, false, false, false, 0, false, false, false)
+    roomMetadata[VolcanoCaveEntranceRoom].hasChest = false
+    roomMetadata[VolcanoTemplateLIGHTRoom] =RoomMetadata(StartRoom, StartRoom, StartRoom, undefined, false, false, false, false, false, 0, false, false, false)
+    roomMetadata[VolcanoEastSpaceRoom].hasChest = false
+    roomMetadata[VolcanoEastSpace2Room].hasChest = false
+    roomMetadata[VolcanoMansionGateRoom].hasChest = false
+    roomMetadata[TestStageRoom] =RoomMetadata(StartRoom, StartRoom, StartRoom, undefined, false, false, false, false, false, 0, false, false, false)
+    roomMetadata[FoeTestRoom] =RoomMetadata(StartRoom, StartRoom, StartRoom, undefined, false, false, false, false, false, 0, false, false, false)
+    roomMetadata[AbandonDropRoom].hasChest = false
+    roomMetadata[VolcanoLavaFallTopRoom].hasChest = false
+    roomMetadata[VolcanoRainPegRoom].hasChest = false
+    roomMetadata[CliffZemplateLightRoom] =RoomMetadata(StartRoom, StartRoom, StartRoom, undefined, false, false, false, false, false, 0, false, false, false)
+    roomMetadata[CliffZemplateDarkRoom] =RoomMetadata(StartRoom, StartRoom, StartRoom, undefined, false, false, false, false, false, 0, false, false, false)
+    roomMetadata[CliffBossEntranceRoom].hasChest = false
+    roomMetadata[CliffBossRoom].hasChest = false
+    roomMetadata[CliffFreeBossRightHitRoom].hasChest = false
+    roomMetadata[CliffPegBreakRoom].hasChest = false
+    roomMetadata[CliffFreeBossLeftHitRoom].hasChest = false
+    roomMetadata[CliffHideLeftRoom].hasChest = false
+    roomMetadata[CliffHideMiddleRoom].hasChest = false
+    roomMetadata[CliffHideRightRoom].hasChest = false
+    roomMetadata[CliffHideTopRoom].hasChest = false
+    roomMetadata[RogueHubRoom].hasChest = false
+    roomMetadata[ManorEntranceRoom].hasChest = false
+    roomMetadata[ManorIntroFight2Room].hasChest = false
+    roomMetadata[ManorLearnRoom].hasChest = false
+    roomMetadata[ManorLeftPuzzleRoom].hasChest = false
+    roomMetadata[ManorCapsuleTopDropRoom].hasChest = false
+    roomMetadata[ManorBottomRightDropRoom].hasChest = false
+    roomMetadata[ManorCapsuleEntranceRoom].hasChest = false
+    roomMetadata[ManorBottomCapsuleRoom].hasChest = false
+    roomMetadata[ManorBall2Room].hasChest = false
+    roomMetadata[ManorPathTopRoom].hasChest = false
+    roomMetadata[ManorCenterPuzzleRoom].hasChest = false
+    roomMetadata[ManorRightPuzzleRoom].hasChest = false
+    roomMetadata[ManorTopCapsuleRoom].hasChest = false
+    roomMetadata[ManorMiddle1CapsuleRoom].hasChest = false
+    roomMetadata[ManorMiddle2CapsuleRoom].hasChest = false
+    roomMetadata[ManorMiddle3CapsuleRoom].hasChest = false
+    roomMetadata[ManorBall3Room].hasChest = false
+    roomMetadata[ManorIntroFightRoom].hasChest = false
+    roomMetadata[LabViscountRoom].hasChest = false
+    roomMetadata[LabMutatedViscountRoom].hasChest = false
+    roomMetadata[LabLashaRoom].hasChest = false
+    roomMetadata[Knife1PuzzleRoom].hasChest = false
+    roomMetadata[Knife2PuzzleRoom].hasChest = false
+    roomMetadata[Caltrop1PuzzleRoom].hasChest = false
+    roomMetadata[ZTemplatePuzzleRoom] =RoomMetadata(StartRoom, StartRoom, StartRoom, undefined, false, false, false, false, false, 0, false, false, false)
+    roomMetadata[Caltrop2PuzzleRoom].hasChest = false
+    roomMetadata[Axe1PuzzleRoom].hasChest = false
+    roomMetadata[Axe2PuzzleRoom].hasChest = false
+    roomMetadata[Cleat1PuzzleRoom].hasChest = false
+    roomMetadata[Cleat2PuzzleRoom].hasChest = false
+    roomMetadata[Bomb1PuzzleRoom].hasChest = false
+    roomMetadata[Bomb2PuzzleRoom].hasChest = false
+    roomMetadata[Wing1PuzzleRoom].hasChest = false
+    roomMetadata[Wing2PuzzleRoom].hasChest = false
+    roomMetadata[Deadland2PuzzleRoom] =RoomMetadata(StartRoom, StartRoom, StartRoom, undefined, false, false, false, false, false, 0, false, false, false)
+    roomMetadata[Deadland3PuzzleRoom] =RoomMetadata(StartRoom, StartRoom, StartRoom, undefined, false, false, false, false, false, 0, false, false, false)
+    roomMetadata[Deadland1PuzzleRoom] =RoomMetadata(StartRoom, StartRoom, StartRoom, undefined, false, false, false, false, false, 0, false, false, false)
+    roomMetadata[SplashScreenDevRoom] =RoomMetadata(StartRoom, StartRoom, StartRoom, undefined, false, false, false, false, false, 0, false, false, false)
+    roomMetadata[SplashScreenMusicRoom] =RoomMetadata(StartRoom, StartRoom, StartRoom, undefined, false, false, false, false, false, 0, false, false, false)
+    roomMetadata[ControlSetRoom] =RoomMetadata(StartRoom, StartRoom, StartRoom, undefined, false, false, false, false, false, 0, false, false, false)
+    roomMetadata[AmonStageRoom].hasChest = false
+    roomMetadata[HixiStageRoom].hasChest = false
+    roomMetadata[CampfireRoom].hasChest = false
+    roomMetadata[TutorialV2Room].hasChest = false
+    roomMetadata[UpExitRoom].hasChest = false
+    roomMetadata[RightExitRoom].hasChest = false
+    roomMetadata[LeftExitRoom].hasChest = false
+    roomMetadata[DownExitRoom].hasChest = false
+    roomMetadata[UpLeftExitRoom].hasChest = false
+    roomMetadata[UpRightExitRoom].hasChest = false
+    roomMetadata[DownRightExitRoom].hasChest = false
+    roomMetadata[DownLeftExitRoom].hasChest = false
+    roomMetadata[AllButLeftExitRoom].hasChest = false
+    roomMetadata[AllButUpExitRoom].hasChest = false
+    roomMetadata[AllButRightExitRoom].hasChest = false
+    roomMetadata[AllButDownExitRoom].hasChest = false
+    roomMetadata[AllExitRoom].hasChest = false
+    roomMetadata[LeftRightExitRoom].hasChest = false
+    roomMetadata[UpDownExitRoom].hasChest = false
+
+
     # Now apply the game map rando logic rules into AP rules
     for roomMetadataItem in roomMetadata:
         
