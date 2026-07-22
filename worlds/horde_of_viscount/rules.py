@@ -511,27 +511,27 @@ def set_all_rules(world: HoVWorld) -> None:
 
 
 class RoomMetadata:
-    def __init__(roomId = None, firstRoomId = None, worldMapId = None, soundID = None, isStageRoom = True, isSaveRoom = False, 
+    def __init__(self, roomId = None, firstRoomId = None, worldMapId = None, soundID = None, isStageRoom = True, isSaveRoom = False, 
                  isBossRoom = False, isRandomizerRoom = True, isPuzzleRoom = False, maxLoot = 0, isChestBreakRequired = False,
-                 subweaponsRequireAll = False, isFillerRoom = False):
-        roomId = roomId
-        firstRoomId = firstRoomId
-        worldMapId = worldMapId
-        soundId = soundID
-        isStageRoom = isStageRoom
-        isSaveRoom = isSaveRoom
-        isBossRoom = isBossRoom
-        isRandomizerRoom = isRandomizerRoom
-        isDependant = False
-        dependRoom = EmptyRoom
-        subweaponRequiredList = []
-        isPuzzleRoom = isPuzzleRoom
-        maxLoot = maxLoot
-        isChestBreakRequired = isChestBreakRequired
-        subweaponsRequireAll = subweaponsRequireAll
-        isFillerRoom = isFillerRoom
-        northSubweaponRequiredList = []
-        hasChest = false
+                 subweaponsRequireAll = False, isFillerRoom = False, hasChest = False):
+        self.roomId = roomId
+        self.firstRoomId = firstRoomId
+        self.worldMapId = worldMapId
+        self.soundId = soundID
+        self.isStageRoom = isStageRoom
+        self.isSaveRoom = isSaveRoom
+        self.isBossRoom = isBossRoom
+        self.isRandomizerRoom = isRandomizerRoom
+        self.isDependant = False
+        self.dependRoom = EmptyRoom
+        self.subweaponRequiredList = []
+        self.isPuzzleRoom = isPuzzleRoom
+        self.maxLoot = maxLoot
+        self.isChestBreakRequired = isChestBreakRequired
+        self.subweaponsRequireAll = subweaponsRequireAll
+        self.isFillerRoom = isFillerRoom
+        self.northSubweaponRequiredList = []
+        self.hasChest = hasChest
 
 def array_last(array):
     return array[-1]
@@ -545,7 +545,7 @@ def array_push(techList, value):
 true = True
 undefined = None
 
-false = True
+false = False
 
 
 
