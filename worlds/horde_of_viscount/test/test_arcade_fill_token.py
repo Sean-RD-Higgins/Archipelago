@@ -1,10 +1,12 @@
+from worlds.horde_of_viscount.options import HoVOptions
+
 from .bases import HoVTestBase
 
 
 # Sometimes, you might want to test something with a specific option disabled, then with it enabled.
 # For this purpose, we'll just have two different TestCase classes.
 class TestExtraStartingItemsOff(HoVTestBase):
-    options = {
+    options: HoVOptions = {
         "arcade_token_fill": False,
     }
 
@@ -19,7 +21,7 @@ class TestExtraStartingItemsOff(HoVTestBase):
 
 
 class TestExtraStartingItemsOn(HoVTestBase):
-    options = {
+    options: HoVOptions = {
         "arcade_token_fill": True,
     }
 

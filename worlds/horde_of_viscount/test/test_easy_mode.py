@@ -1,5 +1,6 @@
 from worlds.horde_of_viscount.items import SUBWEAPON
 from worlds.horde_of_viscount.locations import LOCATION_NAME_TO_ID, ROOM_ID_TO_LOCATION_NAME_LIST
+from worlds.horde_of_viscount.options import HoVOptions
 from worlds.horde_of_viscount.rules import AbandonExitRoom, AbandonWestDrainRoom, CastleBridgeRoom, CastleHiddenStorageRoom, CastleKitchenRoom, CastleMachicolationsRoom, CastleRampartsRoom, CreditsParentRoom
 
 from .bases import HoVTestBase
@@ -11,7 +12,7 @@ class TestEasyModeLogic(HoVTestBase):
     # Our test base is a subclass of WorldTestBase.
     # WorldTestBase takes a dict of options and sets up a multiworld for you with a single world of your game.
     # The world will have the options you specified.
-    options = {
+    options: HoVOptions = {
         "hard_mode": False,
         # Options you don't specify will use their default values.
         # It is good practice to specify every option that has an impact on your test, even when it's the default value.

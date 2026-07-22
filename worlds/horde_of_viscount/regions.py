@@ -105,17 +105,17 @@ def connect_regions(world: HoVWorld) -> None:
     hoVRegionSet.world_map_north_west.connect(
           hoVRegionSet.world_map_west, 
               hoVRegionSet.world_map_north_west.name + " to " + hoVRegionSet.world_map_west.name, 
-					EntranceType.TWO_WAY, lambda state: state.has("Feather", world.player))
+						lambda state: state.has("Feather", world.player))
     hoVRegionSet.world_map_north_west.connect(
           hoVRegionSet.world_map_east, 
               hoVRegionSet.world_map_north_west.name + " to " + hoVRegionSet.world_map_east.name + " (Metal)", 
-					EntranceType.TWO_WAY, lambda state: state.has("Metal", world.player))
+						lambda state: state.has("Metal", world.player))
     hoVRegionSet.world_map_north_west.connect(
           hoVRegionSet.world_map_east, 
               hoVRegionSet.world_map_north_west.name + " to " + hoVRegionSet.world_map_east.name + " (Bone)", 
-					EntranceType.TWO_WAY, lambda state: state.has("Bone", world.player))
+						lambda state: state.has("Bone", world.player))
     hoVRegionSet.world_map_south_central.connect(
           hoVRegionSet.world_map_south, 
               hoVRegionSet.world_map_south_central.name + " to " + hoVRegionSet.world_map_south.name, 
-					EntranceType.TWO_WAY, lambda state: state.has("Mutagen", world.player))
+						lambda state: state.has("Mutagen", world.player))
     

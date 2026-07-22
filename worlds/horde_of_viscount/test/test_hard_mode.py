@@ -1,8 +1,10 @@
+from worlds.horde_of_viscount.options import HoVOptions
+
 from .bases import HoVTestBase
 
 
 class TestHardMode(HoVTestBase):
-    options = {
+    options: HoVOptions = {
         "hard_mode": True,
     }
 

@@ -3,7 +3,8 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from rule_builder.rules import Has, HasAll
-from items import EQUIP, SUBWEAPON, LOCATION_ROOM_ID_TO_NAME
+from worlds.horde_of_viscount.items import EQUIP, SUBWEAPON
+from worlds.horde_of_viscount.locations import LOCATION_ROOM_ID_TO_NAME
 from worlds.horde_of_viscount.regions import get_region_set
 
 

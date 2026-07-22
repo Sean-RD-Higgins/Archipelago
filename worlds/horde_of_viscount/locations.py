@@ -2,10 +2,9 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from BaseClasses import ItemClassification, Location, Region
+from BaseClasses import Location
 from worlds.horde_of_viscount.regions import get_region_set
 
-from . import items
 
 if TYPE_CHECKING:
     from .world import HoVWorld
@@ -618,6 +617,8 @@ LOCATION_NAME_TO_ROOM_ID = {
 	"Wing Challenge 3 Chest 1": 217,
 
 }
+
+LOCATION_ROOM_ID_TO_NAME = {v: k for k, v in LOCATION_NAME_TO_ROOM_ID.items()}
 
 ROOM_ID_TO_LOCATION_NAME_LIST = {
     "AbandonCenterPoorRoom": [
@@ -1806,7 +1807,7 @@ def create_all_locations(world: HoVWorld) -> None:
 
 def create_regular_locations(world: HoVWorld) -> None:
     for location_name in world.location_name_to_id.keys():
-        region_name = world.location_name_to_region_name[location_name]
+        region_name = location_name_to_region_name[location_name]
         regionInstance = world.get_region(region_name)
         regionInstance.locations.append(HoVLocation(
             world.player, location_name, world.location_name_to_id[location_name]

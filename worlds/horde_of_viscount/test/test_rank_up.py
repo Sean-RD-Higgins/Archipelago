@@ -1,11 +1,12 @@
 from worlds.horde_of_viscount.locations import ROOM_ID_TO_LOCATION_NAME_LIST
-from worlds.horde_of_viscount.rules import AbandonEntranceRoom, CastleBridgeRoom
+from worlds.horde_of_viscount.options import HoVOptions
+from worlds.horde_of_viscount.rules import CastleBridgeRoom
 
 from .bases import HoVTestBase
 
 
 class TestWhipRank2Off(HoVTestBase):
-    options = {
+    options: HoVOptions  = {
         "Whip Rank 2": False,
     }
 
@@ -34,8 +35,8 @@ class TestWhipRank2Off(HoVTestBase):
         self.assertTrue(top_middle_chest_player_one.can_reach(self.multiworld.state))
 
 
-class TestHammerOn(HoVTestBase):
-    options = {
+class TestWhipRank2On(HoVTestBase):
+    options: HoVOptions = {
         "Whip Rank 2": True,
     }
 
