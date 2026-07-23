@@ -11,7 +11,7 @@ class TestWhipRank2Off(HoVTestBase):
     }
 
     # Once again, this is just default settings, so running the default tests would be wasteful.
-    run_default_tests = False
+    run_default_tests = True
 
     # The hammer option adds the Hammer item to the itempool.
     # Since the hammer option is off in this TestCase, we have to verify that the Hammer is *not* in the itempool.

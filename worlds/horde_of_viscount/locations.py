@@ -1813,13 +1813,13 @@ def create_regular_locations(world: HoVWorld) -> None:
         region_name = location_name_to_region_name[location_name]
         regionInstance = world.get_region(region_name)
         regionInstance.locations.append(HoVLocation(
-            world.player, location_name, world.location_name_to_id[location_name]
+            world.player, location_name, world.location_name_to_id[location_name], regionInstance
         ))
 
 
 def create_events(world: HoVWorld) -> None:
     hoVRegionSet = get_region_set(world)
-    hoVRegionSet.viscount_lab.locations.append(HoVLocation(world.player, "Credits Peak Event"))
+    hoVRegionSet.viscount_lab.locations.append(HoVLocation(world.player, "Credits Peak Event", None, hoVRegionSet.viscount_lab))
 
     # hoVRegionSet.map_rando_rogue_world.add_event(
     #     "All Chests Opened", "Victory", location_type=HoVLocation, item_type=items.HoVItem
