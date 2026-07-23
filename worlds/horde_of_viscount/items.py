@@ -14,7 +14,16 @@ class SUBWEAPON():
     KNIFE = "Dash Knife"
     WINGS = "Jump Wing"
     CLEATS = "Pogo Cleats"
-    	
+
+SUBWEAPON_NAMES = [
+    "Launch Bomb",
+    "Backflip Caltrop",
+    "Climbing Axe",
+    "Dash Knife",
+    "Jump Wing",
+    "Pogo Cleats",
+]
+
 # Every item must have a unique integer ID associated with it.
 # We will have a lookup from item name to ID here that, in world.py, we will import and bind to the world class.
 # Even if an item doesn't exist on specific options, it must be present in this lookup.

@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from rule_builder.rules import Has, HasAll
-from worlds.horde_of_viscount.items import EQUIP, SUBWEAPON
+from worlds.horde_of_viscount.items import EQUIP, SUBWEAPON, SUBWEAPON_NAMES
 from worlds.horde_of_viscount.locations import LOCATION_ROOM_ID_TO_NAME
 from worlds.horde_of_viscount.regions import get_region_set
 
@@ -548,9 +548,95 @@ undefined = None
 false = False
 
 
+class WORLD_ID():
+    WORLD_MAP = 0
+    ABANDONED_TOWN = 1
+    CLIFFSIDE_CLIMB = 2
+    KINGDOM_CASTLE_TOWN = 3
+    KINGDOM_CASTLE = 4
+    TEPID_VOLCANO = 5
+    MISTIQUE_MINES = 6
+    VISCOUNT_MANOR = 7
+    VISCOUNT_LABS = 8
+    MAX = 9
+
+DeadlandsMusic = None
+LarvelForestMusicSound = None
+IronRockMtMusicSound = None
+CorruptWoodsSound = None
+ToxicJungleSound = None
+GrimeBoneFortMusicSound = None
+MushroomCloudSound = None
+DustyBeachSound = None
+QuenchyDesertMusicSound = None
+StormCloudCraterSound = None
+CrimsonCoveSound = None
+MansionEntranceWorldSound = None
+MansionEntranceWorldSound = None
+CreditsSound = None
 
 def set_all_location_rules(world: HoVWorld) -> None:
-    
+        
+    worldMapTable = [[[]] for _ in range(WORLD_ID.MAX)]
+    worldMapTable[WORLD_ID.WORLD_MAP] = [
+        [WorldMapRoom]
+    ]
+    worldMapTable[WORLD_ID.ABANDONED_TOWN] = [
+        [  AbandonWestSkyRoom,  AbandonWestSkyRoom, AbandonWestRichRoom, AbandonWestRichRoom, AbandonCenterRichRoom, AbandonCenterRichRoom, AbandonEastRichRoom, AbandonEastRichRoom, AbandonEastSkyRoom, AbandonEastSkyRoom,          EmptyRoom],
+        [  AbandonWestSkyRoom,  AbandonWestSkyRoom, AbandonWestRichRoom, AbandonWestRichRoom, AbandonCenterRichRoom, AbandonCenterRichRoom, AbandonEastRichRoom, AbandonEastRichRoom, AbandonEastSkyRoom, AbandonEastSkyRoom,          EmptyRoom],
+        [ AbandonEntranceRoom, AbandonEntranceRoom, AbandonWestPoorRoom, AbandonWestPoorRoom, AbandonCenterPoorRoom, AbandonCenterPoorRoom, AbandonEastPoorRoom, AbandonEastPoorRoom,    AbandonExitRoom,    AbandonExitRoom,          EmptyRoom],
+        [ AbandonEntranceRoom, AbandonEntranceRoom, AbandonWestPoorRoom, AbandonWestPoorRoom, AbandonCenterPoorRoom, AbandonCenterPoorRoom, AbandonEastPoorRoom, AbandonEastPoorRoom,    AbandonExitRoom,    AbandonExitRoom,          EmptyRoom],
+        [AbandonWestDrainRoom,AbandonWestDrainRoom,    AbandonSewerRoom,    AbandonSewerRoom,      AbandonSewerRoom,      AbandonSewerRoom,    AbandonSewerRoom,    AbandonSewerRoom,  AbandonTunnelRoom,  AbandonTunnelRoom,    AbandonDropRoom],
+        [AbandonWestDrainRoom,AbandonWestDrainRoom,    AbandonSewerRoom,    AbandonSewerRoom,      AbandonSewerRoom,      AbandonSewerRoom,    AbandonSewerRoom,    AbandonSewerRoom,  AbandonTunnelRoom,  AbandonTunnelRoom,    AbandonDropRoom],
+        [AbandonWestDrainRoom,AbandonWestDrainRoom,     AbandonNestRoom,     AbandonNestRoom,       AbandonNestRoom,       AbandonNestRoom,     AbandonNestRoom,     AbandonNestRoom,  AbandonTunnelRoom,  AbandonTunnelRoom,    AbandonDropRoom],
+        [AbandonWestDrainRoom,AbandonWestDrainRoom,     AbandonNestRoom,     AbandonNestRoom,       AbandonNestRoom,       AbandonNestRoom,     AbandonNestRoom,     AbandonNestRoom,  AbandonTunnelRoom,  AbandonTunnelRoom,  AbandonHiddenRoom]
+    ]
+    worldMapTable[WORLD_ID.CLIFFSIDE_CLIMB] = [
+        [CliffSkyWestTopSkyRoom,CliffSkyWestTopSkyRoom,        CliffTopsideLeftRoom,       CliffTopsideLeftRoom,   CliffTopsideLeftRoom,  CliffTopsideLeftRoom,  CliffTopsideMiddleRoom, CliffTopsideMiddleRoom, CliffTopsideRightRoom,CliffTopsideRightRoom,      CliffSkyTopRightRoom,     CliffSkyTopRightRoom],
+        [ CliffSideEntranceRoom, CliffSideEntranceRoom,             CliffHiddenRoom,          CliffElevatorRoom,       CliffHideTopRoom,      CliffHideTopRoom,     CliffMiddleExitRoom,    CliffMiddleExitRoom,    CliffRightExitRoom,   CliffRightExitRoom,      CliffSkyTopRightRoom,     CliffSkyTopRightRoom],
+        [ CliffSideEntranceRoom, CliffSideEntranceRoom,               CliffSaveRoom,          CliffElevatorRoom,       CliffHideTopRoom,      CliffHideTopRoom,     CliffMiddleExitRoom,    CliffMiddleExitRoom,    CliffRightExitRoom,   CliffRightExitRoom,     CliffBossEntranceRoom,            CliffBossRoom],
+        [     CliffSideWallRoom,     CliffSideWallRoom,    CliffFreeBossLeftHitRoom,   CliffFreeBossLeftHitRoom,      CliffHideLeftRoom,     CliffHideLeftRoom,     CliffHideMiddleRoom,    CliffHideMiddleRoom,    CliffHideRightRoom,   CliffHideRightRoom,         CliffPegBreakRoom,        CliffPegBreakRoom],
+        [     CliffSideWallRoom,     CliffSideWallRoom,    CliffFreeBossLeftHitRoom,   CliffFreeBossLeftHitRoom,      CliffHideLeftRoom,     CliffHideLeftRoom,     CliffHideMiddleRoom,    CliffHideMiddleRoom,    CliffHideRightRoom,   CliffHideRightRoom,         CliffPegBreakRoom,        CliffPegBreakRoom],
+        [     CliffEntranceRoom,     CliffEntranceRoom,          CliffUnderpassRoom,         CliffUnderpassRoom, CliffUnderEntranceRoom,CliffUnderEntranceRoom,      CliffHideUnderRoom,     CliffHideUnderRoom,    CliffHideRightRoom,   CliffHideRightRoom, CliffFreeBossRightHitRoom,CliffFreeBossRightHitRoom],
+        [     CliffEntranceRoom,     CliffEntranceRoom,          CliffUnderpassRoom,         CliffUnderpassRoom, CliffUnderEntranceRoom,CliffUnderEntranceRoom, CliffSmallUnderpassRoom,CliffSmallUnderpassRoom,        CliffSpikeRoom,       CliffSpikeRoom, CliffFreeBossRightHitRoom,CliffFreeBossRightHitRoom],
+    ]
+    worldMapTable[WORLD_ID.KINGDOM_CASTLE_TOWN] = [
+        [TownGateRoom,TownGateRoom,TownCenterRoom,TownCenterRoom,TownEntranceRoom,TownEntranceRoom],
+        [TownGateRoom,TownGateRoom,TownCenterRoom,TownCenterRoom,TownEntranceRoom,TownEntranceRoom]
+    ]
+    worldMapTable[WORLD_ID.KINGDOM_CASTLE] = [
+        [   CastleSkyRoom,   CastleSkyRoom,  CastleTopRampartsRoom,CastleTopRampartsRoom,   CastleTopRampartsRoom,    CastleTopRampartsRoom, CastleRearTowerRoom,        CastleThroneRoom],
+        [   CastleSkyRoom,   CastleSkyRoom,         CastleDropRoom,CastleBattlementsRoom,      CastleRampartsRoom,       CastleRampartsRoom, CastleRearTowerRoom,        CastleThroneRoom],
+        [   CastleSkyRoom,   CastleSkyRoom,         CastleDropRoom, CastlePortcullisRoom,CastleMachicolationsRoom, CastleMachicolationsRoom, CastleRearTowerRoom,  CastleHiddenHiddenRoom],
+        [   CastleSkyRoom,   CastleSkyRoom,         CastleDropRoom, CastlePortcullisRoom,        CastleColumnRoom,          CastleTowerRoom, CastleRearTowerRoom, CastleHiddenStorageRoom],
+        [CastleBridgeRoom,CastleBridgeRoom,CastleFrontBarbicanRoom, CastlePortcullisRoom,        CastleColumnRoom,          CastleTowerRoom,   CastleKitchenRoom, CastleHiddenStorageRoom],
+        [CastleBridgeRoom,CastleBridgeRoom,CastleFrontBarbicanRoom, CastlePortcullisRoom,         CastleFoyerRoom,          CastleFoyerRoom,   CastleKitchenRoom,          CastleSaveRoom],
+    ]
+    worldMapTable[WORLD_ID.TEPID_VOLCANO] = [
+        [   VolcanoLavaFallTopRoom, VolcanoTopTopEntranceRoom,         VolcanoTopOpenRoom, VolcanoTopHoleRoom,   VolcanoTopHoleRoom,     VolcanoCraterRoom,       VolcanoVentRoom,   VolcanoVentRoom,   VolcanoVentRoom,      VolcanoVentRoom,  VolcanoCampsiteRoom,   VolcanoTopSideRoom,   VolcanoTopSideRoom, VolcanoEastSpaceRoom, VolcanoEastSpaceRoom,            EmptyRoom,            EmptyRoom, VolcanoEastSpace3Room, VolcanoEastSpace3Room],
+        [VolcanoLavaFallCenterRoom,       VolcanoPlatformRoom,            VolcanoOpenRoom,   VolcanoDrainRoom,     VolcanoDrainRoom, VolcanoCraterExitRoom, VolcanoCraterExitRoom, VolcanoThroatRoom, VolcanoThroatRoom,  VolcanoSideVentRoom,  VolcanoSideVentRoom,   VolcanoTopSideRoom,   VolcanoTopSideRoom, VolcanoEastSpaceRoom, VolcanoEastSpaceRoom,VolcanoEastSpace2Room,VolcanoEastSpace2Room, VolcanoEastSpace3Room, VolcanoEastSpace3Room],
+        [VolcanoLavaFallCenterRoom,       VolcanoPlatformRoom,            VolcanoOpenRoom,   VolcanoDrainRoom,     VolcanoDrainRoom,VolcanoCraterUnderRoom,VolcanoCraterUnderRoom, VolcanoThroatRoom, VolcanoThroatRoom,  VolcanoSideVentRoom,  VolcanoSideVentRoom,  VolcanoSideSideRoom,  VolcanoSideSideRoom, VolcanoEastSpaceRoom, VolcanoEastSpaceRoom,VolcanoEastSpace2Room,VolcanoEastSpace2Room, VolcanoEastSpace3Room, VolcanoEastSpace3Room],
+        [VolcanoLavaFallBottomRoom,     VolcanoLeftCornerRoom, VolcanoCaveTopEntranceRoom,   VolcanoDrainRoom,     VolcanoDrainRoom,       VolcanoVeinRoom,       VolcanoVeinRoom, VolcanoThroatRoom, VolcanoThroatRoom,   VolcanoRainPegRoom,   VolcanoRainPegRoom,  VolcanoSideSideRoom,  VolcanoSideSideRoom, VolcanoEastSpaceRoom, VolcanoEastSpaceRoom,VolcanoEastSpace2Room,VolcanoEastSpace2Room, VolcanoEastSpace3Room, VolcanoEastSpace3Room],
+        [          VolcanoFootRoom,           VolcanoFootRoom, VolcanoCaveTopEntranceRoom,VolcanoEntrywayRoom,  VolcanoEntrywayRoom,       VolcanoVeinRoom,       VolcanoVeinRoom, VolcanoThroatRoom, VolcanoThroatRoom,VolcanoRainCenterRoom,VolcanoRainCenterRoom,VolcanoSideBottomRoom,VolcanoSideBottomRoom,  VolcanoEastFootRoom,  VolcanoEastFootRoom,VolcanoEastSpace2Room,VolcanoEastSpace2Room,VolcanoMansionGateRoom,VolcanoMansionGateRoom],
+        [          VolcanoFootRoom,           VolcanoFootRoom,    VolcanoCaveEntranceRoom,VolcanoEntrywayRoom,  VolcanoEntrywayRoom,       VolcanoHop1Room,       VolcanoHop2Room,   VolcanoHop3Room,   VolcanoHop4Room,VolcanoRainBottomRoom,VolcanoRainBottomRoom,VolcanoSideBottomRoom,VolcanoSideBottomRoom,  VolcanoEastFootRoom,  VolcanoEastFootRoom,  VolcanoFootCampRoom,  VolcanoFootCampRoom,VolcanoMansionGateRoom,VolcanoMansionGateRoom],
+    ]
+    worldMapTable[WORLD_ID.MISTIQUE_MINES] = undefined
+    worldMapTable[WORLD_ID.VISCOUNT_MANOR] = [
+        [  ManorAroundTop1Room,  ManorAroundTop1Room,   ManorAroundTop2Room,  ManorAroundTop2Room,    ManorAroundTop3Room,     ManorAroundTop3Room,     ManorAroundTop4Room,     ManorAroundTop4Room,      ManorAroundTop5Room,     ManorAroundTop5Room,      ManorAroundTop6Room,       ManorAroundTop6Room,       ManorAroundTop7Room],
+        [ManorAroundMiddleRoom,ManorAroundMiddleRoom,   ManorPathHiddenRoom,     ManorPathTopRoom,       ManorPathTopRoom,         ManorBlock1Room,         ManorBlock2Room,         ManorBlock2Room,          ManorBlock3Room,         ManorBlock3Room, ManorCapsuleEntranceRoom,   ManorTopRightHiddenRoom,   ManorTopRightHiddenRoom],
+        [ManorAroundMiddleRoom,ManorAroundMiddleRoom,   ManorPathCenterRoom,  ManorPathCenterRoom,    ManorPathCenterRoom,     ManorLeftPuzzleRoom,   ManorCenterPuzzleRoom,   ManorCenterPuzzleRoom,     ManorRightPuzzleRoom,    ManorRightPuzzleRoom,  ManorCapsuleTopDropRoom,   ManorTopRightHiddenRoom,   ManorTopRightHiddenRoom],
+        [ManorAroundMiddleRoom,ManorAroundMiddleRoom,   ManorPathCenterRoom,  ManorPathCenterRoom,    ManorPathCenterRoom,  ManorLeftPrePuzzleRoom,ManorCenterPrePuzzleRoom,ManorCenterPrePuzzleRoom,  ManorRightPrePuzzleRoom, ManorRightPrePuzzleRoom,      ManorTopCapsuleRoom,       ManorTopCapsuleRoom,       ManorTopCapsuleRoom],
+        [ManorAroundBottomRoom,ManorAroundBottomRoom,   ManorPathCenterRoom,  ManorPathCenterRoom,    ManorPathCenterRoom,  ManorLeftPrePuzzleRoom,ManorCenterPrePuzzleRoom,ManorCenterPrePuzzleRoom,  ManorRightPrePuzzleRoom, ManorRightPrePuzzleRoom,  ManorMiddle1CapsuleRoom,   ManorMiddle1CapsuleRoom,   ManorMiddle1CapsuleRoom],
+        [ManorAroundBottomRoom,ManorAroundBottomRoom,   ManorPathBottomRoom,  ManorPathBottomRoom,    ManorPathBottomRoom,          ManorBall3Room,          ManorBall3Room,          ManorBall3Room,           ManorBall3Room,     ManorBallHiddenRoom,  ManorMiddle2CapsuleRoom,   ManorMiddle2CapsuleRoom,   ManorMiddle2CapsuleRoom],
+        [ManorAroundBottomRoom,ManorAroundBottomRoom,        ManorBall4Room,       ManorBall4Room,         ManorBall4Room,          ManorBall2Room,          ManorBall2Room,          ManorBall1Room,           ManorBall1Room,          ManorBall1Room,  ManorMiddle3CapsuleRoom,   ManorMiddle3CapsuleRoom,   ManorMiddle3CapsuleRoom],
+        [ ViscountManorHubRoom, ViscountManorHubRoom,     ManorEntranceRoom,    ManorEntranceRoom,         ManorLearnRoom,     ManorIntroFightRoom,     ManorIntroFightRoom,     ManorIntroFightRoom,     ManorIntroFight2Room,    ManorIntroFight2Room, ManorBottomRightDropRoom,ManorBottomRightHiddenRoom,ManorBottomRightHiddenRoom],
+        [ ViscountManorHubRoom, ViscountManorHubRoom,     ManorEntranceRoom,    ManorEntranceRoom,        ManorHiddenRoom,     ManorIntroFightRoom,     ManorIntroFightRoom,     ManorIntroFightRoom,     ManorIntroFight2Room,    ManorIntroFight2Room,   ManorBottomCapsuleRoom,ManorBottomCapsuleRoom,                 ManorExitRoom],
+        [    ManorHubUnderRoom,    ManorHubUnderRoom, ManorHiddenBottomRoom,ManorHiddenBottomRoom, ManorHiddenBottom2Room,  ManorHiddenBottom2Room,  ManorHiddenBottom3Room,  ManorHiddenBottom3Room,   ManorHiddenBottom3Room,       ManorBossRushRoom,        ManorBossRushRoom,     ManorBossRushRoom,             ManorBossExitRoom],
+    ]
+    worldMapTable[WORLD_ID.VISCOUNT_LABS] = [
+        [LabViscountRoom,LabMutatedViscountRoom,LabLashaRoom,LabCreditsEntranceRoom]
+    ]
+
     # Pasted logic from built in game randomizer.
     roomMetadata = [RoomMetadata() for _ in range(len(LOCATION_ROOM_ID_LIST))]
 
@@ -566,47 +652,83 @@ def set_all_location_rules(world: HoVWorld) -> None:
     roomMetadata[CliffZemplateLightRoom] =  RoomMetadata(CliffZemplateLightRoom, WorldMapRoom, WorldMapRoom, None, True, False, False, False)
     roomMetadata[EmptyRoom] =  RoomMetadata(EmptyRoom, WorldMapRoom, WorldMapRoom, None, True, False, False, False)
 
-    roomMetadata[CorruptWoodsRoom] = RoomMetadata(CorruptWoodsRoom, CorruptWoodsRoom, WorldMapRoom, None, True, False, True, False)
-    roomMetadata[BoneFortRoom] = RoomMetadata(BoneFortRoom, BoneFortRoom, WorldMapRoom, None, True, False, True, False)
-    roomMetadata[AmonStageRoom] =  RoomMetadata(AmonStageRoom, AmonStageRoom, WorldMapRoom, None, True, False, True, False)
-    roomMetadata[AmonStageRoom].isPuzzleRoom = True
+    roomMetadata[DeadlandRoad1Room] = RoomMetadata(DeadlandRoad1Room, DeadlandRoad1Room, WorldMapRoom, DeadlandsMusic)
+    roomMetadata[DeadlandRoad2Room] = RoomMetadata(DeadlandRoad2Room, DeadlandRoad1Room, WorldMapRoom, DeadlandsMusic)
+    roomMetadata[DeadlandRoad3Room] = RoomMetadata(DeadlandRoad3Room, DeadlandRoad1Room, WorldMapRoom, DeadlandsMusic)
+    roomMetadata[LarvelForest1Room] = RoomMetadata(LarvelForest1Room, LarvelForest1Room, WorldMapRoom, LarvelForestMusicSound)
+    roomMetadata[LarvelForest2Room] = RoomMetadata(LarvelForest2Room, LarvelForest1Room, WorldMapRoom, LarvelForestMusicSound)
+    roomMetadata[LarvelForest3Room] = RoomMetadata(LarvelForest3Room, LarvelForest1Room, WorldMapRoom, LarvelForestMusicSound)
+    
+    roomMetadata[IronRock1Room] = RoomMetadata(IronRock1Room, IronRock1Room, WorldMapRoom, IronRockMtMusicSound)
+    roomMetadata[IronRock2Room] = RoomMetadata(IronRock2Room, IronRock1Room, WorldMapRoom, IronRockMtMusicSound)
+    roomMetadata[IronRock3Room] = RoomMetadata(IronRock3Room, IronRock1Room, WorldMapRoom, IronRockMtMusicSound)
+    
+    roomMetadata[CorruptWoodsRoom] = RoomMetadata(CorruptWoodsRoom, CorruptWoodsRoom, WorldMapRoom, CorruptWoodsSound, true, false, true, false)
+    
+    roomMetadata[ToxicJungle1Room] = RoomMetadata(ToxicJungle1Room, ToxicJungle1Room, WorldMapRoom, ToxicJungleSound)
+    roomMetadata[ToxicJungle2Room] = RoomMetadata(ToxicJungle2Room, ToxicJungle1Room, WorldMapRoom, ToxicJungleSound)
+    roomMetadata[ToxicJungle3Room] = RoomMetadata(ToxicJungle3Room, ToxicJungle1Room, WorldMapRoom, ToxicJungleSound)
+    
+    roomMetadata[BoneFortRoom] = RoomMetadata(BoneFortRoom, BoneFortRoom, WorldMapRoom, GrimeBoneFortMusicSound, true, false, true, false)
+    roomMetadata[AmonStageRoom] = RoomMetadata(AmonStageRoom, AmonStageRoom, WorldMapRoom, undefined, true, false, true, false)
+    roomMetadata[AmonStageRoom].isPuzzleRoom = true
     roomMetadata[AmonStageRoom].maxLoot = 1
-    roomMetadata[HixiStageRoom] =  RoomMetadata(HixiStageRoom, HixiStageRoom, WorldMapRoom, None, True, False, True, False)
-    roomMetadata[AmonStageRoom].isPuzzleRoom = True
+    roomMetadata[HixiStageRoom] = RoomMetadata(HixiStageRoom, HixiStageRoom, WorldMapRoom, undefined, true, false, true, false)
+    roomMetadata[AmonStageRoom].isPuzzleRoom = true
     roomMetadata[HixiStageRoom].maxLoot = 1
+    
+    roomMetadata[MushroomClouds1Room] = RoomMetadata(MushroomClouds1Room, MushroomClouds1Room, TownEntranceRoom, MushroomCloudSound)
+    roomMetadata[MushroomClouds2Room] = RoomMetadata(MushroomClouds2Room, MushroomClouds1Room, TownEntranceRoom, MushroomCloudSound)
+    roomMetadata[MushroomClouds3Room] = RoomMetadata(MushroomClouds3Room, MushroomClouds1Room, TownEntranceRoom, MushroomCloudSound)
+    roomMetadata[DustyBeach1Room] = RoomMetadata(DustyBeach1Room, DustyBeach1Room, TownCenterRoom, DustyBeachSound)
+    roomMetadata[DustyBeach2Room] = RoomMetadata(DustyBeach2Room, DustyBeach1Room, TownCenterRoom, DustyBeachSound)
+    roomMetadata[DustyBeach3Room] = RoomMetadata(DustyBeach3Room, DustyBeach1Room, TownCenterRoom, DustyBeachSound)
+    
+    roomMetadata[QuenchyDesert1Room] = RoomMetadata(QuenchyDesert1Room, QuenchyDesert1Room, VolcanoFootRoom, QuenchyDesertMusicSound)
+    roomMetadata[QuenchyDesert2Room] = RoomMetadata(QuenchyDesert2Room, QuenchyDesert1Room, VolcanoFootRoom, QuenchyDesertMusicSound)
+    roomMetadata[QuenchyDesert3Room] = RoomMetadata(QuenchyDesert3Room, QuenchyDesert1Room, VolcanoFootRoom, QuenchyDesertMusicSound)
+    roomMetadata[StormCloudCrater1Room] = RoomMetadata(StormCloudCrater1Room, StormCloudCrater1Room, VolcanoCraterRoom, StormCloudCraterSound)
+    roomMetadata[StormCloudCrater2Room] = RoomMetadata(StormCloudCrater2Room, StormCloudCrater1Room, VolcanoCraterRoom, StormCloudCraterSound)
+    roomMetadata[StormCloudCrater3Room] = RoomMetadata(StormCloudCrater3Room, StormCloudCrater1Room, VolcanoCraterRoom, StormCloudCraterSound)
+    
+    roomMetadata[CrimsonCove1Room] = RoomMetadata(CrimsonCove1Room, CrimsonCove1Room, ManorHubUnderRoom, CrimsonCoveSound)
+    roomMetadata[CrimsonCove2Room] = RoomMetadata(CrimsonCove2Room, CrimsonCove1Room, ManorHubUnderRoom, CrimsonCoveSound)
+    roomMetadata[CrimsonCove3Room] = RoomMetadata(CrimsonCove3Room, CrimsonCove1Room, ManorHubUnderRoom, CrimsonCoveSound)
+    
+    roomMetadata[ViscountManorHubRoom] = RoomMetadata(ViscountManorHubRoom, ViscountManorHubRoom, ViscountManorHubRoom, MansionEntranceWorldSound, false, true, false, false)
+    roomMetadata[RogueHubRoom] = RoomMetadata(RogueHubRoom, RogueHubRoom, RogueHubRoom, MansionEntranceWorldSound, false, false, false, false)
+    roomMetadata[CampfireRoom] = RoomMetadata(CampfireRoom, CampfireRoom, WorldMapRoom, undefined, false, true, false, false)
+    roomMetadata[CreditsParentRoom] = RoomMetadata(CreditsParentRoom, CreditsParentRoom, LabCreditsEntranceRoom, CreditsSound, false, false, false, false)
 
-    roomMetadata[ViscountManorHubRoom] =  RoomMetadata(ViscountManorHubRoom, ViscountManorHubRoom, ViscountManorHubRoom, None, False, True, False, False)
-    roomMetadata[RogueHubRoom] =  RoomMetadata(RogueHubRoom, RogueHubRoom, RogueHubRoom, None, False, False, False, False)
-    roomMetadata[CampfireRoom] =  RoomMetadata(CampfireRoom, CampfireRoom, WorldMapRoom, None, False, True, False, False)
-    roomMetadata[CreditsParentRoom] =  RoomMetadata(CreditsParentRoom, CreditsParentRoom, LabCreditsEntranceRoom, None, False, False, False, False)
+        
+    worldMapTables = worldMapTable
 
-    WORLD_ID = {
-        "WORLD_MAP": 0,
-        "ABANDONED_TOWN": 1,
-        "CLIFFSIDE_CLIMB": 2,
-        "KINGDOM_CASTLE_TOWN": 3,
-        "KINGDOM_CASTLE": 4,
-        "TEPID_VOLCANO": 5,
-        "MISTIQUE_MINES": 6,
-        "VISCOUNT_MANOR": 7,
-        "VISCOUNT_LABS": 8
-    }
+    worldIdToMetaData = [RoomMetadata() for _ in range(WORLD_ID.MAX)]
+    worldIdToMetaData[WORLD_ID.WORLD_MAP] = RoomMetadata(WorldMapRoom, WorldMapRoom, WorldMapRoom, None, false, true, false, false)
+    worldIdToMetaData[WORLD_ID.ABANDONED_TOWN] = RoomMetadata(AbandonEntranceRoom, AbandonEntranceRoom, WorldMapRoom, None, false, true, false, true)
+    worldIdToMetaData[WORLD_ID.CLIFFSIDE_CLIMB] = RoomMetadata(CliffEntranceRoom, CliffEntranceRoom, WorldMapRoom, None, false, true, false, true)
+    worldIdToMetaData[WORLD_ID.KINGDOM_CASTLE_TOWN] = RoomMetadata(TownEntranceRoom, TownGateRoom, WorldMapRoom, None, false, true, false, false)
+    worldIdToMetaData[WORLD_ID.KINGDOM_CASTLE] = RoomMetadata(CastleBridgeRoom, CastleBridgeRoom, WorldMapRoom, None, false, true, false, true)
+    worldIdToMetaData[WORLD_ID.TEPID_VOLCANO] =  RoomMetadata(VolcanoFootRoom, VolcanoFootRoom, WorldMapRoom, None, false, true, false, false)
+    worldIdToMetaData[WORLD_ID.MISTIQUE_MINES] = RoomMetadata(RogueHubRoom, ViscountManorHubRoom, WorldMapRoom, None, false, true, false, false)
+    worldIdToMetaData[WORLD_ID.VISCOUNT_MANOR] =  RoomMetadata(ViscountManorHubRoom, ViscountManorHubRoom, WorldMapRoom, None, false, true, false, false)
+    worldIdToMetaData[WORLD_ID.VISCOUNT_LABS] =  RoomMetadata(LabViscountRoom, LabViscountRoom, WorldMapRoom, undefined, false, false, true, false)
 
     # All of viscount manor, by default, will require at least 1 of these 3 subweapons.
-    for roomId in [ 
-        ManorEntranceRoom, ManorIntroFight2Room, ManorRightPrePuzzleRoom, ManorCenterPrePuzzleRoom, ManorTopRightHiddenRoom, 
-        ManorLearnRoom, ManorHiddenRoom, ManorLeftPuzzleRoom, ManorCapsuleTopDropRoom, ManorAroundTop7Room,
-        ManorBossExitRoom, ManorExitRoom, ManorBottomRightDropRoom, ManorCapsuleEntranceRoom, ManorBallHiddenRoom,
-        ManorBlock1Room, ManorHubUnderRoom, ManorAroundTop1Room, ManorAroundTop2Room, ManorAroundTop3Room, ManorAroundTop4Room,
-        ManorAroundTop5Room, ManorAroundTop6Room, ManorHiddenBottomRoom, ManorHiddenBottom2Room, ManorBottomCapsuleRoom,
-        ManorBall2Room, ManorBlock3Room, ManorPathTopRoom, ManorPathHiddenRoom, ManorBlock2Room, ManorCenterPuzzleRoom,
-        ManorRightPuzzleRoom, ManorBottomRightHiddenRoom, ManorLeftPrePuzzleRoom, ManorBall4Room, ManorPathBottomRoom,
-        ManorBall1Room, ManorHiddenBottom3Room, ManorBossRushRoom, ManorTopCapsuleRoom, ManorMiddle1CapsuleRoom,
-        ManorMiddle2CapsuleRoom, ManorMiddle3CapsuleRoom, ManorBall3Room, ManorIntroFightRoom, ManorPathCenterRoom,
-        ManorAroundBottomRoom, ManorAroundMiddleRoom
-                   ]:
-        roomMetadata[roomId].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.CALTROP, SUBWEAPON.BOMB]
-    
+    for worldId in range(len(worldMapTables)):
+        worldMapTable = worldMapTables[worldId]
+        if worldId == WORLD_ID.MISTIQUE_MINES :
+            continue
+
+        for column in range(len(worldMapTable)) :
+            for row in range(len(worldMapTable[column])):
+                roomId = worldMapTable[column][row]
+                worldMetadata = worldIdToMetaData[worldId]
+                roomMetadata[roomId] = RoomMetadata(roomId, worldMetadata.firstRoomId, worldMetadata.worldMapId, worldMetadata.soundId, false, false, false, true)
+                
+                if worldId == WORLD_ID.VISCOUNT_MANOR:
+                    roomMetadata[roomId].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.CALTROP, SUBWEAPON.BOMB]
+	
 
     simplePairs = [
         [Knife1PuzzleRoom, None, WorldMapRoom],
@@ -628,6 +750,7 @@ def set_all_location_rules(world: HoVWorld) -> None:
         [Wing2PuzzleRoom, None, TownEntranceRoom],
         [Wing3PuzzleRoom, None, TownEntranceRoom],
     ]
+    
     for pair in simplePairs:
         roomId = pair[0]
         musicId = pair[1]
@@ -640,7 +763,8 @@ def set_all_location_rules(world: HoVWorld) -> None:
             UpDownExitRoom, LeftRightExitRoom, 
             AllButLeftExitRoom, AllButUpExitRoom, AllButRightExitRoom, AllButDownExitRoom, 
             AllExitRoom
-       	]
+    ]
+
     for roomId in fillerTable:
         roomMetadata[roomId] = RoomMetadata(roomId, roomId, RogueHubRoom, None, False, False, False, True)
         roomMetadata[roomId].isFillerRoom = True
@@ -990,7 +1114,9 @@ def set_all_location_rules(world: HoVWorld) -> None:
     for roomMetadataItem in roomMetadata:
         
         # Iterate through each room ID and set the rules for the corresponding locations in the world.
-        locationList = LOCATION_ROOM_ID_TO_NAME[roomMetadataItem.roomId]
+        roomId = roomMetadataItem.roomId
+        print(F"RoomId: {roomId}")
+        locationList = LOCATION_ROOM_ID_TO_NAME[roomId]
         for locationName in locationList:
             location = world.get_location(locationName)
 
@@ -1004,18 +1130,18 @@ def set_all_location_rules(world: HoVWorld) -> None:
             # If the room has subweapon requirements, we need to set a rule on the location that requires the player to have the required subweapons.
             if len(roomMetadataItem.subweaponRequiredList) > 0:
                 if roomMetadataItem.subweaponsRequireAll:
-                    subweaponRule = HasAll(*[SUBWEAPON[subweapon] for subweapon in roomMetadataItem.subweaponRequiredList])
+                    subweaponRule = HasAll( *roomMetadataItem.subweaponRequiredList )
                 else:
                     subweaponRule = Has(roomMetadataItem.subweaponRequiredList[0])
                     for subweapon in roomMetadataItem.subweaponRequiredList[1:]:
-                        subweaponRule = subweaponRule | Has(SUBWEAPON[subweapon])
+                        subweaponRule = subweaponRule | Has(subweapon)
                 world.set_rule(location, subweaponRule)
 
             # The north exit of a room has special rules for subweapons
             if len(roomMetadataItem.northSubweaponRequiredList) > 0:
-                northSubweaponRule = Has(*[SUBWEAPON[subweapon] for subweapon in roomMetadataItem.northSubweaponRequiredList])
+                northSubweaponRule = Has(roomMetadataItem.northSubweaponRequiredList[0])
                 for subweapon in roomMetadataItem.northSubweaponRequiredList[1:]:
-                    northSubweaponRule = northSubweaponRule | Has(SUBWEAPON[subweapon])
+                    northSubweaponRule = northSubweaponRule | Has(subweapon)
                 # TODO add North Exit Rules
                 # I can bring the castle maps matrix in and have it reference it as the ENTRANCE to the upper one.
                 #world.set_rule(location, northSubweaponRule)
