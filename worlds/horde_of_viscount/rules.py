@@ -1115,7 +1115,6 @@ def set_all_location_rules(world: HoVWorld) -> None:
         
         # Iterate through each room ID and set the rules for the corresponding locations in the world.
         roomId = roomMetadataItem.roomId
-        print(F"RoomId: {roomId}")
         locationList = LOCATION_ROOM_ID_TO_NAME[roomId]
         for locationName in locationList:
             location = world.get_location(locationName)
