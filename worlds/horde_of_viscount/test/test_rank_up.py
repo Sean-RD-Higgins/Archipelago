@@ -1,6 +1,5 @@
 from worlds.horde_of_viscount.locations import ROOM_ID_TO_LOCATION_NAME_LIST
 from worlds.horde_of_viscount.options import HoVOptions
-from worlds.horde_of_viscount.rules import CastleBridgeRoom
 
 from .bases import HoVTestBase
 
@@ -31,7 +30,7 @@ class TestWhipRank2Off(HoVTestBase):
         self.collect_all_but("Whip Durable B")
 
         # Now, we manually check that the location is accessible using location.can_reach(state):
-        top_middle_chest_player_one = self.world.get_location(ROOM_ID_TO_LOCATION_NAME_LIST[CastleBridgeRoom][0])
+        top_middle_chest_player_one = self.world.get_location(ROOM_ID_TO_LOCATION_NAME_LIST["CastleBridgeRoom"][0])
         self.assertTrue(top_middle_chest_player_one.can_reach(self.multiworld.state))
 
 

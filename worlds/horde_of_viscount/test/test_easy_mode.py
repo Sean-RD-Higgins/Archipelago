@@ -35,10 +35,10 @@ class TestEasyModeLogic(HoVTestBase):
         with self.subTest("Test checks accessible with nothing"):
             
             bottom_left_chest = self.world.get_location(
-                ROOM_ID_TO_LOCATION_NAME_LIST[CastleBridgeRoom][0]
+                ROOM_ID_TO_LOCATION_NAME_LIST["CastleBridgeRoom"][0]
             )
             top_middle_chest = self.world.get_location(
-                ROOM_ID_TO_LOCATION_NAME_LIST[CastleRampartsRoom][0]
+                ROOM_ID_TO_LOCATION_NAME_LIST["CastleRampartsRoom"][0]
             )
 
             # Since access rules have a "state" argument, we must pass our current CollectionState.
@@ -48,7 +48,7 @@ class TestEasyModeLogic(HoVTestBase):
 
         with self.subTest("Test Wings is required to get CastleRampartsRoom chest"):
             top_left_room_chest = self.world.get_location(
-                ROOM_ID_TO_LOCATION_NAME_LIST[CastleRampartsRoom][0]
+                ROOM_ID_TO_LOCATION_NAME_LIST["CastleRampartsRoom"][0]
             )
 
             # Right now, this location should *not* be accessible, as we don't have the key yet.
@@ -69,10 +69,10 @@ class TestEasyModeLogic(HoVTestBase):
             # Well, there is another option. It's the assertAccessDependency function of WorldTestBase.
             self.assertAccessDependency(
                 [
-                    ROOM_ID_TO_LOCATION_NAME_LIST[AbandonWestDrainRoom][0],
-                    ROOM_ID_TO_LOCATION_NAME_LIST[AbandonExitRoom][0],
-                    ROOM_ID_TO_LOCATION_NAME_LIST[CastleHiddenStorageRoom][0],
-                    ROOM_ID_TO_LOCATION_NAME_LIST[CastleKitchenRoom][0],
+                    ROOM_ID_TO_LOCATION_NAME_LIST["AbandonWestDrainRoom"][0],
+                    ROOM_ID_TO_LOCATION_NAME_LIST["AbandonExitRoom"][0],
+                    ROOM_ID_TO_LOCATION_NAME_LIST["CastleHiddenStorageRoom"][0],
+                    ROOM_ID_TO_LOCATION_NAME_LIST["CastleKitchenRoom"][0],
                 ],
                 [[SUBWEAPON.BOMB]],
             )
@@ -88,7 +88,7 @@ class TestEasyModeLogic(HoVTestBase):
         with self.subTest("Test that the Bomb is required to access the final area chest"):
             self.assertAccessDependency(
                 [                    
-                    ROOM_ID_TO_LOCATION_NAME_LIST[CreditsParentRoom][0],
+                    ROOM_ID_TO_LOCATION_NAME_LIST["CreditsParentRoom"][0],
                 ],
                 [[
                     SUBWEAPON.BOMB
