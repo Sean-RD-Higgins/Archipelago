@@ -890,7 +890,7 @@ def create_all_items(world: HoVWorld) -> None:
     # They will be sent as soon as they connect for the first time (depending on your client's item handling flag).
     # Players can add precollected items themselves via the generic "start_inventory" option.
     # If you want to add your own precollected items, you can do so via world.push_precollected().
-    if world.options.arcade_token_fill:
+    if world.options.arcade_credit_fill:
         # We're adding a filler item, but you can also add progression items to the player's precollected inventory.
-        arcade_token = world.create_item("Arcade Token")
-        world.push_precollected(arcade_token)
+        arcade_credit = world.create_item("Arcade Credit")
+        world.push_precollected(arcade_credit)

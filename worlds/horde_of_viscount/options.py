@@ -111,12 +111,12 @@ class BadEquipChance(Range):
 
 
 # A Range is a numeric option with a min and max value. This will be represented by a slider on the website.
-class ArcadeTokenFill(Range):
+class ArcadeCreditFill(Range):
     """
-    How many arcade tokens you will start with. These are used to restart a room with no cost.
+    How many arcade credits you will start with. These are used to restart a room with no cost.
     """
 
-    display_name = "Arcade Token Fill"
+    display_name = "Arcade Credit Fill"
 
     range_start = 0
     range_end = 99
@@ -183,7 +183,7 @@ class HoVOptions(PerGameCommonOptions):
     drops_plus: DropsPlus
     chest_choice: ChestChoice
     bad_equip_chance: BadEquipChance
-    arcade_token_fill: ArcadeTokenFill
+    arcade_credit_fill: ArcadeCreditFill
     player_sprite: PlayerSprite
     chests_required: ChestsRequired
     map_size: MapSize
@@ -197,7 +197,7 @@ option_groups = [
     ),
     OptionGroup(
         "Boons",
-        [HealHub, HubSubFill, HubFoodFill, WhipRank2, WhipRank3, DropsPlus, ChestChoice, BadEquipChance, ArcadeTokenFill],
+        [HealHub, HubSubFill, HubFoodFill, WhipRank2, WhipRank3, DropsPlus, ChestChoice, BadEquipChance, ArcadeCreditFill],
     ),
     OptionGroup(
         "Vanity",
@@ -218,7 +218,7 @@ option_presets = {
         "drops_plus": True,
         "chest_choice": 3,
         "bad_equip_chance": 0,
-        "arcade_token_fill": ArcadeTokenFill.range_end,
+        "arcade_token_fill": ArcadeCreditFill.range_end,
         "player_sprite": PlayerSprite.option_whipp,
         "chests_required": 1,
         "map_size": 6,
@@ -234,7 +234,7 @@ option_presets = {
         "drops_plus": False,
         "chest_choice": 2,
         "bad_equip_chance": 10,
-        "arcade_token_fill": ArcadeTokenFill.range_end,
+        "arcade_token_fill": ArcadeCreditFill.range_end,
         "player_sprite": PlayerSprite.option_whipp,
         "chests_required": 3,
         "map_size": 9,
@@ -250,7 +250,7 @@ option_presets = {
         "drops_plus": False,
         "chest_choice": 1,
         "bad_equip_chance": 50,
-        "arcade_token_fill": ArcadeTokenFill.range_start,
+        "arcade_token_fill": ArcadeCreditFill.range_start,
         "player_sprite": PlayerSprite.option_whipp,
         "chests_required": 0,
         "map_size": 16,
