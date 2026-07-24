@@ -1141,9 +1141,9 @@ def set_all_location_rules(world: HoVWorld) -> None:
                 northSubweaponRule = Has(roomMetadataItem.northSubweaponRequiredList[0])
                 for subweapon in roomMetadataItem.northSubweaponRequiredList[1:]:
                     northSubweaponRule = northSubweaponRule | Has(subweapon)
-                # TODO add North Exit Rules
-                # I can bring the castle maps matrix in and have it reference it as the ENTRANCE to the upper one.
-                #world.set_rule(location, northSubweaponRule)
+                # TODO - This is a phase 2 change, so not implement yet until the data has been migrated over.  Apply North Exit Rules - if no subweapon rule was already set, apply the north subweapon rule
+                #if len(roomMetadataItem.subweaponRequiredList) == 0:
+                    #world.set_rule(location, northSubweaponRule)
 
             # Some rooms have floating chests, which can only be opened by equipping the Chest Breaker EQUIP
             if roomMetadataItem.isChestBreakRequired:
