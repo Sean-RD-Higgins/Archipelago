@@ -985,6 +985,8 @@ def set_all_location_rules(world: HoVWorld) -> None:
     roomMetadata[ManorLearnRoom].subweaponRequiredList = [SUBWEAPON.CLEATS]
     roomMetadata[ManorTopRightHiddenRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB, SUBWEAPON.WINGS]
     roomMetadata[ManorRightPrePuzzleRoom].northSubweaponRequiredList = [SUBWEAPON.BOMB]
+    roomMetadata[CreditsParentRoom].subweaponsRequireAll = True
+    roomMetadata[CreditsParentRoom].subweaponRequiredList = [SUBWEAPON.KNIFE, SUBWEAPON.AXE, SUBWEAPON.BOMB, SUBWEAPON.WINGS, SUBWEAPON.CLEATS, SUBWEAPON.CALTROP]
     
     
     roomMetadata[DeadlandRoad1Room].subweaponRequiredList = [SUBWEAPON.KNIFE]
@@ -1154,7 +1156,8 @@ def set_all_location_rules(world: HoVWorld) -> None:
 def set_completion_condition(world: HoVWorld) -> None:
     # In our case, we went for the Victory event design pattern (see create_events() in locations.py).
     # So lets undo what we just did, and instead set the completion condition to:
-    world.set_completion_rule(lambda state: state.can_reach_location("Credits Peak Event", world.player))
+    #world.set_completion_rule(lambda state: state.can_reach_location("Credits Peak Event", world.player))
+    world.set_completion_rule(lambda state: state.can_reach_location("Credits Peak Chest 2", world.player))
 
 
 # One final comment about rules:

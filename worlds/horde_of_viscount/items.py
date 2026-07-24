@@ -27,14 +27,15 @@ SUBWEAPON_NAMES = [
 # Every item must have a unique integer ID associated with it.
 # We will have a lookup from item name to ID here that, in world.py, we will import and bind to the world class.
 # Even if an item doesn't exist on specific options, it must be present in this lookup.
+# WE CANNOT START THE ITEM IDs AS 0, AS 0 IS RESERVED FOR "NO ITEM" IN AP. START AT 1.
 ITEM_NAME_TO_ID = {
 
-    "Launch Bomb": 0,
-    "Backflip Caltrop": 1,
-    "Climbing Axe": 2,
-    "Dash Knife": 3,
-    "Jump Wing": 4,
-    "Pogo Cleats": 5,
+    "Launch Bomb": 1,
+    "Backflip Caltrop": 2,
+    "Climbing Axe": 3,
+    "Dash Knife": 4,
+    "Jump Wing": 5,
+    "Pogo Cleats": 6,
 
     "Goo": 1000,
     "Fiber": 1001,

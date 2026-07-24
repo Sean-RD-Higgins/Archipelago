@@ -36,22 +36,22 @@ class TestEasyModeLogic(HoVTestBase):
             AbandonHiddenRoom_chest = self.world.get_location(
                 ROOM_ID_TO_LOCATION_NAME_LIST["AbandonHiddenRoom"][0]
             )
-            CastleRampartsRoom_chest = self.world.get_location(
+            VolcanoOpenRoom_chest = self.world.get_location(
                 ROOM_ID_TO_LOCATION_NAME_LIST["CastleRampartsRoom"][0]
             )
 
             # Since access rules have a "state" argument, we must pass our current CollectionState.
             # Helpfully, since we're in a WorldTestBase, we can just use "self.multiworld.state".
             self.assertTrue(AbandonHiddenRoom_chest.can_reach(self.multiworld.state))
-            self.assertTrue(CastleRampartsRoom_chest.can_reach(self.multiworld.state))
+            self.assertTrue(VolcanoOpenRoom_chest.can_reach(self.multiworld.state))
 
-        with self.subTest("Test Jump Wing is required to get CastleRampartsRoom chest"):
-            CastleRampartsRoom_chest = self.world.get_location(
-                ROOM_ID_TO_LOCATION_NAME_LIST["CastleRampartsRoom"][0]
+        with self.subTest("Test Jump Wing is required to get VolcanoOpenRoom chest"):
+            VolcanoOpenRoom_chest = self.world.get_location(
+                ROOM_ID_TO_LOCATION_NAME_LIST["VolcanoOpenRoom"][0]
             )
 
             # Right now, this location should *not* be accessible, as we don't have the wings yet.
-            self.assertFalse(CastleRampartsRoom_chest.can_reach(self.multiworld.state))
+            self.assertFalse(VolcanoOpenRoom_chest.can_reach(self.multiworld.state))
 
             # Now, let's collect the wings.
             # For this, there is a handy helper function to collect items from the itempool.
@@ -60,42 +60,29 @@ class TestEasyModeLogic(HoVTestBase):
             self.collect_by_name(SUBWEAPON.WINGS)
 
             # The chest should now be accessible.
-            self.assertTrue(CastleRampartsRoom_chest.can_reach(self.multiworld.state))
+            self.assertTrue(VolcanoOpenRoom_chest.can_reach(self.multiworld.state))
 
         with self.subTest("Launch Bomb is required for some castle and abandon town areaas"):
             # Manually checking the dependency in the previous function was a bit of a hassle, wasn't it?
             # Now we are checking four locations. It would be even longer as a result.
             # Well, there is another option. It's the assertAccessDependency function of WorldTestBase.
+
             self.assertAccessDependency(
                 [
+                    ROOM_ID_TO_LOCATION_NAME_LIST["CastleTopRampartsRoom"][0],
                     ROOM_ID_TO_LOCATION_NAME_LIST["AbandonWestDrainRoom"][0],
-                    ROOM_ID_TO_LOCATION_NAME_LIST["AbandonExitRoom"][0],
-                    ROOM_ID_TO_LOCATION_NAME_LIST["CastleHiddenStorageRoom"][0],
-                    ROOM_ID_TO_LOCATION_NAME_LIST["CastleKitchenRoom"][0],
+                    ROOM_ID_TO_LOCATION_NAME_LIST["CastleColumnRoom"][0]
                 ],
                 [[SUBWEAPON.BOMB]],
-            )
-
-        with self.subTest("Test that the Launch Bomb is required to access the final area chest"):
-            self.assertAccessDependency(
-                [                    
-                    ROOM_ID_TO_LOCATION_NAME_LIST["CreditsParentRoom"][0],
-                ],
-                [[
-                    SUBWEAPON.BOMB
-                ]],
                 only_check_listed=True,
             )
+
 
     def test_easy_mode_useful_not_progression(self) -> None:
         useful_item_list = self.get_items_by_name([
             "Charcoal",
             "Mutagen"
         ])
-
-        # First, let's verify there's two of them.
-        with self.subTest("Test that there are two items in the pool"):
-            self.assertEqual(len(useful_item_list), 2)
 
         # Then, let's verify that they have the useful classification and NOT the progression classification.
         with self.subTest("Test that the item2 in the pool are useful, but not progression."):

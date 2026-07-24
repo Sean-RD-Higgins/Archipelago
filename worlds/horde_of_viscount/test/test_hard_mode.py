@@ -18,7 +18,7 @@ class TestHardMode(HoVTestBase):
 
         with self.subTest("Test that the final area isn't reachable without the required items"):
             self.assertAccessDependency(
-                ["Credits Peak Event"],
+                ["Credits Peak Chest 2"],
                 [[SUBWEAPON.KNIFE, SUBWEAPON.AXE, SUBWEAPON.BOMB, SUBWEAPON.WINGS, SUBWEAPON.CLEATS, SUBWEAPON.CALTROP]],
                 only_check_listed=True,
             )
@@ -26,7 +26,7 @@ class TestHardMode(HoVTestBase):
         for item in [SUBWEAPON.KNIFE, SUBWEAPON.AXE, SUBWEAPON.BOMB, SUBWEAPON.WINGS, SUBWEAPON.CLEATS, SUBWEAPON.CALTROP]:
             with self.subTest(f"Test that the final boss requires {item}"):
                 self.assertAccessDependency(
-                    ["Credits Peak Event"],
+                    ["Credits Peak Chest 2"],
                     [[item]],
                     only_check_listed=True,
                 )

@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from BaseClasses import Location
+from worlds.horde_of_viscount.items import HoVItem
 from worlds.horde_of_viscount.regions import get_region_set
 
 
@@ -875,7 +876,7 @@ ROOM_ID_TO_LOCATION_NAME_LIST = {
     "CreditsParentRoom": [
         "Credits Peak Chest 1",
         "Credits Peak Chest 2",
-        "Credits Peak Event"
+        #"Credits Peak Event"
     ],
     "CrimsonCove1Room": [
         "Crimson Cove Chest 1",
@@ -1784,7 +1785,7 @@ location_name_to_region_name = {
 	"Tepid Volcano - Vent Chest 1": "Tepid Volcano",
 	"Wing Challenge 3 Chest 1": "Castle Town",
     
-	"Credits Peak Event": "Viscount Lab"
+	#"Credits Peak Event": "Viscount Lab"
 }
 
 # Each Location instance must correctly report the "game" it belongs to.
@@ -1819,8 +1820,12 @@ def create_regular_locations(world: HoVWorld) -> None:
 
 def create_events(world: HoVWorld) -> None:
     hoVRegionSet = get_region_set(world)
-    hoVRegionSet.viscount_lab.locations.append(HoVLocation(world.player, "Credits Peak Event", None, hoVRegionSet.viscount_lab))
+    #hoVRegionSet.viscount_lab.locations.append(HoVLocation(world.player, "Credits Peak Event", None, hoVRegionSet.viscount_lab))
 
+    # hoVRegionSet.viscount_lab.add_event(
+    #     "Credits Peak Event", "Credits Peak Event", location_type=HoVLocation, item_type=HoVItem
+    # )
+    
     # hoVRegionSet.map_rando_rogue_world.add_event(
     #     "All Chests Opened", "Victory", location_type=HoVLocation, item_type=items.HoVItem
     # )
