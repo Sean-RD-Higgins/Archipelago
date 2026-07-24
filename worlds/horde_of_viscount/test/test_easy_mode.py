@@ -1,7 +1,6 @@
 from worlds.horde_of_viscount.items import SUBWEAPON
-from worlds.horde_of_viscount.locations import LOCATION_NAME_TO_ID, ROOM_ID_TO_LOCATION_NAME_LIST
+from worlds.horde_of_viscount.locations import ROOM_ID_TO_LOCATION_NAME_LIST
 from worlds.horde_of_viscount.options import HoVOptions
-from worlds.horde_of_viscount.rules import AbandonExitRoom, AbandonWestDrainRoom, CastleBridgeRoom, CastleHiddenStorageRoom, CastleKitchenRoom, CastleMachicolationsRoom, CastleRampartsRoom, CreditsParentRoom
 
 from .bases import HoVTestBase
 
@@ -34,34 +33,34 @@ class TestEasyModeLogic(HoVTestBase):
         # For the sake of structure, let's have every test item in its own subtest.
         with self.subTest("Test checks accessible with nothing"):
             
-            bottom_left_chest = self.world.get_location(
-                ROOM_ID_TO_LOCATION_NAME_LIST["CastleBridgeRoom"][0]
+            AbandonHiddenRoom_chest = self.world.get_location(
+                ROOM_ID_TO_LOCATION_NAME_LIST["AbandonHiddenRoom"][0]
             )
-            top_middle_chest = self.world.get_location(
+            CastleRampartsRoom_chest = self.world.get_location(
                 ROOM_ID_TO_LOCATION_NAME_LIST["CastleRampartsRoom"][0]
             )
 
             # Since access rules have a "state" argument, we must pass our current CollectionState.
             # Helpfully, since we're in a WorldTestBase, we can just use "self.multiworld.state".
-            self.assertTrue(bottom_left_chest.can_reach(self.multiworld.state))
-            self.assertTrue(top_middle_chest.can_reach(self.multiworld.state))
+            self.assertTrue(AbandonHiddenRoom_chest.can_reach(self.multiworld.state))
+            self.assertTrue(CastleRampartsRoom_chest.can_reach(self.multiworld.state))
 
         with self.subTest("Test Wings is required to get CastleRampartsRoom chest"):
-            top_left_room_chest = self.world.get_location(
+            CastleRampartsRoom_chest = self.world.get_location(
                 ROOM_ID_TO_LOCATION_NAME_LIST["CastleRampartsRoom"][0]
             )
 
-            # Right now, this location should *not* be accessible, as we don't have the key yet.
-            self.assertFalse(top_left_room_chest.can_reach(self.multiworld.state))
+            # Right now, this location should *not* be accessible, as we don't have the wings yet.
+            self.assertFalse(CastleRampartsRoom_chest.can_reach(self.multiworld.state))
 
-            # Now, let's collect the Key.
+            # Now, let's collect the wings.
             # For this, there is a handy helper function to collect items from the itempool.
             # Keep in mind that while test functions are sectioned off from one another, subtests are not.
-            # Collecting this here means that the state will have the Key for all future subtests in this function.
+            # Collecting this here means that the state will have the Wings for all future subtests in this function.
             self.collect_by_name(SUBWEAPON.WINGS)
 
-            # The top left room chest should now be accessible.
-            self.assertTrue(top_left_room_chest.can_reach(self.multiworld.state))
+            # The chest should now be accessible.
+            self.assertTrue(CastleRampartsRoom_chest.can_reach(self.multiworld.state))
 
         with self.subTest("Bomb is required for some castle and abandon town areaas"):
             # Manually checking the dependency in the previous function was a bit of a hassle, wasn't it?
@@ -97,9 +96,6 @@ class TestEasyModeLogic(HoVTestBase):
             )
 
     def test_easy_mode_useful_not_progression(self) -> None:
-        # For our second test, let's make sure that we have two Health Upgrades with the correct classification.
-
-        # We can find the Health Upgrades in the itempool like this:
         useful_item_list = self.get_items_by_name([
             "Charcoal"
             "Mutagen"

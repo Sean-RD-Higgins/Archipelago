@@ -23,6 +23,7 @@ def create_and_connect_regions(world: HoVWorld) -> None:
 
 
 class HoVRegionSet:
+	world_map_room: Region
 	world_map_north_west: Region
 	world_map_east: Region
 	world_map_south_central: Region
@@ -41,6 +42,7 @@ class HoVRegionSet:
 
 def get_region_set(world: HoVWorld) -> HoVRegionSet:
 	hoVRegionSet = HoVRegionSet()
+	hoVRegionSet.world_map_room = world.get_region("WorldMapRoom")
 	hoVRegionSet.world_map_north_west = world.get_region("World Map NorthWest")
 	hoVRegionSet.world_map_east = world.get_region("World Map East")
 	hoVRegionSet.world_map_south_central = world.get_region("World Map South Central")
@@ -55,12 +57,13 @@ def get_region_set(world: HoVWorld) -> HoVRegionSet:
 	hoVRegionSet.viscount_manor = world.get_region("Viscount Manor")
 	hoVRegionSet.viscount_lab = world.get_region("Viscount Lab")
 	hoVRegionSet.map_rando_rogue_world = world.get_region("Rogue Hub Room")
-	hoVRegionSet.list = [hoVRegionSet.world_map_north_west, hoVRegionSet.world_map_east, hoVRegionSet.world_map_south_central, hoVRegionSet.world_map_west, hoVRegionSet.world_map_southwest, hoVRegionSet.world_map_south, hoVRegionSet.abandon_town, hoVRegionSet.cliffside_climb, hoVRegionSet.castle_town, hoVRegionSet.kingdom_castle, hoVRegionSet.tepid_volcano, hoVRegionSet.viscount_manor, hoVRegionSet.viscount_lab, hoVRegionSet.map_rando_rogue_world]
+	hoVRegionSet.list = [hoVRegionSet.world_map_room, hoVRegionSet.world_map_north_west, hoVRegionSet.world_map_east, hoVRegionSet.world_map_south_central, hoVRegionSet.world_map_west, hoVRegionSet.world_map_southwest, hoVRegionSet.world_map_south, hoVRegionSet.abandon_town, hoVRegionSet.cliffside_climb, hoVRegionSet.castle_town, hoVRegionSet.kingdom_castle, hoVRegionSet.tepid_volcano, hoVRegionSet.viscount_manor, hoVRegionSet.viscount_lab, hoVRegionSet.map_rando_rogue_world]
 	return hoVRegionSet
 
 def create_all_regions(world: HoVWorld) -> None:
     # Creating a region is as simple as calling the constructor of the Region class.
 	hoVRegionSet = HoVRegionSet()
+	hoVRegionSet.world_map_room = Region("WorldMapRoom", world.player, world.multiworld)
 	hoVRegionSet.world_map_north_west = Region("World Map NorthWest", world.player, world.multiworld)
 	hoVRegionSet.abandon_town = Region("Abandon Town", world.player, world.multiworld)
 	hoVRegionSet.world_map_east = Region("World Map East", world.player, world.multiworld)
@@ -77,7 +80,7 @@ def create_all_regions(world: HoVWorld) -> None:
 	hoVRegionSet.map_rando_rogue_world = Region("Rogue Hub Room", world.player, world.multiworld)
      
     # Let's put all these regions in a list.
-	hoVRegionSet.list = [hoVRegionSet.world_map_north_west, hoVRegionSet.abandon_town, 
+	hoVRegionSet.list = [hoVRegionSet.world_map_room, hoVRegionSet.world_map_north_west, hoVRegionSet.abandon_town, 
                       hoVRegionSet.world_map_east, hoVRegionSet.cliffside_climb, 
                       hoVRegionSet.world_map_south_central, hoVRegionSet.castle_town,
                       hoVRegionSet.world_map_west, hoVRegionSet.kingdom_castle, 
@@ -98,8 +101,7 @@ def connect_regions(world: HoVWorld) -> None:
 
 		# An even easier way is to use the region.connect helper.
         region.connect(nextRegion, 
-			region.name + " to " + nextRegion.name, 
-			EntranceType.TWO_WAY)
+			region.name + " to " + nextRegion.name)
 
     # Fill in the misc connections that aren't just "next region in the list".s
     hoVRegionSet.world_map_north_west.connect(

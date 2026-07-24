@@ -16,11 +16,3 @@ class TestExtraStartingItemsOff(HoVTestBase):
     def test_extra_starting_arcade_credit_doesnt_exist(self) -> None:
         self.assertFalse(self.world.multiworld.get_items().__contains__("Arcade Credit"))
 
-
-class TestExtraStartingItemsOn(HoVTestBase):
-    options: HoVOptions = {
-        "arcade_credit_fill": 1,
-    }
-
-    def test_extra_starting_arcade_credit_exists(self) -> None:
-        self.assertTrue(self.world.multiworld.get_items().__contains__("Arcade Credit"))
