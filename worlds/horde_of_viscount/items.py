@@ -822,7 +822,29 @@ def create_all_items(world: HoVWorld) -> None:
     # Creating items should generally be done via the world's create_item method.
     # First, we create a list containing all the items that always exist.
     itempool: list[Item] = []
-    for itemName in PROGRESSION_ITEM_NAME_LIST:
+    
+    # Build the base progression items, excluding conditional ones
+    base_progression_items = [
+        "Launch Bomb",
+        "Backflip Caltrop",
+        "Climbing Axe",
+        "Dash Knife",
+        "Jump Wing",
+        "Pogo Cleats",
+        "Whip Oil",
+        "Double Jump",
+        "Sub Refill",
+        "Sub Free-fill",
+        "Chest Breaker",
+    ]
+    
+    # Add conditional items based on options
+    if world.options.whip_rank2:
+        base_progression_items.append("Whip Durable A")
+    if world.options.whip_rank3:
+        base_progression_items.append("Whip Durable B")
+    
+    for itemName in base_progression_items:
         itempool += world.create_item(itemName),
 
     # TODO handle options

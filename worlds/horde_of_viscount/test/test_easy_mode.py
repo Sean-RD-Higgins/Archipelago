@@ -45,7 +45,7 @@ class TestEasyModeLogic(HoVTestBase):
             self.assertTrue(AbandonHiddenRoom_chest.can_reach(self.multiworld.state))
             self.assertTrue(CastleRampartsRoom_chest.can_reach(self.multiworld.state))
 
-        with self.subTest("Test Wings is required to get CastleRampartsRoom chest"):
+        with self.subTest("Test Jump Wing is required to get CastleRampartsRoom chest"):
             CastleRampartsRoom_chest = self.world.get_location(
                 ROOM_ID_TO_LOCATION_NAME_LIST["CastleRampartsRoom"][0]
             )
@@ -62,7 +62,7 @@ class TestEasyModeLogic(HoVTestBase):
             # The chest should now be accessible.
             self.assertTrue(CastleRampartsRoom_chest.can_reach(self.multiworld.state))
 
-        with self.subTest("Bomb is required for some castle and abandon town areaas"):
+        with self.subTest("Launch Bomb is required for some castle and abandon town areaas"):
             # Manually checking the dependency in the previous function was a bit of a hassle, wasn't it?
             # Now we are checking four locations. It would be even longer as a result.
             # Well, there is another option. It's the assertAccessDependency function of WorldTestBase.
@@ -76,15 +76,7 @@ class TestEasyModeLogic(HoVTestBase):
                 [[SUBWEAPON.BOMB]],
             )
 
-            # The assertAccessDependency function is a bit complicated, so let's discuss what it does.
-            # By default, the locations argument must contain *every* location that *hard-depends* on the items.
-            # So, in our case: If every item except Sword is collected, *exactly* these four locations are unreachable.
-
-            # The possible_items argument is initially more intuitive, but has some complexity as well.
-            # In our case, we only care about one item. But sometimes, we care about multiple items at once.
-            # This is why we pass a list of lists. We'll discuss this more when we test hard mode logic.
-
-        with self.subTest("Test that the Bomb is required to access the final area chest"):
+        with self.subTest("Test that the Launch Bomb is required to access the final area chest"):
             self.assertAccessDependency(
                 [                    
                     ROOM_ID_TO_LOCATION_NAME_LIST["CreditsParentRoom"][0],
@@ -97,7 +89,7 @@ class TestEasyModeLogic(HoVTestBase):
 
     def test_easy_mode_useful_not_progression(self) -> None:
         useful_item_list = self.get_items_by_name([
-            "Charcoal"
+            "Charcoal",
             "Mutagen"
         ])
 
