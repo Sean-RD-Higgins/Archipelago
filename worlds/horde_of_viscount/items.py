@@ -768,6 +768,27 @@ PROGRESSION_ITEM_NAME_LIST = [
     "Whip Durable A",
     "Whip Durable B",
     "Chest Breaker",
+    "Spirit Chalk",
+    "Spirit Balm",
+    "Spirit Spray",
+    "Spirit Lotion",
+    "Spirit Soap",
+    "Spirit Shampoo",
+    "Spirit Condi-tioner",
+    "Spirit Body Wash",
+    "Spirit Oin'mnt",
+    "Spirit Lather",
+    "Sub Refill",
+    "Sub Free-fill",
+    "Health Flag",
+    "Heart Brooch",
+    "Heart Anklet",
+    "Heart Ribbon",
+    "Heart Ring",
+    "Heart Bangle",
+    "Heart Chain",
+    "Heart Armband",
+    "Heart Choker",
 ]
 
 # Each Item instance must correctly report the "game" it belongs to.
@@ -824,28 +845,7 @@ def create_all_items(world: HoVWorld) -> None:
     # First, we create a list containing all the items that always exist.
     itempool: list[Item] = []
     
-    # Build the base progression items, excluding conditional ones
-    base_progression_items = [
-        "Launch Bomb",
-        "Backflip Caltrop",
-        "Climbing Axe",
-        "Dash Knife",
-        "Jump Wing",
-        "Pogo Cleats",
-        "Whip Oil",
-        "Double Jump",
-        "Sub Refill",
-        "Sub Free-fill",
-        "Chest Breaker",
-    ]
-    
-    # Add conditional items based on options
-    if world.options.whip_rank2:
-        base_progression_items.append("Whip Durable A")
-    if world.options.whip_rank3:
-        base_progression_items.append("Whip Durable B")
-    
-    for itemName in base_progression_items:
+    for itemName in PROGRESSION_ITEM_NAME_LIST:
         itempool += world.create_item(itemName),
 
     # TODO handle options
