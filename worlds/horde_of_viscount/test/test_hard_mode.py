@@ -12,9 +12,7 @@ class TestHardMode(HoVTestBase):
     def test_hard_mode_access(self) -> None:
         with self.subTest("Test that Whip Durable B in Item Pool"):
             whip_durable_b_in_itempool = self.get_items_by_name("Whip Durable B")
-
-            # ... instead of checking that the len() is 1, we can run this absolutely beautiful statement instead:
-            self.assertTrue(len(whip_durable_b_in_itempool) == 0)
+            self.assertTrue(len(whip_durable_b_in_itempool) == 1)
 
         with self.subTest("Test that the final area isn't reachable without the required items"):
             self.assertAccessDependency(
