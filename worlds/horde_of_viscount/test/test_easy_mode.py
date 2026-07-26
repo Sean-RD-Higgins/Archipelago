@@ -1,6 +1,7 @@
 from worlds.horde_of_viscount.items import SUBWEAPON
-from worlds.horde_of_viscount.locations import ROOM_ID_TO_LOCATION_NAME_LIST
+from worlds.horde_of_viscount.locations import LOCATION_DATA_LIST
 from worlds.horde_of_viscount.options import HoVOptions
+from worlds.horde_of_viscount.rules import AbandonHiddenRoom, AbandonWestDrainRoom, CastleColumnRoom, CastlePortcullisRoom, CastleTopRampartsRoom, VolcanoOpenRoom
 
 from .bases import HoVTestBase
 
@@ -34,20 +35,20 @@ class TestEasyModeLogic(HoVTestBase):
         with self.subTest("Test checks accessible with nothing"):
             
             AbandonHiddenRoom_chest = self.world.get_location(
-                ROOM_ID_TO_LOCATION_NAME_LIST["AbandonHiddenRoom"][0]
+                next(location.ap_location_name for location in LOCATION_DATA_LIST if location.room_id == AbandonHiddenRoom)
             )
-            VolcanoOpenRoom_chest = self.world.get_location(
-                ROOM_ID_TO_LOCATION_NAME_LIST["CastleRampartsRoom"][0]
+            CastlePortcullisRoom_chest = self.world.get_location(
+                next(location.ap_location_name for location in LOCATION_DATA_LIST if location.room_id == CastlePortcullisRoom)
             )
 
             # Since access rules have a "state" argument, we must pass our current CollectionState.
             # Helpfully, since we're in a WorldTestBase, we can just use "self.multiworld.state".
             self.assertTrue(AbandonHiddenRoom_chest.can_reach(self.multiworld.state))
-            self.assertTrue(VolcanoOpenRoom_chest.can_reach(self.multiworld.state))
+            self.assertTrue(CastlePortcullisRoom_chest.can_reach(self.multiworld.state))
 
         with self.subTest("Test Jump Wing is required to get VolcanoOpenRoom chest"):
             VolcanoOpenRoom_chest = self.world.get_location(
-                ROOM_ID_TO_LOCATION_NAME_LIST["VolcanoOpenRoom"][0]
+                next(location.ap_location_name for location in LOCATION_DATA_LIST if location.room_id == VolcanoOpenRoom)
             )
 
             # Right now, this location should *not* be accessible, as we don't have the wings yet.
@@ -69,9 +70,9 @@ class TestEasyModeLogic(HoVTestBase):
 
             self.assertAccessDependency(
                 [
-                    ROOM_ID_TO_LOCATION_NAME_LIST["CastleTopRampartsRoom"][0],
-                    ROOM_ID_TO_LOCATION_NAME_LIST["AbandonWestDrainRoom"][0],
-                    ROOM_ID_TO_LOCATION_NAME_LIST["CastleColumnRoom"][0]
+                    next(location.ap_location_name for location in LOCATION_DATA_LIST if location.room_id == CastleTopRampartsRoom),
+                    next(location.ap_location_name for location in LOCATION_DATA_LIST if location.room_id == AbandonWestDrainRoom),
+                    next(location.ap_location_name for location in LOCATION_DATA_LIST if location.room_id == CastleColumnRoom)
                 ],
                 [[SUBWEAPON.BOMB]],
                 only_check_listed=True,
