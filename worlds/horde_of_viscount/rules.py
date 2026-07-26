@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from rule_builder.rules import Has, HasAll
-from worlds.horde_of_viscount.items import EQUIP, SUBWEAPON
+from worlds.horde_of_viscount.items import EQUIP, ITEM, SUBWEAPON
 from worlds.horde_of_viscount.locations import LOCATION_DATA_LIST, ROOM_ID_TO_AP_LOCATION_NAME_LIST_LIST
 from worlds.horde_of_viscount.regions import get_region_set
 
@@ -285,6 +285,7 @@ class RoomMetadata:
         self.isFillerRoom = isFillerRoom
         self.northSubweaponRequiredList = []
         self.hasChest = hasChest
+        self.lootRequiredList = []
 
 def array_last(array):
     return array[-1]
@@ -768,6 +769,12 @@ def set_all_location_rules(world: HoVWorld) -> None:
 
     roomMetadata[VolcanoRainPegRoom].isRandomizerRoom = False
         
+
+    # Non map rando area requirements.
+    roomMetadata[TownEntranceRoom].lootRequiredList = [ITEM.WOOD];
+    roomMetadata[TownCenterRoom].lootRequiredList = [ITEM.WOOD];
+    roomMetadata[TownGateRoom].lootRequiredList = [ITEM.FEATHER, ITEM.FRESHWATER];
+    roomMetadata[CastleRampartsRoom].lootRequiredList = [ITEM.WOOD];
 
     # Has no chest
     roomMetadata[StartRoom] = RoomMetadata(StartRoom, StartRoom, StartRoom, undefined, false, false, false, false, false, 0, false, false, false)

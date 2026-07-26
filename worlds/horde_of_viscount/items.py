@@ -24,6 +24,25 @@ SUBWEAPON_NAMES = [
     "Pogo Cleats",
 ]
 
+class ITEM():
+    GOO = "Goo"
+    FIBER = "Fiber"
+    PROTEIN = "Protein"
+    ROCK = "Rock"
+    TARSUS = "Tarsus"
+    WOOD = "Wood"
+    FRESHWATER = "Freshwater"
+    HERB = "Herb"
+    METAL = "Metal"
+    OIL = "Oil"
+    FLOUR = "Flour"
+    YEAST = "Yeast"
+    FEATHER = "Feather"
+    BONE = "Bone"
+    SHELL = "Shell"
+    CHARCOAL = "Charcoal"
+    MUTAGEN = "Mutagen"
+
 # Every item must have a unique integer ID associated with it.
 # We will have a lookup from item name to ID here that, in world.py, we will import and bind to the world class.
 # Even if an item doesn't exist on specific options, it must be present in this lookup.
@@ -316,23 +335,23 @@ DEFAULT_ITEM_CLASSIFICATIONS = {
     "Jump Wing": ItemClassification.progression | ItemClassification.useful,
     "Pogo Cleats": ItemClassification.progression | ItemClassification.useful,
 
-    "Goo": ItemClassification.filler | ItemClassification.useful,
-    "Fiber": ItemClassification.filler | ItemClassification.useful,
-    "Protein": ItemClassification.filler | ItemClassification.useful,
-    "Rock": ItemClassification.filler | ItemClassification.useful,
-    "Tarsus": ItemClassification.filler | ItemClassification.useful,
-    "Wood": ItemClassification.filler | ItemClassification.useful,
-    "Freshwater": ItemClassification.filler | ItemClassification.useful,
-    "Herb": ItemClassification.filler | ItemClassification.useful,
-    "Metal": ItemClassification.filler | ItemClassification.useful,
-    "Oil": ItemClassification.filler | ItemClassification.useful,
-    "Flour": ItemClassification.filler | ItemClassification.useful,
-    "Yeast": ItemClassification.filler | ItemClassification.useful,
-    "Feather": ItemClassification.filler | ItemClassification.useful,
-    "Bone": ItemClassification.filler | ItemClassification.useful,
-    "Shell": ItemClassification.filler | ItemClassification.useful,
-    "Charcoal": ItemClassification.filler | ItemClassification.useful,
-    "Mutagen": ItemClassification.filler | ItemClassification.useful,
+    "Goo": ItemClassification.progression | ItemClassification.useful,
+    "Fiber": ItemClassification.progression | ItemClassification.useful,
+    "Protein": ItemClassification.progression | ItemClassification.useful,
+    "Rock": ItemClassification.progression | ItemClassification.useful,
+    "Tarsus": ItemClassification.progression | ItemClassification.useful,
+    "Wood": ItemClassification.progression | ItemClassification.useful,
+    "Freshwater": ItemClassification.progression | ItemClassification.useful,
+    "Herb": ItemClassification.progression | ItemClassification.useful,
+    "Metal": ItemClassification.progression | ItemClassification.useful,
+    "Oil": ItemClassification.progression | ItemClassification.useful,
+    "Flour": ItemClassification.progression | ItemClassification.useful,
+    "Yeast": ItemClassification.progression | ItemClassification.useful,
+    "Feather": ItemClassification.progression | ItemClassification.useful,
+    "Bone": ItemClassification.progression | ItemClassification.useful,
+    "Shell": ItemClassification.progression | ItemClassification.useful,
+    "Charcoal": ItemClassification.progression | ItemClassification.useful,
+    "Mutagen": ItemClassification.progression | ItemClassification.useful,
     "Spicy Pepper": ItemClassification.trap,
     "Viscous Tar": ItemClassification.trap,
     "Novaculite": ItemClassification.trap,
@@ -755,6 +774,23 @@ HARDMODE_FILLER_LIST = [
 ]
 
 PROGRESSION_ITEM_NAME_LIST = [
+    "Goo",
+    "Fiber",
+    "Protein",
+    "Rock",
+    "Tarsus",
+    "Wood",
+    "Freshwater",
+    "Herb",
+    "Metal",
+    "Oil",
+    "Flour",
+    "Yeast",
+    "Feather",
+    "Bone",
+    "Shell",
+    "Charcoal",
+    "Mutagen",
     "Launch Bomb",
     "Backflip Caltrop",
     "Climbing Axe",
