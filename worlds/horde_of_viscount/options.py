@@ -18,6 +18,34 @@ from Options import Choice, OptionGroup, PerGameCommonOptions, Range, Toggle
 # A toggle is an option that can either be on or off. This will be represented by a checkbox on the website.
 # The default for a toggle is "off".
 # If you want a toggle to be on by default, you can use the "DefaultOnToggle" class instead of the "Toggle" class.
+class CustomCommandEquips(Toggle):
+    """
+    Start with all custom command equips so you can map your buttons to directions + Jump, Attack, or Subweapon.
+    """
+
+    # The docstring of an option is used as the description on the website and in the template yaml.
+
+    # You'll also want to set a display name, which will determine what the option is called on the website.
+    display_name = "Custom Command Equips"
+class NerdGlasses(Toggle):
+    """
+    Start with Nerd Glasses, allowing you to see damage numbers.
+    """
+
+    # The docstring of an option is used as the description on the website and in the template yaml.
+
+    # You'll also want to set a display name, which will determine what the option is called on the website.
+    display_name = "Nerd Glasses"
+class WhipOil(Toggle):
+    """
+    Start with Whip Oil, allowing you to pierce through Hordemen with your Whip.
+    """
+
+    # The docstring of an option is used as the description on the website and in the template yaml.
+
+    # You'll also want to set a display name, which will determine what the option is called on the website.
+    display_name = "Whip Oil"
+
 class HardMode(Toggle):
     """
     In hard mode, you will NOT have Sub Refill; only Sub FreeFill.
@@ -28,7 +56,6 @@ class HardMode(Toggle):
     # You'll also want to set a display name, which will determine what the option is called on the website.
     display_name = "Hard Mode"
 
-
 class SubweaponSpawn(Toggle):
     """
     A handful of a subweapon type can spawn randomly in chests.
@@ -37,7 +64,6 @@ class SubweaponSpawn(Toggle):
 
     display_name = "Subweapon Spawn"
 
-
 class HealHub(Toggle):
     """
     Arrival to the main hub room will fully heal you.
@@ -45,14 +71,12 @@ class HealHub(Toggle):
 
     display_name = "Hub Heal"
 
-
 class HubSubFill(Toggle):
     """
     Arrival to the main hub room will free refill your held subweapons
     """
 
     display_name = "Hub Sub Fill"
-
 
 class HubFoodFill(Toggle):
     """
@@ -82,7 +106,6 @@ class DropsPlus(Toggle):
 
     display_name = "Drops +"
 
-
 # A Range is a numeric option with a min and max value. This will be represented by a slider on the website.
 class ChestChoice(Range):
     """
@@ -108,8 +131,6 @@ class BadEquipChance(Range):
     range_end = 100
     default = 0
 
-
-
 # A Range is a numeric option with a min and max value. This will be represented by a slider on the website.
 class ArcadeCreditFill(Range):
     """
@@ -123,7 +144,6 @@ class ArcadeCreditFill(Range):
 
     # Range options must define an explicit default value.
     default = 0
-
 
 # A Choice is an option with multiple discrete choices. This will be represented by a dropdown on the website.
 class PlayerSprite(Choice):
@@ -162,17 +182,22 @@ class MapSize(Range):
     The amount of room tiles horizontally of the map. The same number will be used for how many tiles vertically there will be on the map.
     """
 
-    display_name = "Bad Equip Chance"
+    display_name = "Map Size"
 
-    range_start = 0
-    range_end = 100
-    default = 0
+    range_start = 5
+    range_end = 19
+    default = 15
 
 
 # We must now define a dataclass inheriting from PerGameCommonOptions that we put all our options in.
 # This is in the format "option_name_in_snake_case: OptionClassName".
 @dataclass
 class HoVOptions(PerGameCommonOptions):
+    
+    custom_command_equips: CustomCommandEquips
+    nerd_glasses: NerdGlasses
+    whip_oil: WhipOil
+
     hard_mode: HardMode
     subweapon_spawn: SubweaponSpawn
     heal_hub: HealHub
@@ -192,22 +217,27 @@ class HoVOptions(PerGameCommonOptions):
 # If we want to group our options by similar type, we can do so as well. This looks nice on the website.
 option_groups = [
     OptionGroup(
-        "Gameplay",
-        [HardMode, MapSize, SubweaponSpawn, ChestsRequired],
+        "Quality of Life",
+        [CustomCommandEquips, NerdGlasses, WhipOil],
     ),
     OptionGroup(
         "Boons",
-        [HealHub, HubSubFill, HubFoodFill, WhipRank2, WhipRank3, DropsPlus, ChestChoice, BadEquipChance, ArcadeCreditFill],
+        [WhipRank2, WhipRank3],
     ),
     OptionGroup(
-        "Vanity",
-        [PlayerSprite],
+        "Roguelite Mode",
+        [HardMode, MapSize, SubweaponSpawn, ChestsRequired, PlayerSprite, HealHub, HubSubFill, HubFoodFill, 
+            DropsPlus, ChestChoice, BadEquipChance, ArcadeCreditFill],
     ),
 ]
 
 # Finally, we can define some option presets if we want the player to be able to quickly choose a specific "mode".
 option_presets = {
-    "easy": {
+    "roguelite easy": {
+        "custom_command_equips": True,
+        "nerd_glasses": True,
+        "whip_oil": True,
+
         "hard_mode": False,
         "subweapon_spawn": True,
         "heal_hub": True,
@@ -221,9 +251,13 @@ option_presets = {
         "arcade_credit_fill": ArcadeCreditFill.range_end,
         "player_sprite": PlayerSprite.option_whipp,
         "chests_required": 1,
-        "map_size": 6,
+        "map_size": 9,
     },
-    "normal": {
+    "roguelite normal": {
+        "custom_command_equips": True,
+        "nerd_glasses": True,
+        "whip_oil": True,
+        
         "hard_mode": False,
         "subweapon_spawn": False,
         "heal_hub": False,
@@ -237,9 +271,13 @@ option_presets = {
         "arcade_credit_fill": ArcadeCreditFill.range_end,
         "player_sprite": PlayerSprite.option_whipp,
         "chests_required": 3,
-        "map_size": 9,
+        "map_size": 15,
     },
-    "hard": {
+    "roguelite hard": {
+        "custom_command_equips": True,
+        "nerd_glasses": False,
+        "whip_oil": False,
+        
         "hard_mode": True,
         "subweapon_spawn": False,
         "heal_hub": False,
@@ -253,6 +291,22 @@ option_presets = {
         "arcade_credit_fill": ArcadeCreditFill.range_start,
         "player_sprite": PlayerSprite.option_whipp,
         "chests_required": 0,
-        "map_size": 16,
+        "map_size": 19,
+    },
+    "roguelite unfair": {
+        "hard_mode": True,
+        "subweapon_spawn": False,
+        "heal_hub": False,
+        "hub_sub_fill": False,
+        "hub_food_fill": False,
+        "whip_rank2": False,
+        "whip_rank3": False,
+        "drops_plus": False,
+        "chest_choice": 1,
+        "bad_equip_chance": 100,
+        "arcade_credit_fill": ArcadeCreditFill.range_start,
+        "player_sprite": PlayerSprite.option_whipp,
+        "chests_required": 0,
+        "map_size": 19,
     },
 }
