@@ -733,6 +733,13 @@ def set_all_location_rules(world: HoVWorld) -> None:
     roomMetadata[ManorHiddenBottom2Room].subweaponsRequireAll = True
     roomMetadata[ManorHiddenBottom3Room].subweaponRequiredList = [SUBWEAPON.CLEATS, SUBWEAPON.BOMB, SUBWEAPON.WINGS]
     roomMetadata[ManorHiddenBottom3Room].subweaponsRequireAll = True
+        
+    array_push(techList, "ManorHiddenBottom3Room Cleat Lightning Tower")
+    if array_contains(techEnabled, array_last(techList)) :
+        roomMetadata[ManorHiddenBottom3Room].subweaponRequiredList = [SUBWEAPON.CLEATS, SUBWEAPON.WINGS, SUBWEAPON.KNIFE];
+        roomMetadata[ManorHiddenBottom3Room].subweaponsRequireAll = true;
+    
+    
     roomMetadata[ManorIntroFightRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.KNIFE, SUBWEAPON.CALTROP]
     roomMetadata[ManorIntroFightRoom].subweaponsRequireAll = True
     roomMetadata[ManorIntroFight2Room].isRandomizerRoom = False
