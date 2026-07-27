@@ -81,8 +81,8 @@ class TestEasyModeLogic(HoVTestBase):
 
     def test_easy_mode_useful_not_progression(self) -> None:
         useful_item_list = self.get_items_by_name([
-            "Charcoal",
-            "Mutagen"
+            "Axe BOGO Tag",
+            "Knife BOGO Tag"
         ])
 
         # Then, let's verify that they have the useful classification and NOT the progression classification.
