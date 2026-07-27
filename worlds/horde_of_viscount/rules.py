@@ -912,6 +912,11 @@ def set_all_location_rules(world: HoVWorld) -> None:
                 chestBreakRule = Has(EQUIP["CHEST_BREAKER"])
                 world.set_rule(location, chestBreakRule)
 
+            # If the room has loot requirements, we need to set a rule on the location that requires the player to have the required loot.
+            if len(roomMetadataItem.lootRequiredList) > 0:
+                lootRule = HasAll(*roomMetadataItem.lootRequiredList)
+                world.set_rule(location, lootRule)
+
 
 def set_completion_condition(world: HoVWorld) -> None:
     # In our case, we went for the Victory event design pattern (see create_events() in locations.py).
