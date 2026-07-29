@@ -319,6 +319,7 @@ ITEM_NAME_TO_ID = {
     "Full Whip Sling": 4190,
 }
 EQUIP = {
+    "FREE_WING": "Double Jump",
     "WHIP_DURABLE_A": "Whip Durable A",
     "WHIP_DURABLE_B": "Whip Durable B",
     "CHEST_BREAKER": "Chest Breaker"

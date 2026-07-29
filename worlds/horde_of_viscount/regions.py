@@ -3,6 +3,8 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from BaseClasses import Entrance, EntranceType, Region
+from worlds.horde_of_viscount.items import SUBWEAPON
+from worlds.zillion import region
 
 if TYPE_CHECKING:
     from .world import HoVWorld
@@ -120,8 +122,9 @@ def create_all_regions(world: HoVWorld) -> None:
 					hoVRegionSet.world_map_west, hoVRegionSet.kingdom_castle, 
 					hoVRegionSet.world_map_southwest, hoVRegionSet.tepid_volcano, 
 					hoVRegionSet.crater,
-					hoVRegionSet.world_map_south, hoVRegionSet.viscount_manor, 
+					hoVRegionSet.world_map_south, 
 					hoVRegionSet.crimson_cove_entrance,
+					hoVRegionSet.viscount_manor, 
 					hoVRegionSet.viscount_lab, 
 					hoVRegionSet.credits_overlook,
 					hoVRegionSet.credits_peak,
@@ -134,14 +137,43 @@ def create_all_regions(world: HoVWorld) -> None:
 def connect_regions(world: HoVWorld) -> None:
     # The list is sequential in the order that the player would naturally progress through the game, so we can just connect each region to the next one in the list.
     hoVRegionSet = get_region_set(world)
+    specificRuleList = [ hoVRegionSet.world_map_west.name, hoVRegionSet.world_map_southwest.name, hoVRegionSet.world_map_south.name, hoVRegionSet.crimson_cove_entrance.name ]
     for i in range(len(hoVRegionSet.list) - 1):
         region = hoVRegionSet.list[i]
         nextRegion = hoVRegionSet.list[i + 1]
 
-		# An even easier way is to use the region.connect helper.
-        region.connect(nextRegion, 
-			region.name + " to " + nextRegion.name)
+		# Ignore the regions that have specific rules, as we will add those rules later.
+        if region.name in specificRuleList:
+            continue
+        else:
+            region.connect(nextRegion, 
+				region.name + " to " + nextRegion.name)
+        
 
+	# Add every rule for double jump
+    hoVRegionSet.world_map_west.connect(
+		hoVRegionSet.kingdom_castle, 
+			hoVRegionSet.world_map_west.name + " to " + hoVRegionSet.kingdom_castle.name, 
+					lambda state: state.has("Double Jump", world.player))
+    hoVRegionSet.world_map_southwest.connect(
+          hoVRegionSet.tepid_volcano, 
+              hoVRegionSet.world_map_southwest.name + " to " + hoVRegionSet.tepid_volcano.name, 
+						lambda state: state.has("Double Jump", world.player))
+    hoVRegionSet.world_map_south.connect(
+          hoVRegionSet.viscount_manor, 
+              hoVRegionSet.world_map_south.name + " to " + hoVRegionSet.viscount_manor.name, 
+						lambda state: state.has("Double Jump", world.player))
+    hoVRegionSet.crimson_cove_entrance.connect(
+          hoVRegionSet.viscount_manor, 
+              hoVRegionSet.crimson_cove_entrance.name + " to " + hoVRegionSet.viscount_manor.name, 
+						lambda state: state.has("Double Jump", world.player) 
+							and state.has(SUBWEAPON.KNIFE, world.player) 
+							and state.has(SUBWEAPON.AXE, world.player) 
+							and state.has(SUBWEAPON.BOMB, world.player) 
+							and state.has(SUBWEAPON.WINGS, world.player) 
+							and state.has(SUBWEAPON.CLEATS, world.player) 
+							and state.has(SUBWEAPON.CALTROP, world.player))
+    
     # Fill in the misc connections that aren't just "next region in the list".
     hoVRegionSet.world_map_north_west.connect(
           hoVRegionSet.world_map_west, 
