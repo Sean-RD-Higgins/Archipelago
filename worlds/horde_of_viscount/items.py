@@ -7,6 +7,21 @@ from BaseClasses import Item, ItemClassification
 if TYPE_CHECKING:
     from .world import HoVWorld
 
+class EQUIP():
+    WHIP_PIERCE = "Whip Oil"
+    SUB_REFILL = "Sub Refill"
+    SUB_REFILL_FREE = "Sub Free-fill"
+    WINGS_ONE_FREE = "Double Jump"
+    WHIP_DURABLE_A = "Whip Durable A"
+    WHIP_DURABLE_B = "Whip Durable B"
+    CHEST_BREAKER = "Chest Breaker"
+    SHOW_DAMAGE = "Nerd Glasses"
+    CUSTOM_COMMANDS = "Custom Command"
+    CUSTOM_JUMP = "Custom Jump"
+    CUSTOM_ATTACKS = "Custom Attacks"
+    MAP_HEAL_MAX = "Cast Map"
+
+
 class SUBWEAPON():
     BOMB = "Launch Bomb"
     CALTROP = "Backflip Caltrop"
@@ -43,36 +58,39 @@ class ITEM():
     CHARCOAL = "Charcoal"
     MUTAGEN = "Mutagen"
 
+class FOOD():
+    ROOM_REDO = "Arcade Credit"
+
 # Every item must have a unique integer ID associated with it.
 # We will have a lookup from item name to ID here that, in world.py, we will import and bind to the world class.
 # Even if an item doesn't exist on specific options, it must be present in this lookup.
 # WE CANNOT START THE ITEM IDs AS 0, AS 0 IS RESERVED FOR "NO ITEM" IN AP. START AT 1.
 ITEM_NAME_TO_ID = {
 
-    "Launch Bomb": 1,
-    "Backflip Caltrop": 2,
-    "Climbing Axe": 3,
-    "Dash Knife": 4,
-    "Jump Wing": 5,
-    "Pogo Cleats": 6,
+    SUBWEAPON.BOMB: 1,
+    SUBWEAPON.CALTROP: 2,
+    SUBWEAPON.AXE: 3,
+    SUBWEAPON.KNIFE: 4,
+    SUBWEAPON.WINGS: 5,
+    SUBWEAPON.CLEATS: 6,
 
-    "Goo": 1000,
-    "Fiber": 1001,
-    "Protein": 1002,
-    "Rock": 1003,
-    "Tarsus": 1004,
-    "Wood": 1005,
-    "Freshwater": 1006,
-    "Herb": 1007,
-    "Metal": 1008,
-    "Oil": 1009,
-    "Flour": 1010,
-    "Yeast": 1011,
-    "Feather": 1012,
-    "Bone": 1013,
-    "Shell": 1014,
-    "Charcoal": 1015,
-    "Mutagen": 1016,
+    ITEM.GOO: 1000,
+    ITEM.FIBER: 1001,
+    ITEM.PROTEIN: 1002,
+    ITEM.ROCK: 1003,
+    ITEM.TARSUS: 1004,
+    ITEM.WOOD: 1005,
+    ITEM.FRESHWATER: 1006,
+    ITEM.HERB: 1007,
+    ITEM.METAL: 1008,
+    ITEM.OIL: 1009,
+    ITEM.FLOUR: 1010,
+    ITEM.YEAST: 1011,
+    ITEM.FEATHER: 1012,
+    ITEM.BONE: 1013,
+    ITEM.SHELL: 1014,
+    ITEM.CHARCOAL: 1015,
+    ITEM.MUTAGEN: 1016,
     "Spicy Pepper": 1017,
     "Viscous Tar": 1018,
     "Novaculite": 1019,
@@ -122,7 +140,7 @@ ITEM_NAME_TO_ID = {
     "Liquid Iron": 2033,
     "Solid Iron": 2034,
     "Pill Iron": 2035,
-    "Arcade Credit": 2036,
+    FOOD.ROOM_REDO: 2036,
 
     "Empty Slot": 3000,
 
@@ -153,13 +171,13 @@ ITEM_NAME_TO_ID = {
     "Bomb Oil": 4024,
     "Cleat Oil": 4025,
     "Wings Oil": 4026,
-    "LOOT_GRAB_WHIP": 4027,
+    "Loot Whip Magnet": 4027,
     "Loot Sub Magnet": 4028,
     "Loot Magnet": 4029,
     "Loot Magnet Ex": 4030,
     "Invinci-Go": 4031,
     "Invinci-Bro": 4032,
-    "Whip Oil": 4033,
+    EQUIP.WHIP_PIERCE: 4033,
     "Axe BOGO Tag": 4034,
     "Knife BOGO Tag": 4035,
     "Caltrop BOGO Tag": 4036,
@@ -212,12 +230,12 @@ ITEM_NAME_TO_ID = {
     "Bomb Whet-stone": 4083,
     "Cleat Whet-stone": 4084,
     "Wing Whet-stone": 4085,
-    "Nerd Glasses": 4086,
+    EQUIP.SHOW_DAMAGE: 4086,
     "Quake Heels": 4087,
     "Quake Toes": 4088,
-    "Custom Command": 4089,
-    "Custom Jump": 4090,
-    "Custom Attacks": 4091,
+    EQUIP.CUSTOM_COMMANDS: 4089,
+    EQUIP.CUSTOM_JUMP: 4090,
+    EQUIP.CUSTOM_ATTACKS: 4091,
     "3kg Ton": 4092,
     "Padded Full-plate": 4093,
     "Whip Sling": 4094,
@@ -259,7 +277,7 @@ ITEM_NAME_TO_ID = {
     "Bandaid Map": 4130,
     "Gauze Map": 4131,
     "Patch Map": 4132,
-    "Cast Map": 4133,
+    EQUIP.MAP_HEAL_MAX: 4133,
     "Grip Red Flag": 4134,
     "Grip Max Flag": 4135,
     "Grip Whet-stone": 4136,
@@ -297,7 +315,7 @@ ITEM_NAME_TO_ID = {
     "Cracked Loot Magnet": 4168,
     "Thin Loot Magnet": 4169,
     "Course Loot Magnet": 4170,
-    "Double Jump": 4171,
+    EQUIP.WINGS_ONE_FREE: 4171,
     "Restart Stage Bow": 4172,
     "Elastic Belt": 4173,
     "Perma- loss Hairpin": 4174,
@@ -309,50 +327,44 @@ ITEM_NAME_TO_ID = {
     "Sub Full Flag": 4180,
     "Sub Thin Flag": 4181,
     "Rigid Armor": 4182,
-    "Sub Refill": 4183,
-    "Sub Free-fill": 4184,
+    EQUIP.SUB_REFILL: 4183,
+    EQUIP.SUB_REFILL_FREE: 4184,
     "Food Refill": 4185,
     "Food Free-fill": 4186,
-    "Whip Durable A": 4187,
-    "Whip Durable B": 4188,
-    "Chest Breaker": 4189,
+    EQUIP.WHIP_DURABLE_A: 4187,
+    EQUIP.WHIP_DURABLE_B: 4188,
+    EQUIP.CHEST_BREAKER: 4189,
     "Full Whip Sling": 4190,
-}
-EQUIP = {
-    "FREE_WING": "Double Jump",
-    "WHIP_DURABLE_A": "Whip Durable A",
-    "WHIP_DURABLE_B": "Whip Durable B",
-    "CHEST_BREAKER": "Chest Breaker"
 }
 
 # Items should have a defined default classification.
 # In our case, we will make a dictionary from item name to classification.
 DEFAULT_ITEM_CLASSIFICATIONS = {
 
-    "Launch Bomb": ItemClassification.progression | ItemClassification.useful,
-    "Backflip Caltrop": ItemClassification.progression | ItemClassification.useful,
-    "Climbing Axe": ItemClassification.progression | ItemClassification.useful,
-    "Dash Knife": ItemClassification.progression | ItemClassification.useful,
-    "Jump Wing": ItemClassification.progression | ItemClassification.useful,
-    "Pogo Cleats": ItemClassification.progression | ItemClassification.useful,
+    SUBWEAPON.BOMB: ItemClassification.progression | ItemClassification.useful,
+    SUBWEAPON.CALTROP: ItemClassification.progression | ItemClassification.useful,
+    SUBWEAPON.AXE: ItemClassification.progression | ItemClassification.useful,
+    SUBWEAPON.KNIFE: ItemClassification.progression | ItemClassification.useful,
+    SUBWEAPON.WINGS: ItemClassification.progression | ItemClassification.useful,
+    SUBWEAPON.CLEATS: ItemClassification.progression | ItemClassification.useful,
 
-    "Goo": ItemClassification.progression | ItemClassification.useful,
-    "Fiber": ItemClassification.progression | ItemClassification.useful,
-    "Protein": ItemClassification.progression | ItemClassification.useful,
-    "Rock": ItemClassification.progression | ItemClassification.useful,
-    "Tarsus": ItemClassification.progression | ItemClassification.useful,
-    "Wood": ItemClassification.progression | ItemClassification.useful,
-    "Freshwater": ItemClassification.progression | ItemClassification.useful,
-    "Herb": ItemClassification.progression | ItemClassification.useful,
-    "Metal": ItemClassification.progression | ItemClassification.useful,
-    "Oil": ItemClassification.progression | ItemClassification.useful,
-    "Flour": ItemClassification.progression | ItemClassification.useful,
-    "Yeast": ItemClassification.progression | ItemClassification.useful,
-    "Feather": ItemClassification.progression | ItemClassification.useful,
-    "Bone": ItemClassification.progression | ItemClassification.useful,
-    "Shell": ItemClassification.progression | ItemClassification.useful,
-    "Charcoal": ItemClassification.progression | ItemClassification.useful,
-    "Mutagen": ItemClassification.progression | ItemClassification.useful,
+    ITEM.GOO: ItemClassification.progression | ItemClassification.useful,
+    ITEM.FIBER: ItemClassification.progression | ItemClassification.useful,
+    ITEM.PROTEIN: ItemClassification.progression | ItemClassification.useful,
+    ITEM.ROCK: ItemClassification.progression | ItemClassification.useful,
+    ITEM.TARSUS: ItemClassification.progression | ItemClassification.useful,
+    ITEM.WOOD: ItemClassification.progression | ItemClassification.useful,
+    ITEM.FRESHWATER: ItemClassification.progression | ItemClassification.useful,
+    ITEM.HERB: ItemClassification.progression | ItemClassification.useful,
+    ITEM.METAL: ItemClassification.progression | ItemClassification.useful,
+    ITEM.OIL: ItemClassification.progression | ItemClassification.useful,
+    ITEM.FLOUR: ItemClassification.progression | ItemClassification.useful,
+    ITEM.YEAST: ItemClassification.progression | ItemClassification.useful,
+    ITEM.FEATHER: ItemClassification.progression | ItemClassification.useful,
+    ITEM.BONE: ItemClassification.progression | ItemClassification.useful,
+    ITEM.SHELL: ItemClassification.progression | ItemClassification.useful,
+    ITEM.CHARCOAL: ItemClassification.progression | ItemClassification.useful,
+    ITEM.MUTAGEN: ItemClassification.progression | ItemClassification.useful,
     "Spicy Pepper": ItemClassification.trap,
     "Viscous Tar": ItemClassification.trap,
     "Novaculite": ItemClassification.trap,
@@ -402,7 +414,7 @@ DEFAULT_ITEM_CLASSIFICATIONS = {
     "Liquid Iron": ItemClassification.filler,
     "Solid Iron": ItemClassification.filler,
     "Pill Iron": ItemClassification.filler,
-    "Arcade Credit": ItemClassification.filler,
+    FOOD.ROOM_REDO: ItemClassification.filler,
 
     "Empty Slot": ItemClassification.trap,
 
@@ -433,13 +445,13 @@ DEFAULT_ITEM_CLASSIFICATIONS = {
     "Bomb Oil": ItemClassification.useful,
     "Cleat Oil": ItemClassification.filler,
     "Wings Oil": ItemClassification.useful,
-    "LOOT_GRAB_WHIP": ItemClassification.filler,
+    "Loot Whip Magnet": ItemClassification.filler,
     "Loot Sub Magnet": ItemClassification.filler,
     "Loot Magnet": ItemClassification.filler,
     "Loot Magnet Ex": ItemClassification.filler,
     "Invinci-Go": ItemClassification.filler,
     "Invinci-Bro": ItemClassification.filler,
-    "Whip Oil": ItemClassification.progression | ItemClassification.useful,
+    EQUIP.WHIP_PIERCE: ItemClassification.progression | ItemClassification.useful,
     "Axe BOGO Tag": ItemClassification.useful,
     "Knife BOGO Tag": ItemClassification.useful,
     "Caltrop BOGO Tag": ItemClassification.useful,
@@ -492,12 +504,12 @@ DEFAULT_ITEM_CLASSIFICATIONS = {
     "Bomb Whet-stone": ItemClassification.useful,
     "Cleat Whet-stone": ItemClassification.useful,
     "Wing Whet-stone": ItemClassification.useful,
-    "Nerd Glasses": ItemClassification.filler,
+    EQUIP.SHOW_DAMAGE: ItemClassification.filler,
     "Quake Heels": ItemClassification.filler,
     "Quake Toes": ItemClassification.filler,
-    "Custom Command": ItemClassification.useful,
-    "Custom Jump": ItemClassification.useful,
-    "Custom Attacks": ItemClassification.useful,
+    EQUIP.CUSTOM_COMMANDS: ItemClassification.useful,
+    EQUIP.CUSTOM_JUMP: ItemClassification.useful,
+    EQUIP.CUSTOM_ATTACKS: ItemClassification.useful,
     "3kg Ton": ItemClassification.useful,
     "Padded Full-plate": ItemClassification.filler,
     "Whip Sling": ItemClassification.useful,
@@ -539,7 +551,7 @@ DEFAULT_ITEM_CLASSIFICATIONS = {
     "Bandaid Map": ItemClassification.useful,
     "Gauze Map": ItemClassification.useful,
     "Patch Map": ItemClassification.useful,
-    "Cast Map": ItemClassification.useful,
+    EQUIP.MAP_HEAL_MAX: ItemClassification.useful,
     "Grip Red Flag": ItemClassification.filler,
     "Grip Max Flag": ItemClassification.filler,
     "Grip Whet-stone": ItemClassification.filler,
@@ -577,7 +589,7 @@ DEFAULT_ITEM_CLASSIFICATIONS = {
     "Cracked Loot Magnet": ItemClassification.trap,
     "Thin Loot Magnet": ItemClassification.trap,
     "Course Loot Magnet": ItemClassification.trap,
-    "Double Jump": ItemClassification.progression | ItemClassification.useful,
+    EQUIP.WINGS_ONE_FREE: ItemClassification.progression | ItemClassification.useful,
     "Restart Stage Bow": ItemClassification.trap,
     "Elastic Belt": ItemClassification.trap,
     "Perma- loss Hairpin": ItemClassification.trap,
@@ -589,13 +601,13 @@ DEFAULT_ITEM_CLASSIFICATIONS = {
     "Sub Full Flag": ItemClassification.filler,
     "Sub Thin Flag": ItemClassification.trap,
     "Rigid Armor": ItemClassification.filler,
-    "Sub Refill": ItemClassification.progression | ItemClassification.useful,
-    "Sub Free-fill": ItemClassification.progression | ItemClassification.useful,
+    EQUIP.SUB_REFILL: ItemClassification.progression | ItemClassification.useful,
+    EQUIP.SUB_REFILL_FREE: ItemClassification.progression | ItemClassification.useful,
     "Food Refill": ItemClassification.filler,
     "Food Free-fill": ItemClassification.filler,
-    "Whip Durable A": ItemClassification.progression | ItemClassification.useful,
-    "Whip Durable B": ItemClassification.progression | ItemClassification.useful,
-    "Chest Breaker": ItemClassification.progression | ItemClassification.useful,
+    EQUIP.WHIP_DURABLE_A: ItemClassification.progression | ItemClassification.useful,
+    EQUIP.WHIP_DURABLE_B: ItemClassification.progression | ItemClassification.useful,
+    EQUIP.CHEST_BREAKER: ItemClassification.progression | ItemClassification.useful,
     "Full Whip Sling": ItemClassification.useful,
 }
 
@@ -649,23 +661,23 @@ TRAP_ITEM_NAME_LIST = [
 ]
 
 FILLER_ITEM_NAME_LIST = [
-    "Goo",
-    "Fiber",
-    "Protein",
-    "Rock",
-    "Tarsus",
-    "Wood",
-    "Freshwater",
-    "Herb",
-    "Metal",
-    "Oil",
-    "Flour",
-    "Yeast",
-    "Feather",
-    "Bone",
-    "Shell",
-    "Charcoal",
-    "Mutagen",
+    ITEM.GOO,
+    ITEM.FIBER,
+    ITEM.PROTEIN,
+    ITEM.ROCK,
+    ITEM.TARSUS,
+    ITEM.WOOD,
+    ITEM.FRESHWATER,
+    ITEM.HERB,
+    ITEM.METAL,
+    ITEM.OIL,
+    ITEM.FLOUR,
+    ITEM.YEAST,
+    ITEM.FEATHER,
+    ITEM.BONE,
+    ITEM.SHELL,
+    ITEM.CHARCOAL,
+    ITEM.MUTAGEN,
     "Beetroot",
     "Eggplant",
     "Bread",
@@ -702,10 +714,10 @@ FILLER_ITEM_NAME_LIST = [
     "Liquid Iron",
     "Solid Iron",
     "Pill Iron",
-    "Arcade Credit",
+    FOOD.ROOM_REDO,
     "Caltrop Oil",
     "Cleat Oil",
-    "LOOT_GRAB_WHIP",
+    "Loot Whip Magnet",
     "Loot Sub Magnet",
     "Loot Magnet",
     "Loot Magnet Ex",
@@ -722,7 +734,7 @@ FILLER_ITEM_NAME_LIST = [
     "Padded Vam-brace",
     "Padded Helm",
     "Padded Greaves",
-    "Nerd Glasses",
+    EQUIP.SHOW_DAMAGE,
     "Quake Heels",
     "Quake Toes",
     "Padded Full-plate",
@@ -770,41 +782,41 @@ FILLER_ITEM_NAME_LIST = [
 ]
 
 HARDMODE_FILLER_LIST = [
-    "Whip Durable B",
-    "Sub Refill", 
+    EQUIP.WHIP_DURABLE_B,
+    EQUIP.SUB_REFILL,
 ]
 
 PROGRESSION_ITEM_NAME_LIST = [
-    "Goo",
-    "Fiber",
-    "Protein",
-    "Rock",
-    "Tarsus",
-    "Wood",
-    "Freshwater",
-    "Herb",
-    "Metal",
-    "Oil",
-    "Flour",
-    "Yeast",
-    "Feather",
-    "Bone",
-    "Shell",
-    "Charcoal",
-    "Mutagen",
-    "Launch Bomb",
-    "Backflip Caltrop",
-    "Climbing Axe",
-    "Dash Knife",
-    "Jump Wing",
-    "Pogo Cleats",
-    "Whip Oil",
-    "Double Jump",
-    "Sub Refill",
-    "Sub Free-fill",
-    "Whip Durable A",
-    "Whip Durable B",
-    "Chest Breaker",
+    ITEM.GOO,
+    ITEM.FIBER,
+    ITEM.PROTEIN,
+    ITEM.ROCK,
+    ITEM.TARSUS,
+    ITEM.WOOD,
+    ITEM.FRESHWATER,
+    ITEM.HERB,
+    ITEM.METAL,
+    ITEM.OIL,
+    ITEM.FLOUR,
+    ITEM.YEAST,
+    ITEM.FEATHER,
+    ITEM.BONE,
+    ITEM.SHELL,
+    ITEM.CHARCOAL,
+    ITEM.MUTAGEN,
+    SUBWEAPON.BOMB,
+    SUBWEAPON.CALTROP,
+    SUBWEAPON.AXE,
+    SUBWEAPON.KNIFE,
+    SUBWEAPON.WINGS,
+    SUBWEAPON.CLEATS,
+    EQUIP.WHIP_PIERCE,
+    EQUIP.WINGS_ONE_FREE,
+    EQUIP.SUB_REFILL,
+    EQUIP.SUB_REFILL_FREE,
+    EQUIP.WHIP_DURABLE_A,
+    EQUIP.WHIP_DURABLE_B,
+    EQUIP.CHEST_BREAKER,
     "Spirit Chalk",
     "Spirit Balm",
     "Spirit Spray",
@@ -815,8 +827,8 @@ PROGRESSION_ITEM_NAME_LIST = [
     "Spirit Body Wash",
     "Spirit Oin'mnt",
     "Spirit Lather",
-    "Sub Refill",
-    "Sub Free-fill",
+    EQUIP.SUB_REFILL,
+    EQUIP.SUB_REFILL_FREE,
     "Health Flag",
     "Heart Brooch",
     "Heart Anklet",
@@ -882,10 +894,8 @@ def create_all_items(world: HoVWorld) -> None:
     # First, we create a list containing all the items that always exist.
     itempool: list[Item] = []
     
-    for itemName in PROGRESSION_ITEM_NAME_LIST:
+    for itemName in DEFAULT_ITEM_CLASSIFICATIONS.keys():
         itempool += world.create_item(itemName),
-
-    # TODO handle options
 
 
     # Archipelago requires that each world submits as many locations as it submits items.
@@ -952,5 +962,36 @@ def create_all_items(world: HoVWorld) -> None:
     # If you want to add your own precollected items, you can do so via world.push_precollected().
     if world.options.arcade_credit_fill:
         # We're adding a filler item, but you can also add progression items to the player's precollected inventory.
-        arcade_credit = world.create_item("Arcade Credit")
-        world.push_precollected(arcade_credit)
+        arcade_credit = next(item for item in itempool if item.name == FOOD.ROOM_REDO)
+        for _ in range(world.options.arcade_credit_fill.value):
+            world.push_precollected(arcade_credit)
+    if world.options.whip_oil:
+        whip_oil = next(item for item in itempool if item.name == EQUIP.WHIP_PIERCE)
+        world.push_precollected(whip_oil)
+    if world.options.sub_refill:
+        sub_refill = next(item for item in itempool if item.name == EQUIP.SUB_REFILL)
+        world.push_precollected(sub_refill)
+    if world.options.sub_freefill:
+        sub_freefill = next(item for item in itempool if item.name == EQUIP.SUB_REFILL_FREE)
+        world.push_precollected(sub_freefill)
+    if world.options.nerd_glasses:
+        nerd_glasses = next(item for item in itempool if item.name == EQUIP.SHOW_DAMAGE)
+        world.push_precollected(nerd_glasses)
+    if world.options.custom_command_equips:
+        custom_commands = next(item for item in itempool if item.name == EQUIP.CUSTOM_COMMANDS)
+        world.push_precollected(custom_commands)
+        custom_jump = next(item for item in itempool if item.name == EQUIP.CUSTOM_JUMP)
+        world.push_precollected(custom_jump)
+        custom_attacks = next(item for item in itempool if item.name == EQUIP.CUSTOM_ATTACKS)
+        world.push_precollected(custom_attacks)
+    if world.options.whip_rank2:
+        whip_rank2 = next(item for item in itempool if item.name == EQUIP.WHIP_DURABLE_A)
+        world.push_precollected(whip_rank2)
+    if world.options.whip_rank3:
+        whip_rank3 = next(item for item in itempool if item.name == EQUIP.WHIP_DURABLE_B)
+        world.push_precollected(whip_rank3)
+    if world.options.heal_hub:
+        heal_hub = next(item for item in itempool if item.name == EQUIP.MAP_HEAL_MAX)
+        world.push_precollected(heal_hub)
+
+

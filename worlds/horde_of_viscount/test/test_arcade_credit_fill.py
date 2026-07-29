@@ -1,3 +1,4 @@
+from worlds.horde_of_viscount.items import FOOD
 from worlds.horde_of_viscount.options import HoVOptions
 
 from .bases import HoVTestBase
@@ -14,5 +15,4 @@ class TestExtraStartingItemsOff(HoVTestBase):
     run_default_tests = False
 
     def test_extra_starting_arcade_credit_doesnt_exist(self) -> None:
-        self.assertFalse(self.world.multiworld.get_items().__contains__("Arcade Credit"))
-
+        self.assertFalse(self.world.multiworld.get_items().__contains__(FOOD.ROOM_REDO))

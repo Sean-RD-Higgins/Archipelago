@@ -888,6 +888,11 @@ def set_all_location_rules(world: HoVWorld) -> None:
         for locationName in locationList:
             location = world.get_location(locationName)
 
+            hoVLocation = next((loc for loc in LOCATION_DATA_LIST if loc.ap_location_name == locationName), None)
+            if hoVLocation is not None and hoVLocation.isNoSubweaponRequired:
+                # Skip setting rules if THIS SPECIFIC location does not require subweapons
+                continue  
+
             # If the room has a dependency, we need to set a rule on the location that requires the player to be able to reach the dependent room's locations.
             if roomMetadataItem.isDependant:
                 dependantLocationList = ROOM_ID_TO_AP_LOCATION_NAME_LIST_LIST[roomMetadataItem.dependRoom]
@@ -916,7 +921,7 @@ def set_all_location_rules(world: HoVWorld) -> None:
 
             # Some rooms have floating chests, which can only be opened by equipping the Chest Breaker EQUIP
             if roomMetadataItem.isChestBreakRequired:
-                chestBreakRule = Has(EQUIP["CHEST_BREAKER"])
+                chestBreakRule = Has(EQUIP.CHEST_BREAKER)
                 world.set_rule(location, chestBreakRule)
 
             # If the room has loot requirements, we need to set a rule on the location that requires the player to have the required loot.

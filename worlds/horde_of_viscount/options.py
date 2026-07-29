@@ -27,6 +27,7 @@ class CustomCommandEquips(Toggle):
 
     # You'll also want to set a display name, which will determine what the option is called on the website.
     display_name = "Custom Command Equips"
+    default = True
 class NerdGlasses(Toggle):
     """
     Start with Nerd Glasses, allowing you to see damage numbers.
@@ -36,6 +37,7 @@ class NerdGlasses(Toggle):
 
     # You'll also want to set a display name, which will determine what the option is called on the website.
     display_name = "Nerd Glasses"
+    default = True
 class WhipOil(Toggle):
     """
     Start with Whip Oil, allowing you to pierce through Hordemen with your Whip.
@@ -45,6 +47,28 @@ class WhipOil(Toggle):
 
     # You'll also want to set a display name, which will determine what the option is called on the website.
     display_name = "Whip Oil"
+    default = True
+
+class SubRefill(Toggle):
+    """
+    Start with Sub Refill, which will give you some subweapons from storage when going to a new room. Logic requires this, disable at your own risk.
+    """
+    display_name = "Sub Refill"
+    default = True
+
+class SubFreefill(Toggle):
+    """
+    Start with Sub Freefill, which will give you some subweapons when going to a new room. Logic requires this, disable at your own risk.
+    """
+    display_name = "Sub Freefill"
+    default = True
+
+class DoubleJump(Toggle):
+    """
+    Start with the Double Jump Equip
+    """
+    display_name = "Double Jump"
+    default = False
 
 class HardMode(Toggle):
     """
@@ -70,6 +94,7 @@ class HealHub(Toggle):
     """
 
     display_name = "Hub Heal"
+    default = False
 
 class HubSubFill(Toggle):
     """
@@ -197,18 +222,23 @@ class HoVOptions(PerGameCommonOptions):
     custom_command_equips: CustomCommandEquips
     nerd_glasses: NerdGlasses
     whip_oil: WhipOil
+    arcade_credit_fill: ArcadeCreditFill
+
+    heal_hub: HealHub
+    whip_rank2: WhipRank2
+    whip_rank3: WhipRank3
+    double_jump: DoubleJump
+
+    sub_refill: SubRefill
+    sub_freefill: SubFreefill
 
     hard_mode: HardMode
     subweapon_spawn: SubweaponSpawn
-    heal_hub: HealHub
     hub_sub_fill: HubSubFill
     hub_food_fill: HubFoodFill
-    whip_rank2: WhipRank2
-    whip_rank3: WhipRank3
     drops_plus: DropsPlus
     chest_choice: ChestChoice
     bad_equip_chance: BadEquipChance
-    arcade_credit_fill: ArcadeCreditFill
     player_sprite: PlayerSprite
     chests_required: ChestsRequired
     map_size: MapSize
@@ -218,16 +248,20 @@ class HoVOptions(PerGameCommonOptions):
 option_groups = [
     OptionGroup(
         "Quality of Life",
-        [CustomCommandEquips, NerdGlasses, WhipOil],
+        [CustomCommandEquips, NerdGlasses, WhipOil, ArcadeCreditFill],
     ),
     OptionGroup(
-        "Boons",
-        [WhipRank2, WhipRank3],
+        "Much Easier Mode",
+        [HealHub, DoubleJump, WhipRank2, WhipRank3],
+    ),
+    OptionGroup(
+        "Customize",
+        [SubRefill, SubFreefill],
     ),
     OptionGroup(
         "Roguelite Mode",
-        [HardMode, MapSize, SubweaponSpawn, ChestsRequired, PlayerSprite, HealHub, HubSubFill, HubFoodFill, 
-            DropsPlus, ChestChoice, BadEquipChance, ArcadeCreditFill],
+        [HardMode, MapSize, SubweaponSpawn, ChestsRequired, PlayerSprite, HubSubFill, HubFoodFill, 
+            DropsPlus, ChestChoice, BadEquipChance],
     ),
 ]
 
@@ -237,18 +271,24 @@ option_presets = {
         "custom_command_equips": True,
         "nerd_glasses": True,
         "whip_oil": True,
+        "arcade_credit_fill": ArcadeCreditFill.range_end,
+
+        "whip_rank2": True,
+        "whip_rank3": True,
+        "heal_hub": True,
+        "double_jump": True,
+
+        "sub_refill": True,
+        "sub_freefill": True,
 
         "hard_mode": False,
         "subweapon_spawn": True,
         "heal_hub": True,
         "hub_sub_fill": True,
         "hub_food_fill": True,
-        "whip_rank2": True,
-        "whip_rank3": True,
         "drops_plus": True,
         "chest_choice": 3,
         "bad_equip_chance": 0,
-        "arcade_credit_fill": ArcadeCreditFill.range_end,
         "player_sprite": PlayerSprite.option_whipp,
         "chests_required": 1,
         "map_size": 9,
@@ -257,18 +297,24 @@ option_presets = {
         "custom_command_equips": True,
         "nerd_glasses": True,
         "whip_oil": True,
+        "arcade_credit_fill": ArcadeCreditFill.range_end,
+
+        "heal_hub": True,
+        "double_jump": True,
+        "whip_rank2": False,
+        "whip_rank3": False,
+
+        "sub_refill": True,
+        "sub_freefill": True,
         
         "hard_mode": False,
         "subweapon_spawn": False,
         "heal_hub": False,
         "hub_sub_fill": False,
         "hub_food_fill": False,
-        "whip_rank2": False,
-        "whip_rank3": False,
         "drops_plus": False,
         "chest_choice": 2,
         "bad_equip_chance": 10,
-        "arcade_credit_fill": ArcadeCreditFill.range_end,
         "player_sprite": PlayerSprite.option_whipp,
         "chests_required": 3,
         "map_size": 15,
@@ -277,34 +323,49 @@ option_presets = {
         "custom_command_equips": True,
         "nerd_glasses": False,
         "whip_oil": False,
+        "arcade_credit_fill": ArcadeCreditFill.range_start,
+        
+        "heal_hub": True,
+        "double_jump": True,
+        "whip_rank2": False,
+        "whip_rank3": False,
+        
+        "sub_refill": True,
+        "sub_freefill": True,
         
         "hard_mode": True,
         "subweapon_spawn": False,
         "heal_hub": False,
         "hub_sub_fill": False,
         "hub_food_fill": False,
-        "whip_rank2": False,
-        "whip_rank3": False,
         "drops_plus": False,
         "chest_choice": 1,
         "bad_equip_chance": 50,
-        "arcade_credit_fill": ArcadeCreditFill.range_start,
         "player_sprite": PlayerSprite.option_whipp,
         "chests_required": 0,
         "map_size": 19,
     },
     "roguelite unfair": {
-        "hard_mode": True,
-        "subweapon_spawn": False,
+        "custom_command_equips": True,
+        "nerd_glasses": False,
+        "whip_oil": False,
+        "arcade_credit_fill": ArcadeCreditFill.range_start,
+
         "heal_hub": False,
-        "hub_sub_fill": False,
-        "hub_food_fill": False,
+        "double_jump": False,
         "whip_rank2": False,
         "whip_rank3": False,
+
+        "sub_refill": False,
+        "sub_freefill": False,
+        
+        "hard_mode": True,
+        "subweapon_spawn": False,
+        "hub_sub_fill": False,
+        "hub_food_fill": False,
         "drops_plus": False,
         "chest_choice": 1,
         "bad_equip_chance": 100,
-        "arcade_credit_fill": ArcadeCreditFill.range_start,
         "player_sprite": PlayerSprite.option_whipp,
         "chests_required": 0,
         "map_size": 19,
