@@ -783,6 +783,20 @@ def set_all_location_rules(world: HoVWorld) -> None:
     roomMetadata[TownGateRoom].lootRequiredList = [ITEM.FEATHER, ITEM.FRESHWATER];
     roomMetadata[CastleRampartsRoom].lootRequiredList = [ITEM.WOOD];
 
+    # Puzzle Room rules
+    roomMetadata[Knife3PuzzleRoom].lootRequiredList = [ITEM.WOOD, ITEM.HERB];
+    # Hospital + Butcher + Tinkerer Upgrade
+    roomMetadata[Caltrop3PuzzleRoom].itemRequiredList = [ITEM.WOOD, ITEM.HERB, ITEM.ROCK, ITEM.TARSUS, ITEM.GOO];
+    # Hospital + Butcher + Tinkerer + Apprentice Upgrade
+    roomMetadata[Axe3PuzzleRoom].itemRequiredList = [ITEM.WOOD, ITEM.HERB, ITEM.ROCK, ITEM.TARSUS, ITEM.GOO, ITEM.FIBER];
+    # Hospital + Butcher + Tinkerer + Apprentice + Shoemaker Upgrade
+    roomMetadata[Cleat3PuzzleRoom].itemRequiredList = [ITEM.WOOD, ITEM.HERB, ITEM.ROCK, ITEM.TARSUS, ITEM.GOO, ITEM.FIBER, ITEM.METAL];
+    # Hospital + Butcher + Tinkerer + Apprentice + Shoemaker + Seamstress Upgrade
+    roomMetadata[Wing3PuzzleRoom].itemRequiredList = [ITEM.WOOD, ITEM.HERB, ITEM.ROCK, ITEM.TARSUS, ITEM.GOO, ITEM.FIBER, ITEM.METAL, ITEM.FEATHER];
+    # Hospital + Butcher + Tinkerer + Apprentice + Shoemaker + Seamstress + Boomer Upgrade
+    roomMetadata[Bomb3PuzzleRoom].itemRequiredList = [ITEM.WOOD, ITEM.HERB, ITEM.ROCK, ITEM.TARSUS, ITEM.GOO, ITEM.FIBER, ITEM.METAL, ITEM.FEATHER, ITEM.BONE, ITEM.FLOUR];
+    
+
     # Has no chest
     roomMetadata[StartRoom] = RoomMetadata(StartRoom, StartRoom, StartRoom, undefined, false, false, false, false, false, 0, false, false, false)
     roomMetadata[MainMenuRoom] = RoomMetadata(StartRoom, StartRoom, StartRoom, undefined, false, false, false, false, false, 0, false, false, false)
