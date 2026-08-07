@@ -18,6 +18,18 @@ from Options import Choice, OptionGroup, PerGameCommonOptions, Range, Toggle
 # A toggle is an option that can either be on or off. This will be represented by a checkbox on the website.
 # The default for a toggle is "off".
 # If you want a toggle to be on by default, you can use the "DefaultOnToggle" class instead of the "Toggle" class.
+
+class LevelUpProgression(Range):
+    """
+    Smaller number means materials required for leveling up is easier to find. Larger number means the materials required will not be as easily obtainable.
+    """
+
+    display_name = "Level Up Progression"
+
+    range_start = 0
+    range_end = 100
+    default = 50
+
 class CustomCommandEquips(Toggle):
     """
     Start with all custom command equips so you can map your buttons to directions + Jump, Attack, or Subweapon.
@@ -48,6 +60,17 @@ class WhipOil(Toggle):
     # You'll also want to set a display name, which will determine what the option is called on the website.
     display_name = "Whip Oil"
     default = True
+
+class DashKnife(Toggle):
+    """
+    Start with Dash Knife, to traverse horizontally.
+    """
+
+    # The docstring of an option is used as the description on the website and in the template yaml.
+
+    # You'll also want to set a display name, which will determine what the option is called on the website.
+    display_name = "Dash Knife"
+    default = False
 
 class SubRefill(Toggle):
     """
@@ -223,11 +246,13 @@ class HoVOptions(PerGameCommonOptions):
     nerd_glasses: NerdGlasses
     whip_oil: WhipOil
     arcade_credit_fill: ArcadeCreditFill
+    level_up_progression: LevelUpProgression
 
     heal_hub: HealHub
     whip_rank2: WhipRank2
     whip_rank3: WhipRank3
     double_jump: DoubleJump
+    dash_knife: DashKnife
 
     sub_refill: SubRefill
     sub_freefill: SubFreefill
@@ -248,35 +273,37 @@ class HoVOptions(PerGameCommonOptions):
 option_groups = [
     OptionGroup(
         "Quality of Life",
-        [CustomCommandEquips, NerdGlasses, WhipOil, ArcadeCreditFill],
+        [CustomCommandEquips, NerdGlasses, WhipOil, ArcadeCreditFill, LevelUpProgression],
     ),
     OptionGroup(
         "Much Easier Mode",
-        [HealHub, DoubleJump, WhipRank2, WhipRank3],
+        [HealHub, DoubleJump, WhipRank2, WhipRank3, DashKnife],
     ),
     OptionGroup(
         "Customize",
         [SubRefill, SubFreefill],
     ),
-    OptionGroup(
-        "Roguelite Mode",
-        [HardMode, MapSize, SubweaponSpawn, ChestsRequired, PlayerSprite, HubSubFill, HubFoodFill, 
-            DropsPlus, ChestChoice, BadEquipChance],
-    ),
+    # OptionGroup(
+    #     "Roguelite Mode",
+    #     [HardMode, MapSize, SubweaponSpawn, ChestsRequired, PlayerSprite, HubSubFill, HubFoodFill, 
+    #         DropsPlus, ChestChoice, BadEquipChance],
+    # ),
 ]
 
 # Finally, we can define some option presets if we want the player to be able to quickly choose a specific "mode".
 option_presets = {
-    "roguelite easy": {
+    "easy": {
         "custom_command_equips": True,
         "nerd_glasses": True,
         "whip_oil": True,
         "arcade_credit_fill": ArcadeCreditFill.range_end,
+        "level_up_progression": LevelUpProgression.range_start,
 
         "whip_rank2": True,
         "whip_rank3": True,
         "heal_hub": True,
         "double_jump": True,
+        "dash_knife": True,
 
         "sub_refill": True,
         "sub_freefill": True,
@@ -293,16 +320,18 @@ option_presets = {
         "chests_required": 1,
         "map_size": 9,
     },
-    "roguelite normal": {
+    "normal": {
         "custom_command_equips": True,
         "nerd_glasses": True,
         "whip_oil": True,
         "arcade_credit_fill": ArcadeCreditFill.range_end,
+        "level_up_progression": LevelUpProgression.range_end // 2,
 
         "heal_hub": True,
-        "double_jump": True,
+        "double_jump": False,
         "whip_rank2": False,
         "whip_rank3": False,
+        "dash_knife": True,
 
         "sub_refill": True,
         "sub_freefill": True,
@@ -319,17 +348,19 @@ option_presets = {
         "chests_required": 3,
         "map_size": 15,
     },
-    "roguelite hard": {
+    "hard": {
         "custom_command_equips": True,
         "nerd_glasses": False,
         "whip_oil": False,
         "arcade_credit_fill": ArcadeCreditFill.range_start,
-        
+        "level_up_progression": LevelUpProgression.range_end * 0.75,
+
         "heal_hub": True,
         "double_jump": True,
         "whip_rank2": False,
         "whip_rank3": False,
-        
+        "dash_knife": False,
+
         "sub_refill": True,
         "sub_freefill": True,
         
@@ -345,16 +376,18 @@ option_presets = {
         "chests_required": 0,
         "map_size": 19,
     },
-    "roguelite unfair": {
+    "unfair": {
         "custom_command_equips": True,
         "nerd_glasses": False,
         "whip_oil": False,
         "arcade_credit_fill": ArcadeCreditFill.range_start,
+        "level_up_progression": LevelUpProgression.range_end,
 
         "heal_hub": False,
         "double_jump": False,
         "whip_rank2": False,
         "whip_rank3": False,
+        "dash_knife": False,
 
         "sub_refill": False,
         "sub_freefill": False,

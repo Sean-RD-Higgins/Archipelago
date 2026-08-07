@@ -1,9 +1,10 @@
 from __future__ import annotations
 
+from math import floor
 from typing import TYPE_CHECKING
 
 from BaseClasses import Region
-from worlds.horde_of_viscount.items import EQUIP, ITEM, SUBWEAPON
+from worlds.horde_of_viscount.items import EQUIP, ITEM, ITEM_RANK_LIST, SUBWEAPON
 
 if TYPE_CHECKING:
     from .world import HoVWorld
@@ -193,3 +194,21 @@ def connect_regions(world: HoVWorld) -> None:
               hoVRegionSet.world_map_south_central.name + " to " + hoVRegionSet.world_map_south.name, 
 						lambda state: state.has(ITEM.MUTAGEN, world.player))
     
+    # level_up_progression = world.options.level_up_progression.value
+    # ITEM_RANK_LIST
+    maxListLength = len(hoVRegionSet.list)
+    # startingLevelProgressionIndex = floor(level_up_progression * maxListLength)
+
+
+	# level_up_progression is a % that affects when level up materials come in.
+	# 00% ==16 0 0 0 0 0 0 0
+    # 25% == 4 4 4 4 0 0 0 0
+    # <50%== 3 2 2 2 2 2 2 0
+	# 50% == 2 2 2 2 2 2 2 2
+    # >50%== 0 2 2 2 2 2 2 2
+    # 75%== 0 0 0 0 2 2 2 2
+    # 100%== 0 0 0 0 0 0 0 0
+
+
+	
+    hoVRegionSet.list[0].get_connecting_entrance().access_rules.append(lambda state: state.has(ITEM_RANK_LIST[level_up_progression], world.player))

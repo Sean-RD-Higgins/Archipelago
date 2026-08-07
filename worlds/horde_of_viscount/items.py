@@ -58,6 +58,25 @@ class ITEM():
     CHARCOAL = "Charcoal"
     MUTAGEN = "Mutagen"
 
+ITEM_RANK_LIST = [
+    ITEM.TARSUS,
+    ITEM.HERB,
+    ITEM.WOOD,
+    ITEM.GOO,
+    ITEM.FLOUR,
+    ITEM.YEAST,
+    ITEM.OIL,
+    ITEM.ROCK,
+    ITEM.METAL,
+    ITEM.FIBER,
+    ITEM.PROTEIN,
+    ITEM.BONE,
+    ITEM.FEATHER,
+    ITEM.FRESHWATER,
+    ITEM.SHELL,
+    ITEM.CHARCOAL,
+]
+
 class FOOD():
     ROOM_REDO = "Arcade Credit"
 
@@ -963,11 +982,14 @@ def create_all_items(world: HoVWorld) -> None:
     if world.options.arcade_credit_fill:
         # We're adding a filler item, but you can also add progression items to the player's precollected inventory.
         arcade_credit = next(item for item in itempool if item.name == FOOD.ROOM_REDO)
-        for _ in range(world.options.arcade_credit_fill.value):
+        for _ in range(world.options.arcade_credit_fill.value / 6):
             world.push_precollected(arcade_credit)
     if world.options.whip_oil:
         whip_oil = next(item for item in itempool if item.name == EQUIP.WHIP_PIERCE)
         world.push_precollected(whip_oil)
+    if world.options.dash_knife:
+        dash_knife = next(item for item in itempool if item.name == SUBWEAPON.KNIFE)
+        world.push_precollected(dash_knife)
     if world.options.sub_refill:
         sub_refill = next(item for item in itempool if item.name == EQUIP.SUB_REFILL)
         world.push_precollected(sub_refill)
