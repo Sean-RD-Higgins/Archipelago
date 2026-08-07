@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from math import floor
 from typing import TYPE_CHECKING
 
 from BaseClasses import Region
@@ -194,21 +193,91 @@ def connect_regions(world: HoVWorld) -> None:
               hoVRegionSet.world_map_south_central.name + " to " + hoVRegionSet.world_map_south.name, 
 						lambda state: state.has(ITEM.MUTAGEN, world.player))
     
-    # level_up_progression = world.options.level_up_progression.value
-    # ITEM_RANK_LIST
-    maxListLength = len(hoVRegionSet.list)
-    # startingLevelProgressionIndex = floor(level_up_progression * maxListLength)
+    add_level_up_progression_rules(world, hoVRegionSet)
 
 
-	# level_up_progression is a % that affects when level up materials come in.
-	# 00% ==16 0 0 0 0 0 0 0
-    # 25% == 4 4 4 4 0 0 0 0
-    # <50%== 3 2 2 2 2 2 2 0
-	# 50% == 2 2 2 2 2 2 2 2
-    # >50%== 0 2 2 2 2 2 2 2
-    # 75%== 0 0 0 0 2 2 2 2
-    # 100%== 0 0 0 0 0 0 0 0
+def add_level_up_progression_rules(world: HoVWorld, hoVRegionSet: HoVRegionSet) -> None:
+    # Percentage Level Progression rules:
+    level_up_progression_percent = world.options.level_up_progression.value
+    item_list_length = len(ITEM_RANK_LIST)  # 16
+    region_item_counts: list[int]
 
+    # level_up_progression is a % that affects when level up materials come in.
+    if level_up_progression_percent == 0:
+        region_item_counts = [item_list_length] + [0] * 10
+    elif level_up_progression_percent == 1:
+        region_item_counts = [15, 1] + [0] * 9
+    elif level_up_progression_percent == 2:
+        region_item_counts = [14, 2] + [0] * 9
+    elif level_up_progression_percent == 3:
+        region_item_counts = [12, 4] + [0] * 9
+    elif level_up_progression_percent == 4:
+        region_item_counts = [10, 6] + [0] * 9
+    elif level_up_progression_percent <= 5:
+        region_item_counts = [8, 6, 2] + [0] * 8
+    elif level_up_progression_percent <= 10:
+        region_item_counts = [6, 5, 3, 2] + [0] * 7
+    elif level_up_progression_percent <= 15:
+        region_item_counts = [5, 4, 3, 2, 2] + [0] * 6
+    elif level_up_progression_percent <= 20:
+        region_item_counts = [5, 4, 3, 2, 1, 1] + [0] * 5
+    elif level_up_progression_percent <= 25:
+        region_item_counts = [4, 4, 3, 2, 1, 1, 1] + [0] * 4
+    elif level_up_progression_percent <= 30:
+        region_item_counts = [4, 3, 3, 2, 2, 1, 1] + [0] * 4
+    elif level_up_progression_percent <= 35:
+        region_item_counts = [3, 3, 3, 2, 2, 1, 1, 1] + [0] * 3
+    elif level_up_progression_percent <= 40:
+        region_item_counts = [3, 3, 2, 2, 2, 1, 1, 1, 1] + [0] * 2
+    elif level_up_progression_percent <= 45:
+        region_item_counts = [3, 2, 2, 2, 2, 1, 1, 1, 1, 1] + [0]
+    elif level_up_progression_percent <= 50:
+        region_item_counts = [2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 0]
+    elif level_up_progression_percent <= 55:
+        region_item_counts = [2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1]
+    elif level_up_progression_percent <= 60:
+        region_item_counts = [2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1]
+    elif level_up_progression_percent <= 65:
+        region_item_counts = [1, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1]
+    elif level_up_progression_percent <= 70:
+        region_item_counts = [1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 1]
+    elif level_up_progression_percent <= 75:
+        region_item_counts = [1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1]
+    elif level_up_progression_percent <= 80:
+        region_item_counts = [0, 1, 2, 2, 2, 2, 2, 2, 1, 1, 0]
+    elif level_up_progression_percent <= 85:
+        region_item_counts = [0, 0, 1, 2, 2, 2, 2, 2, 2, 1, 0]
+    elif level_up_progression_percent <= 90:
+        region_item_counts = [0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 3]
+    elif level_up_progression_percent <= 95:
+        region_item_counts = [0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 5]
+    elif level_up_progression_percent == 96:
+        region_item_counts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 12]
+    elif level_up_progression_percent == 97:
+        region_item_counts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 14]
+    elif level_up_progression_percent == 98:
+        region_item_counts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 15]
+    elif level_up_progression_percent == 99:
+        region_item_counts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16]
+    else:
+        region_item_counts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-	
-    hoVRegionSet.list[0].get_connecting_entrance().access_rules.append(lambda state: state.has(ITEM_RANK_LIST[level_up_progression], world.player))
+    item_progression_index = 0
+    for region_progression_index, item_count in enumerate(region_item_counts):
+        if item_progression_index >= item_list_length:
+            return
+
+        entrance = hoVRegionSet.list[region_progression_index].get_exits()[0]
+        for _ in range(item_count):
+            if item_progression_index >= item_list_length:
+                return
+            item = ITEM_RANK_LIST[item_progression_index]
+
+            # TODO not working, need to fix it
+            entrance.access_rule().append(
+                lambda state, item=item: state.has(item, world.player)
+            )
+            item_progression_index += 1
+
+        # Scale to every other region
+        region_progression_index += 1

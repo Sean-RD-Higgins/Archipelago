@@ -486,7 +486,7 @@ def create_regular_locations(world: HoVWorld) -> None:
 
 def create_events(world: HoVWorld) -> None:
     hoVRegionSet = get_region_set(world)
-    #hoVRegionSet.viscount_lab.locations.append(HoVLocation(world.player, "Credits Peak Event", None, hoVRegionSet.viscount_lab))
+    # hoVRegionSet.viscount_lab.locations.append(HoVLocation(world.player, "Credits Peak Event", None, hoVRegionSet.viscount_lab))
 
     # hoVRegionSet.viscount_lab.add_event(
     #     "Credits Peak Event", "Credits Peak Event", location_type=HoVLocation, item_type=HoVItem
