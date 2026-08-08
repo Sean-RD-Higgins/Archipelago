@@ -46,7 +46,7 @@ class RestartStageBow(Toggle):
     
     display_name = "Restart Stage Bow"
     # EQUIP.RESTART_STAGE
-    default = False
+    default = True
 
 class PermaLossHairpin(Toggle): 
     """
@@ -145,7 +145,7 @@ class DashKnife(Toggle):
 
     # You'll also want to set a display name, which will determine what the option is called on the website.
     display_name = "Dash Knife"
-    default = False
+    default = True
 
 class SubRefill(Toggle):
     """
