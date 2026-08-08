@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from rule_builder.rules import Has, HasAll
-from worlds.horde_of_viscount.items import EQUIP, ITEM, SUBWEAPON
+from worlds.horde_of_viscount.items import EQUIP, ITEM, ITEM_RANK_LIST, SUBWEAPON
 from worlds.horde_of_viscount.locations import LOCATION_DATA_LIST, ROOM_ID_TO_AP_LOCATION_NAME_LIST_LIST
 from worlds.horde_of_viscount.regions import get_region_set
 
@@ -736,8 +736,8 @@ def set_all_location_rules(world: HoVWorld) -> None:
         
     array_push(techList, "ManorHiddenBottom3Room Cleat Lightning Tower")
     if array_contains(techEnabled, array_last(techList)) :
-        roomMetadata[ManorHiddenBottom3Room].subweaponRequiredList = [SUBWEAPON.CLEATS, SUBWEAPON.WINGS, SUBWEAPON.KNIFE];
-        roomMetadata[ManorHiddenBottom3Room].subweaponsRequireAll = true;
+        roomMetadata[ManorHiddenBottom3Room].subweaponRequiredList = [SUBWEAPON.CLEATS, SUBWEAPON.WINGS, SUBWEAPON.KNIFE]
+        roomMetadata[ManorHiddenBottom3Room].subweaponsRequireAll = true
     
     
     roomMetadata[ManorIntroFightRoom].subweaponRequiredList = [SUBWEAPON.WINGS, SUBWEAPON.KNIFE, SUBWEAPON.CALTROP]
@@ -778,23 +778,38 @@ def set_all_location_rules(world: HoVWorld) -> None:
         
 
     # Non map rando area requirements.
-    roomMetadata[TownEntranceRoom].lootRequiredList = [ITEM.WOOD];
-    roomMetadata[TownCenterRoom].lootRequiredList = [ITEM.WOOD];
-    roomMetadata[TownGateRoom].lootRequiredList = [ITEM.FEATHER, ITEM.FRESHWATER];
-    roomMetadata[CastleRampartsRoom].lootRequiredList = [ITEM.WOOD];
+    roomMetadata[TownEntranceRoom].lootRequiredList = [ITEM.WOOD]
+    roomMetadata[TownCenterRoom].lootRequiredList = [ITEM.WOOD]
+    roomMetadata[TownGateRoom].lootRequiredList = [ITEM.FEATHER, ITEM.FRESHWATER]
+
+    roomMetadata[AbandonCenterRichRoom].lootRequiredList = [ITEM.WOOD]
+    roomMetadata[AbandonEastRichRoom].lootRequiredList = [ITEM.WOOD]
+
+    roomMetadata[AbandonWestPoorRoom].lootRequiredList = [ITEM.WOOD]
+    roomMetadata[AbandonCenterPoorRoom].lootRequiredList = [ITEM.WOOD]
+    roomMetadata[AbandonEastPoorRoom].lootRequiredList = [ITEM.WOOD]
+
+    roomMetadata[CastleBridgeRoom].lootRequiredList = [ITEM.FEATHER]
+    roomMetadata[CastleFrontBarbicanRoom].lootRequiredList = [ITEM.FEATHER]
+    roomMetadata[CastleRampartsRoom].lootRequiredList = [ITEM.WOOD]
+
+    roomMetadata[VolcanoEastSpaceRoom].lootRequiredList = [ITEM.FEATHER]
+    roomMetadata[VolcanoEastSpace2Room].lootRequiredList = [ITEM.FEATHER]
+    # All loot is required for Ending D, so just map it to the Credits room.
+    roomMetadata[CreditsParentRoom].lootRequiredList = ITEM_RANK_LIST
 
     # Puzzle Room rules
-    roomMetadata[Knife3PuzzleRoom].lootRequiredList = [ITEM.WOOD, ITEM.HERB];
+    roomMetadata[Knife3PuzzleRoom].lootRequiredList = [ITEM.WOOD, ITEM.HERB]
     # Hospital + Butcher + Tinkerer Upgrade
-    roomMetadata[Caltrop3PuzzleRoom].itemRequiredList = [ITEM.WOOD, ITEM.HERB, ITEM.ROCK, ITEM.TARSUS, ITEM.GOO];
+    roomMetadata[Caltrop3PuzzleRoom].itemRequiredList = [ITEM.WOOD, ITEM.HERB, ITEM.ROCK, ITEM.TARSUS, ITEM.GOO]
     # Hospital + Butcher + Tinkerer + Apprentice Upgrade
-    roomMetadata[Axe3PuzzleRoom].itemRequiredList = [ITEM.WOOD, ITEM.HERB, ITEM.ROCK, ITEM.TARSUS, ITEM.GOO, ITEM.FIBER];
+    roomMetadata[Axe3PuzzleRoom].itemRequiredList = [ITEM.WOOD, ITEM.HERB, ITEM.ROCK, ITEM.TARSUS, ITEM.GOO, ITEM.FIBER]
     # Hospital + Butcher + Tinkerer + Apprentice + Shoemaker Upgrade
-    roomMetadata[Cleat3PuzzleRoom].itemRequiredList = [ITEM.WOOD, ITEM.HERB, ITEM.ROCK, ITEM.TARSUS, ITEM.GOO, ITEM.FIBER, ITEM.METAL];
+    roomMetadata[Cleat3PuzzleRoom].itemRequiredList = [ITEM.WOOD, ITEM.HERB, ITEM.ROCK, ITEM.TARSUS, ITEM.GOO, ITEM.FIBER, ITEM.METAL]
     # Hospital + Butcher + Tinkerer + Apprentice + Shoemaker + Seamstress Upgrade
-    roomMetadata[Wing3PuzzleRoom].itemRequiredList = [ITEM.WOOD, ITEM.HERB, ITEM.ROCK, ITEM.TARSUS, ITEM.GOO, ITEM.FIBER, ITEM.METAL, ITEM.FEATHER];
+    roomMetadata[Wing3PuzzleRoom].itemRequiredList = [ITEM.WOOD, ITEM.HERB, ITEM.ROCK, ITEM.TARSUS, ITEM.GOO, ITEM.FIBER, ITEM.METAL, ITEM.FEATHER]
     # Hospital + Butcher + Tinkerer + Apprentice + Shoemaker + Seamstress + Boomer Upgrade
-    roomMetadata[Bomb3PuzzleRoom].itemRequiredList = [ITEM.WOOD, ITEM.HERB, ITEM.ROCK, ITEM.TARSUS, ITEM.GOO, ITEM.FIBER, ITEM.METAL, ITEM.FEATHER, ITEM.BONE, ITEM.FLOUR];
+    roomMetadata[Bomb3PuzzleRoom].itemRequiredList = [ITEM.WOOD, ITEM.HERB, ITEM.ROCK, ITEM.TARSUS, ITEM.GOO, ITEM.FIBER, ITEM.METAL, ITEM.FEATHER, ITEM.BONE, ITEM.FLOUR]
     
 
     # Has no chest

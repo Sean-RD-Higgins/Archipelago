@@ -2,7 +2,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from BaseClasses import Region
+from BaseClasses import CollectionRule, Region
+from rule_builder.rules import HasAll, Rule
 from worlds.horde_of_viscount.items import EQUIP, ITEM, ITEM_RANK_LIST, SUBWEAPON
 
 if TYPE_CHECKING:
@@ -135,6 +136,7 @@ def create_all_regions(world: HoVWorld) -> None:
 def connect_regions(world: HoVWorld) -> None:
     # The list is sequential in the order that the player would naturally progress through the game, so we can just connect each region to the next one in the list.
     hoVRegionSet = get_region_set(world)
+    level_up_rule_list = get_region_item_required_list(world)
     specificRuleList = [ hoVRegionSet.world_map_west.name, hoVRegionSet.abandoned_town.name, hoVRegionSet.world_map_southwest.name, hoVRegionSet.crimson_cove_entrance.name ]
     for i in range(len(hoVRegionSet.list) - 1):
         region = hoVRegionSet.list[i]
@@ -144,8 +146,14 @@ def connect_regions(world: HoVWorld) -> None:
         if region.name in specificRuleList:
             continue
         else:
-            region.connect(nextRegion, 
-				region.name + " to " + nextRegion.name)
+            if i >= len(level_up_rule_list) or len(level_up_rule_list[i]) == 0:
+                region.connect(nextRegion, 
+                    region.name + " to " + nextRegion.name)
+            else:
+                itemList = level_up_rule_list[i]
+                region.connect(nextRegion, 
+                    region.name + " to " + nextRegion.name, 
+                    HasAll(*itemList))
         
 
 	# Add every rule for double jump
@@ -193,10 +201,9 @@ def connect_regions(world: HoVWorld) -> None:
               hoVRegionSet.world_map_south_central.name + " to " + hoVRegionSet.world_map_south.name, 
 						lambda state: state.has(ITEM.MUTAGEN, world.player))
     
-    add_level_up_progression_rules(world, hoVRegionSet)
 
 
-def add_level_up_progression_rules(world: HoVWorld, hoVRegionSet: HoVRegionSet) -> None:
+def get_region_item_required_list(world: HoVWorld) -> list[list[str]]:
     # Percentage Level Progression rules:
     level_up_progression_percent = world.options.level_up_progression.value
     item_list_length = len(ITEM_RANK_LIST)  # 16
@@ -262,22 +269,23 @@ def add_level_up_progression_rules(world: HoVWorld, hoVRegionSet: HoVRegionSet) 
     else:
         region_item_counts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
+    region_progression_index = 2
     item_progression_index = 0
+    ruleList = [[], []]
     for region_progression_index, item_count in enumerate(region_item_counts):
+        ruleList.append([])
         if item_progression_index >= item_list_length:
-            return
-
-        entrance = hoVRegionSet.list[region_progression_index].get_exits()[0]
+            return ruleList
+        
         for _ in range(item_count):
             if item_progression_index >= item_list_length:
-                return
+                return ruleList
             item = ITEM_RANK_LIST[item_progression_index]
-
-            # TODO not working, need to fix it
-            entrance.access_rule().append(
-                lambda state, item=item: state.has(item, world.player)
-            )
+            ruleList[-1].append(item)
             item_progression_index += 1
 
         # Scale to every other region
         region_progression_index += 1
+        ruleList.append([])
+
+    return ruleList

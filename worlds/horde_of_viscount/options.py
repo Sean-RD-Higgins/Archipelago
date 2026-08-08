@@ -283,11 +283,11 @@ option_groups = [
         "Customize",
         [SubRefill, SubFreefill],
     ),
-    # OptionGroup(
-    #     "Roguelite Mode",
-    #     [HardMode, MapSize, SubweaponSpawn, ChestsRequired, PlayerSprite, HubSubFill, HubFoodFill, 
-    #         DropsPlus, ChestChoice, BadEquipChance],
-    # ),
+    OptionGroup(
+        "Roguelite Mode",
+        [HardMode, MapSize, SubweaponSpawn, ChestsRequired, PlayerSprite, HubSubFill, HubFoodFill, 
+            DropsPlus, ChestChoice, BadEquipChance],
+    ),
 ]
 
 # Finally, we can define some option presets if we want the player to be able to quickly choose a specific "mode".

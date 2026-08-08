@@ -9,6 +9,7 @@ from .bases import HoVTestBase
 class TestExtraStartingItemsOff(HoVTestBase):
     options: HoVOptions = {
         "arcade_credit_fill": 0,
+        "level_up_progression": 100,
     }
 
     # This would run all the default WorldTestBase tests a second time on default options. That's a bit wasteful.

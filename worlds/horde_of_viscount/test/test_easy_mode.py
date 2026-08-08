@@ -13,7 +13,8 @@ class TestEasyModeLogic(HoVTestBase):
     # WorldTestBase takes a dict of options and sets up a multiworld for you with a single world of your game.
     # The world will have the options you specified.
     options: HoVOptions = {
-        "hard_mode": False,
+        "hard_mode": False, 
+        "level_up_progression": 100,
         # Options you don't specify will use their default values.
         # It is good practice to specify every option that has an impact on your test, even when it's the default value.
         # As such, we'll spell out that hard_mode is meant to be False.
