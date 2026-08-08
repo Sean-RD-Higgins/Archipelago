@@ -20,6 +20,25 @@ class EQUIP():
     CUSTOM_JUMP = "Custom Jump"
     CUSTOM_ATTACKS = "Custom Attacks"
     MAP_HEAL_MAX = "Cast Map"
+    EASYMODE = "Easy Mode Ribbon"
+    MAX_SATIATION_UP = "Elastic Belt"
+    MAX_SATIATION_DOWN = "Fiber Pills"
+    RESTART_STAGE = "Restart Stage Bow"
+    PERMALOSS = "Perma- loss Hairpin"
+    DEBUFF_ON_FALL = "Amnesia Med"
+    LESS_EP = "Iron Rings"
+    NO_EP = "Iron Glove"
+    NO_MAP_WARP = "Expired BusPass"
+    EP1 = "Spirit Chalk"
+    EP2 = "Spirit Balm"
+    EP3 = "Spirit Spray"
+    EP4 = "Spirit Lotion"
+    EP5 = "Spirit Soap"
+    EP6 = "Spirit Shampoo"
+    EP7 = "Spirit Condi-tioner"
+    EP8 = "Spirit Body Wash"
+    EP9 = "Spirit Oin'mnt"
+    EP10 = "Spirit Lather"
 
 
 class SUBWEAPON():
@@ -163,7 +182,7 @@ ITEM_NAME_TO_ID = {
 
     "Empty Slot": 3000,
 
-    "Easy Mode Ribbon": 4000,
+    EQUIP.EASYMODE: 4000,
     "Heart Brooch": 4001,
     "Heart Anklet": 4002,
     "Heart Ribbon": 4003,
@@ -174,16 +193,16 @@ ITEM_NAME_TO_ID = {
     "Heart Choker": 4008,
     "Whip Regrip Tape": 4009,
     "Whip Grip Aerator": 4010,
-    "Spirit Chalk": 4011,
-    "Spirit Balm": 4012,
-    "Spirit Spray": 4013,
-    "Spirit Lotion": 4014,
-    "Spirit Soap": 4015,
-    "Spirit Shampoo": 4016,
-    "Spirit Condi-tioner": 4017,
-    "Spirit Body Wash": 4018,
-    "Spirit Oin'mnt": 4019,
-    "Spirit Lather": 4020,
+    EQUIP.EP1: 4011,
+    EQUIP.EP2: 4012,
+    EQUIP.EP3: 4013,
+    EQUIP.EP4: 4014,
+    EQUIP.EP5: 4015,
+    EQUIP.EP6: 4016,
+    EQUIP.EP7: 4017,
+    EQUIP.EP8: 4018,
+    EQUIP.EP9: 4019,
+    EQUIP.EP10: 4020,
     "Axe Oil": 4021,
     "Knife Oil": 4022,
     "Caltrop Oil": 4023,
@@ -335,14 +354,14 @@ ITEM_NAME_TO_ID = {
     "Thin Loot Magnet": 4169,
     "Course Loot Magnet": 4170,
     EQUIP.WINGS_ONE_FREE: 4171,
-    "Restart Stage Bow": 4172,
-    "Elastic Belt": 4173,
-    "Perma- loss Hairpin": 4174,
-    "Amnesia Med": 4175,
-    "Iron Rings": 4176,
-    "Iron Glove": 4177,
-    "Expired BusPass": 4178,
-    "Fiber Pills": 4179,
+    EQUIP.RESTART_STAGE: 4172,
+    EQUIP.MAX_SATIATION_UP: 4173,
+    EQUIP.PERMALOSS: 4174,
+    EQUIP.DEBUFF_ON_FALL: 4175,
+    EQUIP.LESS_EP: 4176,
+    EQUIP.NO_EP: 4177,
+    EQUIP.NO_MAP_WARP: 4178,
+    EQUIP.MAX_SATIATION_DOWN: 4179,
     "Sub Full Flag": 4180,
     "Sub Thin Flag": 4181,
     "Rigid Armor": 4182,
@@ -437,7 +456,7 @@ DEFAULT_ITEM_CLASSIFICATIONS = {
 
     "Empty Slot": ItemClassification.trap,
 
-    "Easy Mode Ribbon": ItemClassification.trap,
+    EQUIP.EASYMODE: ItemClassification.trap,
     "Heart Brooch": ItemClassification.useful,
     "Heart Anklet": ItemClassification.useful,
     "Heart Ribbon": ItemClassification.useful,
@@ -448,16 +467,16 @@ DEFAULT_ITEM_CLASSIFICATIONS = {
     "Heart Choker": ItemClassification.useful,
     "Whip Regrip Tape": ItemClassification.useful,
     "Whip Grip Aerator": ItemClassification.useful,
-    "Spirit Chalk": ItemClassification.useful,
-    "Spirit Balm": ItemClassification.useful,
-    "Spirit Spray": ItemClassification.useful,
-    "Spirit Lotion": ItemClassification.useful,
-    "Spirit Soap": ItemClassification.useful,
-    "Spirit Shampoo": ItemClassification.useful,
-    "Spirit Condi-tioner": ItemClassification.useful,
-    "Spirit Body Wash": ItemClassification.useful,
-    "Spirit Oin'mnt": ItemClassification.useful,
-    "Spirit Lather": ItemClassification.useful,
+    EQUIP.EP1: ItemClassification.useful,
+    EQUIP.EP2: ItemClassification.useful,
+    EQUIP.EP3: ItemClassification.useful,
+    EQUIP.EP4: ItemClassification.useful,
+    EQUIP.EP5: ItemClassification.useful,
+    EQUIP.EP6: ItemClassification.useful,
+    EQUIP.EP7: ItemClassification.useful,
+    EQUIP.EP8: ItemClassification.useful,
+    EQUIP.EP9: ItemClassification.useful,
+    EQUIP.EP10: ItemClassification.useful,
     "Axe Oil": ItemClassification.useful,
     "Knife Oil": ItemClassification.useful,
     "Caltrop Oil": ItemClassification.filler,
@@ -609,14 +628,14 @@ DEFAULT_ITEM_CLASSIFICATIONS = {
     "Thin Loot Magnet": ItemClassification.trap,
     "Course Loot Magnet": ItemClassification.trap,
     EQUIP.WINGS_ONE_FREE: ItemClassification.progression | ItemClassification.useful,
-    "Restart Stage Bow": ItemClassification.trap,
-    "Elastic Belt": ItemClassification.trap,
-    "Perma- loss Hairpin": ItemClassification.trap,
-    "Amnesia Med": ItemClassification.trap,
-    "Iron Rings": ItemClassification.trap,
-    "Iron Glove": ItemClassification.trap,
-    "Expired BusPass": ItemClassification.trap,
-    "Fiber Pills": ItemClassification.trap,
+    EQUIP.RESTART_STAGE: ItemClassification.trap,
+    EQUIP.MAX_SATIATION_UP: ItemClassification.trap,
+    EQUIP.PERMALOSS: ItemClassification.trap,
+    EQUIP.DEBUFF_ON_FALL: ItemClassification.trap,
+    EQUIP.LESS_EP: ItemClassification.trap,
+    EQUIP.NO_EP: ItemClassification.trap,
+    EQUIP.NO_MAP_WARP: ItemClassification.trap,
+    EQUIP.MAX_SATIATION_DOWN: ItemClassification.trap,
     "Sub Full Flag": ItemClassification.filler,
     "Sub Thin Flag": ItemClassification.trap,
     "Rigid Armor": ItemClassification.filler,
@@ -631,51 +650,51 @@ DEFAULT_ITEM_CLASSIFICATIONS = {
 }
 
 TRAP_ITEM_NAME_LIST = [
-    "Spicy Pepper"
-    "Viscous Tar"
-    "Novaculite"
-    "Vines"
-    "Femur"
-    "Shoe Buckle"
-    "Cloud Sponge"
-    "Tetrodotox"
-    "Capsule"
-    "Pinion"
-    "Pumpkin"
-    "Ladle"
-    "Empty Slot"
-    "Easy Mode Ribbon"
-    "Barb Rage"
-    "Pretty Ribbon"
-    "Space Helmet"
-    "Hero's Heart"
-    "Tri-hit Shell"
-    "One Hit Wonder"
-    "Rolling Claw"
-    "Anti- Magnet Claw"
-    "Axe Crude Oil"
-    "Knife Crude Oil"
-    "Caltrop Crude Oil"
-    "Bomb Crude Oil"
-    "Cleat Crude Oil"
-    "Wings Crude Oil"
-    "Cracked Whip Wave"
-    "Thin Whip Wave"
-    "Course Whip Wave"
-    "Cracked Sub Break"
-    "Thin Sub Break"
-    "Course Sub Break"
-    "Cracked Loot Magnet"
-    "Thin Loot Magnet"
-    "Course Loot Magnet"
-    "Restart Stage Bow"
-    "Elastic Belt"
-    "Perma- loss Hairpin"
-    "Amnesia Med"
-    "Iron Rings"
-    "Iron Glove"
-    "Expired BusPass"
-    "Fiber Pills"
+    "Spicy Pepper",
+    "Viscous Tar",
+    "Novaculite",
+    "Vines",
+    "Femur",
+    "Shoe Buckle",
+    "Cloud Sponge",
+    "Tetrodotox",
+    "Capsule",
+    "Pinion",
+    "Pumpkin",
+    "Ladle",
+    "Empty Slot",
+    EQUIP.EASYMODE,
+    "Barb Rage",
+    "Pretty Ribbon",
+    "Space Helmet",
+    "Hero's Heart",
+    "Tri-hit Shell",
+    "One Hit Wonder",
+    "Rolling Claw",
+    "Anti- Magnet Claw",
+    "Axe Crude Oil",
+    "Knife Crude Oil",
+    "Caltrop Crude Oil",
+    "Bomb Crude Oil",
+    "Cleat Crude Oil",
+    "Wings Crude Oil",
+    "Cracked Whip Wave",
+    "Thin Whip Wave",
+    "Course Whip Wave",
+    "Cracked Sub Break",
+    "Thin Sub Break",
+    "Course Sub Break",
+    "Cracked Loot Magnet",
+    "Thin Loot Magnet",
+    "Course Loot Magnet",
+    EQUIP.RESTART_STAGE,
+    EQUIP.MAX_SATIATION_UP,
+    EQUIP.PERMALOSS,
+    EQUIP.DEBUFF_ON_FALL,
+    EQUIP.LESS_EP,
+    EQUIP.NO_EP,
+    EQUIP.NO_MAP_WARP,
+    EQUIP.MAX_SATIATION_DOWN,
     "Sub Thin Flag"
 ]
 
@@ -836,16 +855,16 @@ PROGRESSION_ITEM_NAME_LIST = [
     EQUIP.WHIP_DURABLE_A,
     EQUIP.WHIP_DURABLE_B,
     EQUIP.CHEST_BREAKER,
-    "Spirit Chalk",
-    "Spirit Balm",
-    "Spirit Spray",
-    "Spirit Lotion",
-    "Spirit Soap",
-    "Spirit Shampoo",
-    "Spirit Condi-tioner",
-    "Spirit Body Wash",
-    "Spirit Oin'mnt",
-    "Spirit Lather",
+    EQUIP.EP1,
+    EQUIP.EP2,
+    EQUIP.EP3,
+    EQUIP.EP4,
+    EQUIP.EP5,
+    EQUIP.EP6,
+    EQUIP.EP7,
+    EQUIP.EP8,
+    EQUIP.EP9,
+    EQUIP.EP10,
     EQUIP.SUB_REFILL,
     EQUIP.SUB_REFILL_FREE,
     "Health Flag",
@@ -1015,5 +1034,29 @@ def create_all_items(world: HoVWorld) -> None:
     if world.options.heal_hub:
         heal_hub = next(item for item in itempool if item.name == EQUIP.MAP_HEAL_MAX)
         world.push_precollected(heal_hub)
+    if world.options.easyModeRibbon:
+        easyModeRibbon = next(item for item in itempool if item.name == EQUIP.EASYMODE)
+        world.push_precollected(easyModeRibbon)
+    if world.options.fiberPills:
+        fiberPills = next(item for item in itempool if item.name == EQUIP.FIBER_PILLS)
+        world.push_precollected(fiberPills)
+    if world.options.restartStageBow:
+        restartStageBow = next(item for item in itempool if item.name == EQUIP.RESTART_STAGE)
+        world.push_precollected(restartStageBow)
+    if world.options.permaLossHairpin:
+        permaLossHairpin = next(item for item in itempool if item.name == EQUIP.PERMALOSS)
+        world.push_precollected(permaLossHairpin)
+    if world.options.fiberPills:
+        fiberPills = next(item for item in itempool if item.name == EQUIP.DEBUFF_ON_FALL)
+        world.push_precollected(fiberPills)
+    if world.options.ironRings:
+        ironRings = next(item for item in itempool if item.name == EQUIP.LESS_EP)
+        world.push_precollected(ironRings)
+    if world.options.ironGlove:
+        ironGlove = next(item for item in itempool if item.name == EQUIP.NO_EP)
+        world.push_precollected(ironGlove)
+    if world.options.expiredBusPass:
+        expiredBusPass = next(item for item in itempool if item.name == EQUIP.NO_MAP_WARP)
+        world.push_precollected(expiredBusPass)
 
 

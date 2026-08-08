@@ -19,6 +19,81 @@ from Options import Choice, OptionGroup, PerGameCommonOptions, Range, Toggle
 # The default for a toggle is "off".
 # If you want a toggle to be on by default, you can use the "DefaultOnToggle" class instead of the "Toggle" class.
 
+
+
+class EasyModeRibbon(Toggle): 
+    """
+    Start with Easy Mode Ribbon. A pretty ribbon making hunting much easier. More hearts for less drops.
+    """
+    
+    display_name = "Easy Mode Ribbon"
+    # EQUIP.EASYMODE
+    default = False
+
+class FiberPills(Toggle): 
+    """
+    Start with Fiber Pills. Decrease max Satiation. More EP for more difficulty.
+    """
+    
+    display_name = "Fiber Pills"
+    # EQUIP.MAX_SATIATION_DOWN
+    default = False
+
+class RestartStageBow(Toggle): 
+    """
+    Start with Restart Stage Bow. When defeated, you will restart the stage. More EP for more difficulty.
+    """
+    
+    display_name = "Restart Stage Bow"
+    # EQUIP.RESTART_STAGE
+    default = False
+
+class PermaLossHairpin(Toggle): 
+    """
+    Start with Perma-loss Hairpin. When defeated, you lose all progress. More EP for more difficulty
+    """
+    
+    display_name = "Perma-loss Hairpin"
+    # EQUIP.PERMALOSS
+    default = False
+
+class AmnesiaMed(Toggle): 
+    """
+    Start with Amnesia Med. When defeated, you lose all of your buffs. More EP for more difficulty.
+    """
+    
+    display_name = "Amnesia Med"
+    # EQUIP.DEBUFF_ON_FALL
+    default = False
+
+class IronRings(Toggle): 
+    """
+    Start with Iron Rings. You just have less EQUIP POINTS to work with, that's it.  No benefit besides bragging.
+    """
+    
+    display_name = "Iron Rings"
+    # EQUIP.LESS_EP
+    default = False
+
+class IronGlove(Toggle): 
+    """
+    Start with Iron Glove. You just have NO EQUIP POINTS.  No benefit besides bragging.
+    """
+    
+    display_name = "Iron Glove"
+    # EQUIP.NO_EP
+    default = False
+
+class ExpiredBusPass(Toggle): 
+    """
+    Start with Expired BusPass. You cannot warp to any other map. More EP for more difficulty.
+    """
+    
+    display_name = "Expired BusPass"
+    # EQUIP.NO_MAP_WARP
+    default = False
+
+
 class LevelUpProgression(Range):
     """
     Smaller number means materials required for leveling up is easier to find. Larger number means the materials required will not be as easily obtainable.
@@ -248,6 +323,15 @@ class HoVOptions(PerGameCommonOptions):
     arcade_credit_fill: ArcadeCreditFill
     level_up_progression: LevelUpProgression
 
+    easyModeRibbon: EasyModeRibbon
+    fiberPills: FiberPills
+    restartStageBow: RestartStageBow
+    permaLossHairpin: PermaLossHairpin
+    amnesiaMed: AmnesiaMed
+    ironRings: IronRings
+    ironGlove: IronGlove
+    expiredBusPass: ExpiredBusPass
+
     heal_hub: HealHub
     whip_rank2: WhipRank2
     whip_rank3: WhipRank3
@@ -277,11 +361,15 @@ option_groups = [
     ),
     OptionGroup(
         "Much Easier Mode",
-        [HealHub, DoubleJump, WhipRank2, WhipRank3, DashKnife],
+        [HealHub, DoubleJump, WhipRank2, WhipRank3, DashKnife, FiberPills, EasyModeRibbon],
+    ),
+    OptionGroup(
+        "Much Harder Mode",
+        [RestartStageBow, AmnesiaMed, IronRings, IronGlove, ExpiredBusPass],
     ),
     OptionGroup(
         "Customize",
-        [SubRefill, SubFreefill],
+        [SubRefill, SubFreefill, PermaLossHairpin],
     ),
     OptionGroup(
         "Roguelite Mode",
@@ -304,9 +392,17 @@ option_presets = {
         "heal_hub": True,
         "double_jump": True,
         "dash_knife": True,
+        "easyModeRibbon": True,
+        "fiberPills": True,
 
         "sub_refill": True,
         "sub_freefill": True,
+        "restartStageBow": False,
+        "permaLossHairpin": False,
+        "amnesiaMed": False,
+        "ironRings": False,
+        "ironGlove": False,
+        "expiredBusPass": False,
 
         "hard_mode": False,
         "subweapon_spawn": True,
@@ -332,9 +428,17 @@ option_presets = {
         "whip_rank2": False,
         "whip_rank3": False,
         "dash_knife": True,
+        "easyModeRibbon": False,
+        "fiberPills": False,
 
         "sub_refill": True,
         "sub_freefill": True,
+        "restartStageBow": True,
+        "permaLossHairpin": False,
+        "amnesiaMed": False,
+        "ironRings": False,
+        "ironGlove": False,
+        "expiredBusPass": False,
         
         "hard_mode": False,
         "subweapon_spawn": False,
@@ -360,9 +464,18 @@ option_presets = {
         "whip_rank2": False,
         "whip_rank3": False,
         "dash_knife": False,
+        "easyModeRibbon": False,
+        "fiberPills": False,
 
         "sub_refill": True,
         "sub_freefill": True,
+        "restartStageBow": True,
+        "permaLossHairpin": False,
+        "amnesiaMed": True,
+        "ironRings": False,
+        "ironGlove": False,
+        "expiredBusPass": False,
+
         
         "hard_mode": True,
         "subweapon_spawn": False,
@@ -388,9 +501,17 @@ option_presets = {
         "whip_rank2": False,
         "whip_rank3": False,
         "dash_knife": False,
+        "easyModeRibbon": False,
+        "fiberPills": False,
 
         "sub_refill": False,
         "sub_freefill": False,
+        "restartStageBow": True,
+        "permaLossHairpin": True,
+        "amnesiaMed": True,
+        "ironRings": True,
+        "ironGlove": True,
+        "expiredBusPass": True,
         
         "hard_mode": True,
         "subweapon_spawn": False,

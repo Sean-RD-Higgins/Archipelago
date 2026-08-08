@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from BaseClasses import CollectionRule, Region
+from MultiServer import console
 from rule_builder.rules import HasAll, Rule
 from worlds.horde_of_viscount.items import EQUIP, ITEM, ITEM_RANK_LIST, SUBWEAPON
 
@@ -150,7 +151,7 @@ def connect_regions(world: HoVWorld) -> None:
                 region.connect(nextRegion, 
                     region.name + " to " + nextRegion.name)
             else:
-                itemList = level_up_rule_list[i]
+                itemList = level_up_rule_list.pop(0)
                 region.connect(nextRegion, 
                     region.name + " to " + nextRegion.name, 
                     HasAll(*itemList))
@@ -269,9 +270,10 @@ def get_region_item_required_list(world: HoVWorld) -> list[list[str]]:
     else:
         region_item_counts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-    region_progression_index = 2
     item_progression_index = 0
-    ruleList = [[], []]
+
+    # Skip the first region since it is the starting one.
+    ruleList = [[]]
     for region_progression_index, item_count in enumerate(region_item_counts):
         ruleList.append([])
         if item_progression_index >= item_list_length:
@@ -281,6 +283,7 @@ def get_region_item_required_list(world: HoVWorld) -> list[list[str]]:
             if item_progression_index >= item_list_length:
                 return ruleList
             item = ITEM_RANK_LIST[item_progression_index]
+            console(f"Adding {item} to region {region_progression_index} in ruleList")
             ruleList[-1].append(item)
             item_progression_index += 1
 
