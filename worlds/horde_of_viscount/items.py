@@ -59,7 +59,7 @@ SUBWEAPON_NAMES = [
 ]
 
 class ITEM():
-    GOO = "Goo"
+    EYE = "Goo"
     FIBER = "Fiber"
     PROTEIN = "Protein"
     ROCK = "Rock"
@@ -81,7 +81,7 @@ ITEM_RANK_LIST = [
     ITEM.TARSUS,
     ITEM.HERB,
     ITEM.WOOD,
-    ITEM.GOO,
+    ITEM.EYE,
     ITEM.FLOUR,
     ITEM.YEAST,
     ITEM.OIL,
@@ -112,7 +112,7 @@ ITEM_NAME_TO_ID = {
     SUBWEAPON.WINGS: 5,
     SUBWEAPON.CLEATS: 6,
 
-    ITEM.GOO: 1000,
+    ITEM.EYE: 1000,
     ITEM.FIBER: 1001,
     ITEM.PROTEIN: 1002,
     ITEM.ROCK: 1003,
@@ -180,7 +180,8 @@ ITEM_NAME_TO_ID = {
     "Pill Iron": 2035,
     FOOD.ROOM_REDO: 2036,
 
-    "Empty Slot": 3000,
+    # Keep this Item ID free since it maps to ItemType.
+    #"Empty Slot": 3000,
 
     EQUIP.EASYMODE: 4000,
     "Heart Brooch": 4001,
@@ -386,7 +387,7 @@ DEFAULT_ITEM_CLASSIFICATIONS = {
     SUBWEAPON.WINGS: ItemClassification.progression | ItemClassification.useful,
     SUBWEAPON.CLEATS: ItemClassification.progression | ItemClassification.useful,
 
-    ITEM.GOO: ItemClassification.progression | ItemClassification.useful,
+    ITEM.EYE: ItemClassification.progression | ItemClassification.useful,
     ITEM.FIBER: ItemClassification.progression | ItemClassification.useful,
     ITEM.PROTEIN: ItemClassification.progression | ItemClassification.useful,
     ITEM.ROCK: ItemClassification.progression | ItemClassification.useful,
@@ -699,7 +700,7 @@ TRAP_ITEM_NAME_LIST = [
 ]
 
 FILLER_ITEM_NAME_LIST = [
-    ITEM.GOO,
+    ITEM.EYE,
     ITEM.FIBER,
     ITEM.PROTEIN,
     ITEM.ROCK,
@@ -825,7 +826,7 @@ HARDMODE_FILLER_LIST = [
 ]
 
 PROGRESSION_ITEM_NAME_LIST = [
-    ITEM.GOO,
+    ITEM.EYE,
     ITEM.FIBER,
     ITEM.PROTEIN,
     ITEM.ROCK,
