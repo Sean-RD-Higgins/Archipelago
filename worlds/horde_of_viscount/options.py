@@ -192,7 +192,7 @@ class HealHub(Toggle):
     """
 
     display_name = "Hub Heal"
-    default = False
+    default = True
 
 class HubSubFill(Toggle):
     """
