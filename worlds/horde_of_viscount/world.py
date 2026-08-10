@@ -2,6 +2,7 @@ from collections.abc import Mapping
 from typing import Any
 
 # Imports of base Archipelago modules must be absolute.
+from BaseClasses import ItemClassification
 from worlds.AutoWorld import World
 
 # Imports of your world's files must be relative.
@@ -83,5 +84,30 @@ class HoVWorld(World):
     def fill_slot_data(self) -> Mapping[str, Any]:
         # If you need access to the player's chosen options on the client side, there is a helper for that.
         return self.options.as_dict(
-             "hard_mode", "subweapon_spawn", "heal_hub", "hub_sub_fill", "hub_food_fill", "whip_rank2", "whip_rank3", "drops_plus", "chest_choice", "bad_equip_chance", "arcade_credit_fill", "player_sprite", "chests_required", "map_size",
+            "ending", 
+
+            "custom_command_equips", 
+            "nerd_glasses", 
+            "whip_oil", 
+            "arcade_credit_fill", 
+            "level_up_progression", 
+            
+            "whip_rank2", 
+            "whip_rank3", 
+            "heal_hub", 
+            "double_jump", 
+            "dash_knife", 
+            "easyModeRibbon", 
+            "fiberPills", 
+            
+            "sub_refill", 
+            "sub_freefill", 
+            "restartStageBow", 
+            "permaLossHairpin", 
+            "amnesiaMed", 
+            "ironRings", 
+            "ironGlove", 
+            "expiredBusPass", 
+            
+            "hard_mode", 
         )

@@ -21,6 +21,26 @@ from Options import Choice, OptionGroup, PerGameCommonOptions, Range, Toggle
 
 
 
+# A Choice is an option with multiple discrete choices. This will be represented by a dropdown on the website.
+class Ending(Choice):
+    """
+    Which Ending is required to complete the game. 
+    Ending A is the hardest, requiring no assistance from Lasha nor Merchants.
+    Ending B is the easiest. 
+    Ending C is the default. 
+    Ending D is the best ending, requiring the most work. 
+    """
+
+    display_name = "Ending Required"
+
+    option_A = 0
+    option_B = 1
+    option_C = 2
+    option_D = 3
+
+    # Choice options must define an explicit default value.
+    default = option_B
+
 class EasyModeRibbon(Toggle): 
     """
     Start with Easy Mode Ribbon. A pretty ribbon making hunting much easier. More hearts for less drops.
@@ -170,7 +190,7 @@ class DoubleJump(Toggle):
 
 class HardMode(Toggle):
     """
-    In hard mode, you will NOT have Sub Refill; only Sub FreeFill.
+    In hard mode, you will NOT have Sub Refill; only Sub FreeFill, and less powerful EQUIPs. Might be impossible.
     """
 
     # The docstring of an option is used as the description on the website and in the template yaml.
@@ -316,6 +336,8 @@ class MapSize(Range):
 # This is in the format "option_name_in_snake_case: OptionClassName".
 @dataclass
 class HoVOptions(PerGameCommonOptions):
+
+    ending: Ending
     
     custom_command_equips: CustomCommandEquips
     nerd_glasses: NerdGlasses
@@ -338,23 +360,27 @@ class HoVOptions(PerGameCommonOptions):
     double_jump: DoubleJump
     dash_knife: DashKnife
 
+    bad_equip_chance: BadEquipChance
+    hard_mode: HardMode
     sub_refill: SubRefill
     sub_freefill: SubFreefill
 
-    hard_mode: HardMode
-    subweapon_spawn: SubweaponSpawn
-    hub_sub_fill: HubSubFill
-    hub_food_fill: HubFoodFill
-    drops_plus: DropsPlus
-    chest_choice: ChestChoice
-    bad_equip_chance: BadEquipChance
-    player_sprite: PlayerSprite
-    chests_required: ChestsRequired
-    map_size: MapSize
+    # subweapon_spawn: SubweaponSpawn
+    # hub_sub_fill: HubSubFill
+    # hub_food_fill: HubFoodFill
+    # drops_plus: DropsPlus
+    # chest_choice: ChestChoice
+    # player_sprite: PlayerSprite
+    # chests_required: ChestsRequired
+    # map_size: MapSize
 
 
 # If we want to group our options by similar type, we can do so as well. This looks nice on the website.
 option_groups = [
+    OptionGroup(
+        "Goal",
+        [Ending],
+    ),
     OptionGroup(
         "Quality of Life",
         [CustomCommandEquips, NerdGlasses, WhipOil, ArcadeCreditFill, LevelUpProgression],
@@ -365,22 +391,24 @@ option_groups = [
     ),
     OptionGroup(
         "Much Harder Mode",
-        [RestartStageBow, AmnesiaMed, IronRings, IronGlove, ExpiredBusPass],
+        [RestartStageBow, AmnesiaMed, IronRings, IronGlove, ExpiredBusPass, BadEquipChance],
     ),
     OptionGroup(
         "Customize",
-        [SubRefill, SubFreefill, PermaLossHairpin],
+        [HardMode, SubRefill, SubFreefill, PermaLossHairpin],
     ),
-    OptionGroup(
-        "Roguelite Mode",
-        [HardMode, MapSize, SubweaponSpawn, ChestsRequired, PlayerSprite, HubSubFill, HubFoodFill, 
-            DropsPlus, ChestChoice, BadEquipChance],
-    ),
+    # OptionGroup(
+    #     "Roguelite Mode",
+    #     [MapSize, SubweaponSpawn, ChestsRequired, PlayerSprite, HubSubFill, HubFoodFill, 
+    #         DropsPlus, ChestChoice],
+    # ),
 ]
 
 # Finally, we can define some option presets if we want the player to be able to quickly choose a specific "mode".
 option_presets = {
     "easy": {
+        "ending": Ending.option_B,
+
         "custom_command_equips": True,
         "nerd_glasses": True,
         "whip_oil": True,
@@ -405,18 +433,20 @@ option_presets = {
         "expiredBusPass": False,
 
         "hard_mode": False,
-        "subweapon_spawn": True,
-        "heal_hub": True,
-        "hub_sub_fill": True,
-        "hub_food_fill": True,
-        "drops_plus": True,
-        "chest_choice": 3,
-        "bad_equip_chance": 0,
-        "player_sprite": PlayerSprite.option_whipp,
-        "chests_required": 1,
-        "map_size": 9,
+        # "subweapon_spawn": True,
+        # "heal_hub": True,
+        # "hub_sub_fill": True,
+        # "hub_food_fill": True,
+        # "drops_plus": True,
+        # "chest_choice": 3,
+        # "bad_equip_chance": 0,
+        # "player_sprite": PlayerSprite.option_whipp,
+        # "chests_required": 1,
+        # "map_size": 9,
     },
     "normal": {
+        "ending": Ending.option_C,
+
         "custom_command_equips": True,
         "nerd_glasses": True,
         "whip_oil": True,
@@ -441,18 +471,20 @@ option_presets = {
         "expiredBusPass": False,
         
         "hard_mode": False,
-        "subweapon_spawn": False,
-        "heal_hub": False,
-        "hub_sub_fill": False,
-        "hub_food_fill": False,
-        "drops_plus": False,
-        "chest_choice": 2,
-        "bad_equip_chance": 10,
-        "player_sprite": PlayerSprite.option_whipp,
-        "chests_required": 3,
-        "map_size": 15,
+        # "subweapon_spawn": False,
+        # "heal_hub": False,
+        # "hub_sub_fill": False,
+        # "hub_food_fill": False,
+        # "drops_plus": False,
+        # "chest_choice": 2,
+        # "bad_equip_chance": 10,
+        # "player_sprite": PlayerSprite.option_whipp,
+        # "chests_required": 3,
+        # "map_size": 15,
     },
     "hard": {
+        "ending": Ending.option_D,
+
         "custom_command_equips": True,
         "nerd_glasses": False,
         "whip_oil": False,
@@ -476,20 +508,21 @@ option_presets = {
         "ironGlove": False,
         "expiredBusPass": False,
 
-        
         "hard_mode": True,
-        "subweapon_spawn": False,
-        "heal_hub": False,
-        "hub_sub_fill": False,
-        "hub_food_fill": False,
-        "drops_plus": False,
-        "chest_choice": 1,
-        "bad_equip_chance": 50,
-        "player_sprite": PlayerSprite.option_whipp,
-        "chests_required": 0,
-        "map_size": 19,
+        # "subweapon_spawn": False,
+        # "heal_hub": False,
+        # "hub_sub_fill": False,
+        # "hub_food_fill": False,
+        # "drops_plus": False,
+        # "chest_choice": 1,
+        # "bad_equip_chance": 50,
+        # "player_sprite": PlayerSprite.option_whipp,
+        # "chests_required": 0,
+        # "map_size": 19,
     },
     "unfair": {
+        "ending": Ending.option_A,
+
         "custom_command_equips": True,
         "nerd_glasses": False,
         "whip_oil": False,
@@ -514,14 +547,14 @@ option_presets = {
         "expiredBusPass": True,
         
         "hard_mode": True,
-        "subweapon_spawn": False,
-        "hub_sub_fill": False,
-        "hub_food_fill": False,
-        "drops_plus": False,
-        "chest_choice": 1,
-        "bad_equip_chance": 100,
-        "player_sprite": PlayerSprite.option_whipp,
-        "chests_required": 0,
-        "map_size": 19,
+        # "subweapon_spawn": False,
+        # "hub_sub_fill": False,
+        # "hub_food_fill": False,
+        # "drops_plus": False,
+        # "chest_choice": 1,
+        # "bad_equip_chance": 100,
+        # "player_sprite": PlayerSprite.option_whipp,
+        # "chests_required": 0,
+        # "map_size": 19,
     },
 }

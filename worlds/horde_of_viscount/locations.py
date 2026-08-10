@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+import json
 from typing import TYPE_CHECKING
 
-from BaseClasses import Location
+from BaseClasses import ItemClassification, Location
 from worlds.horde_of_viscount.items import HoVItem
 from worlds.horde_of_viscount.regions import get_region_set
 
@@ -436,6 +437,12 @@ LOCATION_DATA_LIST = [
 	HoVLocationMetaData(217, 1, 'Castle Town-Wing Challenge C-Chest-1', 21701, 'Wing Challenge C', 'Wing3PuzzleRoom', '38', 'Castle Town', 'Chest'),
 	HoVLocationMetaData(227, 1, 'Credits Peak-Credits Peak-Chest-1', 22701, 'Credits Peak', 'CreditsParentRoom', '227', 'Credits Peak', 'Chest'),
 	HoVLocationMetaData(227, 2, 'Credits Peak-Credits Peak-Chest-2', 22702, 'Credits Peak', 'CreditsParentRoom', '227', 'Credits Peak', 'Chest'),
+
+	HoVLocationMetaData(227, 0, 'Ending A Location', 1000001, 'Credits Peak', 'CreditsParentRoom', '227', 'Credits Peak', 'Ending Event'),
+	HoVLocationMetaData(227, 0, 'Ending B Location', 1000002, 'Credits Peak', 'CreditsParentRoom', '227', 'Credits Peak', 'Ending Event'),
+	HoVLocationMetaData(227, 0, 'Ending C Location', 1000003, 'Credits Peak', 'CreditsParentRoom', '227', 'Credits Peak', 'Ending Event'),
+	HoVLocationMetaData(227, 0, 'Ending D Location', 1000004, 'Credits Peak', 'CreditsParentRoom', '227', 'Credits Peak', 'Ending Event'),
+
 ]
 
 if TYPE_CHECKING:
@@ -483,19 +490,61 @@ def create_regular_locations(world: HoVWorld) -> None:
     for location_name in world.location_name_to_id.keys():
         region_name = location_name_to_region_name[location_name]
         regionInstance = world.get_region(region_name)
-        regionInstance.locations.append(HoVLocation(
+        location = HoVLocation(
             world.player, location_name, world.location_name_to_id[location_name], regionInstance
-        ))
+        )
+        regionInstance.locations.append(location)
+        
+        # Add victory items
+        if location.address == 1000001:
+            location.place_locked_item(HoVItem("Ending A Victory", ItemClassification.progression, 1000001, world.player))
+            
+        elif location.address == 1000002:
+            # Default win condition
+            location.place_locked_item(HoVItem("Ending B Victory", ItemClassification.progression, 1000002, world.player))
+            
+        elif location.address == 1000004:
+            location.place_locked_item(HoVItem("Ending D Victory", ItemClassification.progression, 1000004, world.player))
+            
+        elif location.address == 1000003:
+            location.place_locked_item(HoVItem("Ending C Victory", ItemClassification.progression, 1000003, world.player))
+
+        
 
 
 def create_events(world: HoVWorld) -> None:
-    hoVRegionSet = get_region_set(world)
-    # hoVRegionSet.viscount_lab.locations.append(HoVLocation(world.player, "Credits Peak Event", None, hoVRegionSet.viscount_lab))
+	hoVRegionSet = get_region_set(world)
+	# hoVRegionSet.viscount_lab.locations.append(HoVLocation(world.player, "Credits Peak Event", None, hoVRegionSet.viscount_lab))
 
-    # hoVRegionSet.viscount_lab.add_event(
-    #     "Credits Peak Event", "Credits Peak Event", location_type=HoVLocation, item_type=HoVItem
-    # )
-    
-    # hoVRegionSet.map_rando_rogue_world.add_event(
-    #     "All Chests Opened", "Victory", location_type=HoVLocation, item_type=items.HoVItem
-    # )
+	# hoVRegionSet.viscount_lab.add_event(
+	#     "Credits Peak Event", "Credits Peak Event", location_type=HoVLocation, item_type=HoVItem
+	# )
+
+	# hoVRegionSet.map_rando_rogue_world.add_event(
+	#     "All Chests Opened", "Victory", location_type=HoVLocation, item_type=items.HoVItem
+	# )
+	# world.get_location("Ending A Location").place_locked_item(next(item for item in world.multiworld.get_items() if item.name == "Ending A Victory"))
+	# world.get_location("Ending B Location").place_locked_item(next(item for item in world.multiworld.get_items() if item.name == "Ending B Victory"))
+	# world.get_location("Ending C Location").place_locked_item(next(item for item in world.multiworld.get_items() if item.name == "Ending C Victory"))
+	# world.get_location("Ending D Location").place_locked_item(next(item for item in world.multiworld.get_items() if item.name == "Ending D Victory"))
+	
+	# ending = HoVLocation(world.player, name='Ending B Location', address=1000002)
+	# hoVRegionSet.credits_overlook.locations.append(ending)
+	# ending.place_locked_item(HoVItem(world.player, "Ending B Victory", ItemClassification.progression, 1000002))
+
+	# if world.options.ending.value == world.options.ending.option_A:
+	# 	hoVRegionSet.credits_peak.add_event(
+	# 		"Ending A Event", "Ending A Victory", location_type=HoVLocation, item_type=HoVItem
+	# 	)
+	# elif world.options.ending.value == world.options.ending.option_B:
+	# 	hoVRegionSet.credits_peak.add_event(
+	# 		"Ending B Event", "Ending B Victory", location_type=HoVLocation, item_type=HoVItem
+	# 	)
+	# elif world.options.ending.value == world.options.ending.option_C:
+	# 	hoVRegionSet.credits_peak.add_event(
+	# 		"Ending C Event", "Ending C Victory", location_type=HoVLocation, item_type=HoVItem
+	# 	)
+	# elif world.options.ending.value == world.options.ending.option_D:
+	# 	hoVRegionSet.credits_peak.add_event(
+	# 		"Ending D Event", "Ending D Victory", location_type=HoVLocation, item_type=HoVItem
+	# 	)

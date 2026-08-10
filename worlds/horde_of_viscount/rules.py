@@ -964,8 +964,17 @@ def set_all_location_rules(world: HoVWorld) -> None:
 def set_completion_condition(world: HoVWorld) -> None:
     # In our case, we went for the Victory event design pattern (see create_events() in locations.py).
     # So lets undo what we just did, and instead set the completion condition to:
-    #world.set_completion_rule(lambda state: state.can_reach_location("Credits Peak Event", world.player))
-    world.set_completion_rule(lambda state: state.can_reach_location(next(location.ap_location_name for location in LOCATION_DATA_LIST if location.room_id == CreditsParentRoom), world.player))
+    # # world.set_completion_rule(lambda state: state.can_reach_location(next(location.ap_location_name for location in LOCATION_DATA_LIST if location.room_id == CreditsParentRoom), world.player))
+ 
+    if world.options.ending.value == world.options.ending.option_A:
+        world.set_completion_rule(Has("Ending A Victory"))
+    elif world.options.ending.value == world.options.ending.option_D:
+        world.set_completion_rule(Has("Ending D Victory"))
+    elif world.options.ending.value == world.options.ending.option_C:
+        world.set_completion_rule(Has("Ending C Victory"))
+    elif world.options.ending.value == world.options.ending.option_B:
+        world.set_completion_rule(Has("Ending B Victory"))
+
 
 
 # One final comment about rules:

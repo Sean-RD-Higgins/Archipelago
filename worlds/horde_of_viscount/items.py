@@ -374,6 +374,11 @@ ITEM_NAME_TO_ID = {
     EQUIP.WHIP_DURABLE_B: 4188,
     EQUIP.CHEST_BREAKER: 4189,
     "Full Whip Sling": 4190,
+
+    # "Ending A Victory": 1000001,
+    # "Ending B Victory": 1000002,
+    # "Ending C Victory": 1000003,
+    # "Ending D Victory": 1000004,
 }
 
 # Items should have a defined default classification.
@@ -455,7 +460,7 @@ DEFAULT_ITEM_CLASSIFICATIONS = {
     "Pill Iron": ItemClassification.filler,
     FOOD.ROOM_REDO: ItemClassification.filler,
 
-    "Empty Slot": ItemClassification.trap,
+    #"Empty Slot": ItemClassification.trap,
 
     EQUIP.EASYMODE: ItemClassification.trap,
     "Heart Brooch": ItemClassification.useful,
@@ -663,7 +668,7 @@ TRAP_ITEM_NAME_LIST = [
     "Pinion",
     "Pumpkin",
     "Ladle",
-    "Empty Slot",
+    #"Empty Slot",
     EQUIP.EASYMODE,
     "Barb Rage",
     "Pretty Ribbon",
@@ -883,7 +888,6 @@ PROGRESSION_ITEM_NAME_LIST = [
 # To make this simple, it is common practice to subclass the basic Item class and override the "game" field.
 class HoVItem(Item):
     game = "Horde of Viscount"
-
 
 # Ontop of our regular itempool, our world must be able to create arbitrary amounts of filler as requested by core.
 # To do this, it must define a function called world.get_filler_item_name(), which we will define in world.py later.
