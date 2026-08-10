@@ -147,7 +147,7 @@ def connect_regions(world: HoVWorld) -> None:
         if region.name in specificRuleList:
             continue
         else:
-            if i >= len(level_up_rule_list) or len(level_up_rule_list[i]) == 0:
+            if len(level_up_rule_list) == 0:
                 region.connect(nextRegion, 
                     region.name + " to " + nextRegion.name)
             else:
