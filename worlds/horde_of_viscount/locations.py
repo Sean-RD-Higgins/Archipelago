@@ -1,0 +1,550 @@
+from __future__ import annotations
+
+import json
+from typing import TYPE_CHECKING
+
+from BaseClasses import ItemClassification, Location
+from worlds.horde_of_viscount.items import HoVItem
+from worlds.horde_of_viscount.regions import get_region_set
+
+class HoVLocationMetaData:
+	def __init__(
+			self, room_id: int, interact_id: int, ap_location_name: str, ap_location_id: int, room_name: str, 
+               room_asset_name: str, parent_room_id: int, parent_name: str, assetName: str, isNoSubweaponRequired: bool = False
+	):
+		self.room_id = room_id
+		self.interact_id = interact_id
+		self.ap_location_name = ap_location_name
+		self.ap_location_id = ap_location_id
+		self.room_name = room_name
+		self.room_asset_name = room_asset_name
+		self.parent_room_id = parent_room_id
+		self.parent_name = parent_name
+		self.assetName = assetName
+		self.isNoSubweaponRequired = isNoSubweaponRequired
+
+LOCATION_DATA_LIST = [
+	HoVLocationMetaData(4, 1, 'World Map-World Map-Bridge-1', 401, 'World Map', 'WorldMapRoom', '4', 'World Map', 'Bridge'),
+	HoVLocationMetaData(4, 2, 'World Map-World Map-Bridge-2', 402, 'World Map', 'WorldMapRoom', '4', 'World Map', 'Bridge'),
+	HoVLocationMetaData(4, 3, 'World Map-World Map-Bridge-3', 403, 'World Map', 'WorldMapRoom', '4', 'World Map', 'Bridge'),
+	HoVLocationMetaData(4, 4, 'World Map-World Map-Bridge-4', 404, 'World Map', 'WorldMapRoom', '4', 'World Map', 'Bridge'),
+	HoVLocationMetaData(6, 1, 'World Map-Deadland Road-Chest-1', 601, 'Deadland Road', 'DeadlandRoad1Room', '4', 'World Map', 'Chest'),
+	HoVLocationMetaData(7, 1, 'World Map-Deadland Road 2-Chest-1', 701, 'Deadland Road 2', 'DeadlandRoad2Room', '4', 'World Map', 'Chest'),
+	HoVLocationMetaData(8, 1, 'World Map-Deadland Road 3-Chest-1', 801, 'Deadland Road 3', 'DeadlandRoad3Room', '4', 'World Map', 'Chest'),
+	HoVLocationMetaData(9, 1, 'World Map-Toxic Jungle-Chest-1', 901, 'Toxic Jungle', 'ToxicJungle1Room', '4', 'World Map East', 'Chest'),
+	HoVLocationMetaData(10, 1, 'World Map-Toxic Jungle 2-Chest-1', 1001, 'Toxic Jungle 2', 'ToxicJungle2Room', '4', 'World Map East', 'Chest'),
+	HoVLocationMetaData(11, 1, 'World Map-Toxic Jungle 3-Chest-1', 1101, 'Toxic Jungle 3', 'ToxicJungle3Room', '4', 'World Map East', 'Chest', True),
+	HoVLocationMetaData(12, 1, 'World Map-Larval Forest-Chest-1', 1201, 'Larval Forest', 'LarvelForest1Room', '4', 'World Map', 'Chest'),
+	HoVLocationMetaData(13, 1, 'World Map-Larval Forest 2-Chest-1', 1301, 'Larval Forest 2', 'LarvelForest2Room', '4', 'World Map', 'Chest'),
+	HoVLocationMetaData(14, 1, 'World Map-Larval Forest 3-Chest-1', 1401, 'Larval Forest 3', 'LarvelForest3Room', '4', 'World Map', 'Chest'),
+	HoVLocationMetaData(14, 2, 'World Map-Larval Forest 3-Chest-2', 1402, 'Larval Forest 3', 'LarvelForest3Room', '4', 'World Map', 'Chest'),
+	HoVLocationMetaData(14, 3, 'World Map-Larval Forest 3-Chest-3', 1403, 'Larval Forest 3', 'LarvelForest3Room', '4', 'World Map', 'Chest'),
+	HoVLocationMetaData(15, 1, 'World Map-Iron Rock Mt-Chest-1', 1501, 'Iron Rock Mt', 'IronRock1Room', '4', 'World Map East', 'Chest'),
+	HoVLocationMetaData(16, 1, 'World Map-Iron Rock Mt 2-Chest-1', 1601, 'Iron Rock Mt 2', 'IronRock2Room', '4', 'World Map East', 'Chest', True),
+	HoVLocationMetaData(17, 1, 'World Map-Iron Rock Mt 3-Chest-1', 1701, 'Iron Rock Mt 3', 'IronRock3Room', '4', 'World Map East', 'Chest', True),
+	HoVLocationMetaData(18, 1, 'World Map-GrimeBone Fort-Chest-1', 1801, 'GrimeBone Fort', 'BoneFortRoom', '4', 'World Map East', 'Chest', True),
+	HoVLocationMetaData(18, 2, 'World Map-GrimeBone Fort-Chest-2', 1802, 'GrimeBone Fort', 'BoneFortRoom', '4', 'World Map East', 'Chest', True),
+	HoVLocationMetaData(18, 3, 'World Map-GrimeBone Fort-Chest-3', 1803, 'GrimeBone Fort', 'BoneFortRoom', '4', 'World Map East', 'Chest', True),
+	HoVLocationMetaData(20, 1, 'Town Center-Dusty Beach-Chest-1', 2001, 'Dusty Beach', 'DustyBeach1Room', '39', 'Town Center', 'Chest'),
+	HoVLocationMetaData(21, 1, 'Town Center-Dusty Beach 2-Chest-1', 2101, 'Dusty Beach 2', 'DustyBeach2Room', '39', 'Town Center', 'Chest'),
+	HoVLocationMetaData(22, 1, 'Town Center-Dusty Beach 3-Chest-1', 2201, 'Dusty Beach 3', 'DustyBeach3Room', '39', 'Town Center', 'Chest'),
+	HoVLocationMetaData(23, 1, 'Castle Town-Mushroom Cloud-Chest-1', 2301, 'Mushroom Cloud', 'MushroomClouds1Room', '38', 'Castle Town', 'Chest', True),
+	HoVLocationMetaData(24, 1, 'Castle Town-Mushroom Cloud 2-Chest-1', 2401, 'Mushroom Cloud 2', 'MushroomClouds2Room', '38', 'Castle Town', 'Chest', True),
+	HoVLocationMetaData(25, 1, 'Castle Town-Mushroom Cloud 3-Chest-1', 2501, 'Mushroom Cloud 3', 'MushroomClouds3Room', '38', 'Castle Town', 'Chest'),
+	HoVLocationMetaData(26, 1, 'Tepid Volcano-Quenchy Desert-Chest-1', 2601, 'Quenchy Desert', 'QuenchyDesert1Room', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(27, 1, 'Tepid Volcano-Quenchy Desert 2-Chest-1', 2701, 'Quenchy Desert 2', 'QuenchyDesert2Room', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(27, 2, 'Tepid Volcano-Quenchy Desert 2-Chest-2', 2702, 'Quenchy Desert 2', 'QuenchyDesert2Room', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(28, 1, 'Tepid Volcano-Quenchy Desert 3-Chest-1', 2801, 'Quenchy Desert 3', 'QuenchyDesert3Room', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(28, 2, 'Tepid Volcano-Quenchy Desert 3-Chest-2', 2802, 'Quenchy Desert 3', 'QuenchyDesert3Room', '49', 'Tepid Volcano', 'Chest', True),
+	HoVLocationMetaData(29, 1, 'Kingdom Castle-Kingdom Castle-Chest-1', 2901, 'Kingdom Castle', 'CastleBridgeRoom', '29', 'Kingdom Castle', 'Chest', True),
+	HoVLocationMetaData(29, 2, 'Kingdom Castle-Kingdom Castle-Bridge-2', 2902, 'Kingdom Castle', 'CastleBridgeRoom', '29', 'Kingdom Castle', 'Bridge'),
+	HoVLocationMetaData(29, 3, 'Kingdom Castle-Kingdom Castle-Chest-3', 2903, 'Kingdom Castle', 'CastleBridgeRoom', '29', 'Kingdom Castle', 'Chest', True),
+	HoVLocationMetaData(29, 4, 'Kingdom Castle-Kingdom Castle-Chest-4', 2904, 'Kingdom Castle', 'CastleBridgeRoom', '29', 'Kingdom Castle', 'Chest', True),
+	HoVLocationMetaData(30, 1, 'Kingdom Castle-Barbican-Winch-1', 3001, 'Barbican', 'CastleFrontBarbicanRoom', '29', 'Kingdom Castle', 'Winch'),
+	HoVLocationMetaData(30, 2, 'Kingdom Castle-Barbican-Chest-2', 3002, 'Barbican', 'CastleFrontBarbicanRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(30, 3, 'Kingdom Castle-Barbican-Bridge-3', 3003, 'Barbican', 'CastleFrontBarbicanRoom', '29', 'Kingdom Castle', 'Bridge'),
+	HoVLocationMetaData(32, 1, 'Kingdom Castle-Portcullis Room-Chest-1', 3201, 'Portcullis Room', 'CastlePortcullisRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(32, 2, 'Kingdom Castle-Portcullis Room-Chest-2', 3202, 'Portcullis Room', 'CastlePortcullisRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(32, 3, 'Kingdom Castle-Portcullis Room-Chest-3', 3203, 'Portcullis Room', 'CastlePortcullisRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(33, 1, 'Kingdom Castle-Great Hall-Chest-1', 3301, 'Great Hall', 'CastleFoyerRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(34, 1, 'Kingdom Castle-Tower-Chest-1', 3401, 'Tower', 'CastleTowerRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(34, 2, 'Kingdom Castle-Tower-Chest-2', 3402, 'Tower', 'CastleTowerRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(34, 3, 'Kingdom Castle-Tower-Chest-3', 3403, 'Tower', 'CastleTowerRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(35, 1, 'Kingdom Castle-Ramparts-Chest-1', 3501, 'Ramparts', 'CastleRampartsRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(35, 2, 'Kingdom Castle-Ramparts-Bridge-2', 3502, 'Ramparts', 'CastleRampartsRoom', '29', 'Kingdom Castle', 'Bridge'),
+	HoVLocationMetaData(35, 3, 'Kingdom Castle-Ramparts-Bridge-3', 3503, 'Ramparts', 'CastleRampartsRoom', '29', 'Kingdom Castle', 'Bridge'),
+	HoVLocationMetaData(36, 1, 'Kingdom Castle-Machicolations-Wall?-1', 3601, 'Machicolations', 'CastleMachicolationsRoom', '29', 'Kingdom Castle', 'Wall?'),
+	HoVLocationMetaData(36, 2, 'Kingdom Castle-Machicolations-Winch-2', 3602, 'Machicolations', 'CastleMachicolationsRoom', '29', 'Kingdom Castle', 'Winch'),
+	HoVLocationMetaData(36, 3, 'Kingdom Castle-Machicolations-Chest-3', 3603, 'Machicolations', 'CastleMachicolationsRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(37, 1, 'Kingdom Castle-Battlements-Chest-1', 3701, 'Battlements', 'CastleBattlementsRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(38, 1, 'Town Gate-Castle Town-Bridge-1', 3801, 'Castle Town', 'TownEntranceRoom', '40', 'Town Gate', 'Bridge'),
+	HoVLocationMetaData(38, 2, 'Town Gate-Castle Town-Bridge-2', 3802, 'Castle Town', 'TownEntranceRoom', '40', 'Town Gate', 'Bridge'),
+	HoVLocationMetaData(38, 3, 'Town Gate-Castle Town-Bridge-3', 3803, 'Castle Town', 'TownEntranceRoom', '40', 'Town Gate', 'Bridge'),
+	HoVLocationMetaData(39, 1, 'Town Gate-Town Center-Bridge-1', 3901, 'Town Center', 'TownCenterRoom', '40', 'Town Gate', 'Bridge'),
+	HoVLocationMetaData(39, 2, 'Town Gate-Town Center-Bridge-2', 3902, 'Town Center', 'TownCenterRoom', '40', 'Town Gate', 'Bridge'),
+	HoVLocationMetaData(39, 3, 'Town Gate-Town Center-Bridge-3', 3903, 'Town Center', 'TownCenterRoom', '40', 'Town Gate', 'Bridge'),
+	HoVLocationMetaData(40, 1, 'Town Gate-Town Gate-Chest-1', 4001, 'Town Gate', 'TownGateRoom', '40', 'Town Gate', 'Chest'),
+	HoVLocationMetaData(40, 2, 'Town Gate-Town Gate-Bridge-2', 4002, 'Town Gate', 'TownGateRoom', '40', 'Town Gate', 'Bridge'),
+	HoVLocationMetaData(40, 3, 'Town Gate-Town Gate-Chest-3', 4003, 'Town Gate', 'TownGateRoom', '40', 'Town Gate', 'Chest'),
+	HoVLocationMetaData(40, 4, 'Town Gate-Town Gate-Bridge-4', 4004, 'Town Gate', 'TownGateRoom', '40', 'Town Gate', 'Bridge'),
+	HoVLocationMetaData(40, 5, 'Town Gate-Town Gate-Bridge-5', 4005, 'Town Gate', 'TownGateRoom', '40', 'Town Gate', 'Bridge'),
+	HoVLocationMetaData(40, 6, 'Town Gate-Town Gate-Bridge-6', 4006, 'Town Gate', 'TownGateRoom', '40', 'Town Gate', 'Bridge'),
+	HoVLocationMetaData(40, 7, 'Town Gate-Town Gate-Bridge-7', 4007, 'Town Gate', 'TownGateRoom', '40', 'Town Gate', 'Bridge'),
+	HoVLocationMetaData(40, 8, 'Town Gate-Town Gate-Chest-8', 4008, 'Town Gate', 'TownGateRoom', '40', 'Town Gate', 'Chest', True),
+	HoVLocationMetaData(41, 1, 'Crimson Cove Entrance-Crimson Cove-Chest-1', 4101, 'Crimson Cove', 'CrimsonCove1Room', '162', 'Crimson Cove Entrance', 'Chest'),
+	HoVLocationMetaData(42, 1, 'Crimson Cove Entrance-Crimson Cove 2-Chest-1', 4201, 'Crimson Cove 2', 'CrimsonCove2Room', '162', 'Crimson Cove Entrance', 'Chest'),
+	HoVLocationMetaData(43, 1, 'Crimson Cove Entrance-Crimson Cove 3-Chest-1', 4301, 'Crimson Cove 3', 'CrimsonCove3Room', '162', 'Crimson Cove Entrance', 'Chest'),
+	HoVLocationMetaData(44, 1, 'Kingdom Castle-Kitchen-Chest-1', 4401, 'Kitchen', 'CastleKitchenRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(44, 2, 'Kingdom Castle-Kitchen-Chest-2', 4402, 'Kitchen', 'CastleKitchenRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(44, 3, 'Kingdom Castle-Kitchen-Chest-3', 4403, 'Kitchen', 'CastleKitchenRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(45, 1, 'Kingdom Castle-Castle Break Room-Chest-1', 4501, 'Castle Break Room', 'CastleSaveRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(46, 1, 'Kingdom Castle-Hidden Storage-Chest-1', 4601, 'Hidden Storage', 'CastleHiddenStorageRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(46, 2, 'Kingdom Castle-Hidden Storage-Chest-2', 4602, 'Hidden Storage', 'CastleHiddenStorageRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(46, 3, 'Kingdom Castle-Hidden Storage-Chest-3', 4603, 'Hidden Storage', 'CastleHiddenStorageRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(46, 4, 'Kingdom Castle-Hidden Storage-Chest-4', 4604, 'Hidden Storage', 'CastleHiddenStorageRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(46, 5, 'Kingdom Castle-Hidden Storage-Chest-5', 4605, 'Hidden Storage', 'CastleHiddenStorageRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(46, 6, 'Kingdom Castle-Hidden Storage-Chest-6', 4606, 'Hidden Storage', 'CastleHiddenStorageRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(47, 1, 'Kingdom Castle-Rear Tower-Wall?-1', 4701, 'Rear Tower', 'CastleRearTowerRoom', '29', 'Kingdom Castle', 'Wall?'),
+	HoVLocationMetaData(47, 2, 'Kingdom Castle-Rear Tower-Chest-2', 4702, 'Rear Tower', 'CastleRearTowerRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(47, 3, 'Kingdom Castle-Rear Tower-Chest-3', 4703, 'Rear Tower', 'CastleRearTowerRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(47, 4, 'Kingdom Castle-Rear Tower-Wall?-4', 4704, 'Rear Tower', 'CastleRearTowerRoom', '29', 'Kingdom Castle', 'Wall?'),
+	HoVLocationMetaData(48, 1, 'Kingdom Castle-Throne Room-Winch-1', 4801, 'Throne Room', 'CastleThroneRoom', '29', 'Kingdom Castle', 'Winch'),
+	HoVLocationMetaData(49, 1, 'Tepid Volcano-Tepid Volcano-Chest-1', 4901, 'Tepid Volcano', 'VolcanoFootRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(51, 1, 'Tepid Volcano-Cave Entrance-Peg-1', 5101, 'Cave Entrance', 'VolcanoCaveEntranceRoom', '49', 'Tepid Volcano', 'Peg'),
+	HoVLocationMetaData(52, 1, 'Tepid Volcano-Entryway-Chest-1', 5201, 'Entryway', 'VolcanoEntrywayRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(52, 2, 'Tepid Volcano-Entryway-Chest-2', 5202, 'Entryway', 'VolcanoEntrywayRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(52, 3, 'Tepid Volcano-Entryway-Peg-3', 5203, 'Entryway', 'VolcanoEntrywayRoom', '49', 'Tepid Volcano', 'Peg'),
+	HoVLocationMetaData(53, 1, 'Tepid Volcano-Vein-Chest-1', 5301, 'Vein', 'VolcanoVeinRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(53, 2, 'Tepid Volcano-Vein-Chest-2', 5302, 'Vein', 'VolcanoVeinRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(54, 1, 'Tepid Volcano-Throat-Chest-1', 5401, 'Throat', 'VolcanoThroatRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(54, 2, 'Tepid Volcano-Throat-Chest-2', 5402, 'Throat', 'VolcanoThroatRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(54, 3, 'Tepid Volcano-Throat-Chest-3', 5403, 'Throat', 'VolcanoThroatRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(55, 1, 'Tepid Volcano-Side Vent-Chest-1', 5501, 'Side Vent', 'VolcanoSideVentRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(55, 2, 'Tepid Volcano-Side Vent-Chest-2', 5502, 'Side Vent', 'VolcanoSideVentRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(55, 3, 'Tepid Volcano-Side Vent-Chest-3', 5503, 'Side Vent', 'VolcanoSideVentRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(56, 1, 'Tepid Volcano-Vent-Chest-1', 5601, 'Vent', 'VolcanoVentRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(57, 1, 'Tepid Volcano-Volcano Campsite-Chest-1', 5701, 'Volcano Campsite', 'VolcanoCampsiteRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(57, 2, 'Tepid Volcano-Volcano Campsite-Chest-2', 5702, 'Volcano Campsite', 'VolcanoCampsiteRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(59, 1, 'Tepid Volcano-East Topside-Chest-1', 5901, 'East Topside', 'VolcanoTopSideRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(60, 1, 'Tepid Volcano-Side Cavern-Chest-1', 6001, 'Side Cavern', 'VolcanoSideSideRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(61, 1, 'Tepid Volcano-Bottom Cave-Chest-1', 6101, 'Bottom Cave', 'VolcanoSideBottomRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(61, 2, 'Tepid Volcano-Bottom Cave-Chest-2', 6102, 'Bottom Cave', 'VolcanoSideBottomRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(62, 1, 'Tepid Volcano-Fluffy Clouds 1-Bridge-1', 6201, 'Fluffy Clouds 1', 'VolcanoEastSpaceRoom', '49', 'Tepid Volcano', 'Bridge'),
+	HoVLocationMetaData(62, 2, 'Tepid Volcano-Fluffy Clouds 1-Bridge-2', 6202, 'Fluffy Clouds 1', 'VolcanoEastSpaceRoom', '49', 'Tepid Volcano', 'Bridge'),
+	HoVLocationMetaData(62, 3, 'Tepid Volcano-Fluffy Clouds 1-Bridge-3', 6203, 'Fluffy Clouds 1', 'VolcanoEastSpaceRoom', '49', 'Tepid Volcano', 'Bridge'),
+	HoVLocationMetaData(62, 4, 'Tepid Volcano-Fluffy Clouds 1-Bridge-4', 6204, 'Fluffy Clouds 1', 'VolcanoEastSpaceRoom', '49', 'Tepid Volcano', 'Bridge'),
+	HoVLocationMetaData(62, 5, 'Tepid Volcano-Fluffy Clouds 1-Bridge-5', 6205, 'Fluffy Clouds 1', 'VolcanoEastSpaceRoom', '49', 'Tepid Volcano', 'Bridge'),
+	HoVLocationMetaData(62, 6, 'Tepid Volcano-Fluffy Clouds 1-Bridge-6', 6206, 'Fluffy Clouds 1', 'VolcanoEastSpaceRoom', '49', 'Tepid Volcano', 'Bridge'),
+	HoVLocationMetaData(62, 7, 'Tepid Volcano-Fluffy Clouds 1-Bridge-7', 6207, 'Fluffy Clouds 1', 'VolcanoEastSpaceRoom', '49', 'Tepid Volcano', 'Bridge'),
+	HoVLocationMetaData(63, 1, 'Tepid Volcano-Eastern Foot-Chest-1', 6301, 'Eastern Foot', 'VolcanoEastFootRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(63, 2, 'Tepid Volcano-Eastern Foot-Chest-2', 6302, 'Eastern Foot', 'VolcanoEastFootRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(64, 1, 'Tepid Volcano-Fluffy Clouds 2-Bridge-1', 6401, 'Fluffy Clouds 2', 'VolcanoEastSpace2Room', '49', 'Tepid Volcano', 'Bridge'),
+	HoVLocationMetaData(64, 2, 'Tepid Volcano-Fluffy Clouds 2-Bridge-2', 6402, 'Fluffy Clouds 2', 'VolcanoEastSpace2Room', '49', 'Tepid Volcano', 'Bridge'),
+	HoVLocationMetaData(64, 3, 'Tepid Volcano-Fluffy Clouds 2-Bridge-3', 6403, 'Fluffy Clouds 2', 'VolcanoEastSpace2Room', '49', 'Tepid Volcano', 'Bridge'),
+	HoVLocationMetaData(64, 4, 'Tepid Volcano-Fluffy Clouds 2-Bridge-4', 6404, 'Fluffy Clouds 2', 'VolcanoEastSpace2Room', '49', 'Tepid Volcano', 'Bridge'),
+	HoVLocationMetaData(65, 1, 'Tepid Volcano-Fluffy Clouds 3-Chest-1', 6501, 'Fluffy Clouds 3', 'VolcanoEastSpace3Room', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(65, 2, 'Tepid Volcano-Fluffy Clouds 3-Chest-2', 6502, 'Fluffy Clouds 3', 'VolcanoEastSpace3Room', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(66, 1, 'Tepid Volcano-Volcano Foot Camp-Chest-1', 6601, 'Volcano Foot Camp', 'VolcanoFootCampRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(66, 2, 'Tepid Volcano-Volcano Foot Camp-Chest-2', 6602, 'Volcano Foot Camp', 'VolcanoFootCampRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(66, 3, 'Tepid Volcano-Volcano Foot Camp-Chest-3', 6603, 'Volcano Foot Camp', 'VolcanoFootCampRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(66, 4, 'Tepid Volcano-Volcano Foot Camp-Chest-4', 6604, 'Volcano Foot Camp', 'VolcanoFootCampRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(67, 1, 'Tepid Volcano-Mansion Gate-Winch-1', 6701, 'Mansion Gate', 'VolcanoMansionGateRoom', '49', 'Tepid Volcano', 'Winch'),
+	HoVLocationMetaData(68, 1, 'Viscount Manor-Viscount Manor-Chest-1', 6801, 'Viscount Manor', 'ViscountManorHubRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(68, 2, 'Viscount Manor-Viscount Manor-Chest-2', 6802, 'Viscount Manor', 'ViscountManorHubRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(68, 3, 'Viscount Manor-Viscount Manor-Wall?-3', 6803, 'Viscount Manor', 'ViscountManorHubRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(68, 4, 'Viscount Manor-Viscount Manor-Wall?-4', 6804, 'Viscount Manor', 'ViscountManorHubRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(71, 1, 'Abandoned Town-Abandoned Town-Chest-1', 7101, 'Abandoned Town', 'AbandonEntranceRoom', '71', 'Abandoned Town', 'Chest'),
+	HoVLocationMetaData(71, 2, 'Abandoned Town-Abandoned Town-Peg-2', 7102, 'Abandoned Town', 'AbandonEntranceRoom', '71', 'Abandoned Town', 'Peg', True),
+	HoVLocationMetaData(71, 3, 'Abandoned Town-Abandoned Town-Chest-3', 7103, 'Abandoned Town', 'AbandonEntranceRoom', '71', 'Abandoned Town', 'Chest', True),
+	HoVLocationMetaData(71, 4, 'Abandoned Town-Abandoned Town-Chest-4', 7104, 'Abandoned Town', 'AbandonEntranceRoom', '71', 'Abandoned Town', 'Chest', True),
+	HoVLocationMetaData(72, 1, 'Abandoned Town-West Proletariat-Chest-1', 7201, 'West Proletariat', 'AbandonWestPoorRoom', '71', 'Abandoned Town', 'Chest'),
+	HoVLocationMetaData(72, 2, 'Abandoned Town-West Proletariat-Bridge-2', 7202, 'West Proletariat', 'AbandonWestPoorRoom', '71', 'Abandoned Town', 'Bridge'),
+	HoVLocationMetaData(72, 3, 'Abandoned Town-West Proletariat-Chest-3', 7203, 'West Proletariat', 'AbandonWestPoorRoom', '71', 'Abandoned Town', 'Chest', True),
+	HoVLocationMetaData(72, 4, 'Abandoned Town-West Proletariat-Chest-4', 7204, 'West Proletariat', 'AbandonWestPoorRoom', '71', 'Abandoned Town', 'Chest', True),
+	HoVLocationMetaData(73, 1, 'Abandoned Town-Center Proletariat-Chest-1', 7301, 'Center Proletariat', 'AbandonCenterPoorRoom', '71', 'Abandoned Town', 'Chest'),
+	HoVLocationMetaData(73, 2, 'Abandoned Town-Center Proletariat-Bridge-2', 7302, 'Center Proletariat', 'AbandonCenterPoorRoom', '71', 'Abandoned Town', 'Bridge'),
+	HoVLocationMetaData(73, 3, 'Abandoned Town-Center Proletariat-Bridge-3', 7303, 'Center Proletariat', 'AbandonCenterPoorRoom', '71', 'Abandoned Town', 'Bridge'),
+	HoVLocationMetaData(73, 4, 'Abandoned Town-Center Proletariat-Chest-4', 7304, 'Center Proletariat', 'AbandonCenterPoorRoom', '71', 'Abandoned Town', 'Chest'),
+	HoVLocationMetaData(73, 5, 'Abandoned Town-Center Proletariat-Chest-5', 7305, 'Center Proletariat', 'AbandonCenterPoorRoom', '71', 'Abandoned Town', 'Chest'),
+	HoVLocationMetaData(74, 1, 'Abandoned Town-East Proletariat-Chest-1', 7401, 'East Proletariat', 'AbandonEastPoorRoom', '71', 'Abandoned Town', 'Chest'),
+	HoVLocationMetaData(74, 2, 'Abandoned Town-East Proletariat-Chest-2', 7402, 'East Proletariat', 'AbandonEastPoorRoom', '71', 'Abandoned Town', 'Chest', True),
+	HoVLocationMetaData(74, 3, 'Abandoned Town-East Proletariat-Bridge-3', 7403, 'East Proletariat', 'AbandonEastPoorRoom', '71', 'Abandoned Town', 'Bridge'),
+	HoVLocationMetaData(74, 4, 'Abandoned Town-East Proletariat-Chest-4', 7404, 'East Proletariat', 'AbandonEastPoorRoom', '71', 'Abandoned Town', 'Chest', True),
+	HoVLocationMetaData(75, 1, 'Abandoned Town-West Bourgeoisie-Chest-1', 7501, 'West Bourgeoisie', 'AbandonWestRichRoom', '71', 'Abandoned Town', 'Chest', True),
+	HoVLocationMetaData(75, 2, 'Abandoned Town-West Bourgeoisie-Chest-2', 7502, 'West Bourgeoisie', 'AbandonWestRichRoom', '71', 'Abandoned Town', 'Chest'),
+	HoVLocationMetaData(75, 3, 'Abandoned Town-West Bourgeoisie-Chest-3', 7503, 'West Bourgeoisie', 'AbandonWestRichRoom', '71', 'Abandoned Town', 'Chest', True),
+	HoVLocationMetaData(76, 1, 'Abandoned Town-Center Bourgeoisie-Chest-1', 7601, 'Center Bourgeoisie', 'AbandonCenterRichRoom', '71', 'Abandoned Town', 'Chest'),
+	HoVLocationMetaData(76, 2, 'Abandoned Town-Center Bourgeoisie-Chest-2', 7602, 'Center Bourgeoisie', 'AbandonCenterRichRoom', '71', 'Abandoned Town', 'Chest'),
+	HoVLocationMetaData(76, 3, 'Abandoned Town-Center Bourgeoisie-Chest-3', 7603, 'Center Bourgeoisie', 'AbandonCenterRichRoom', '71', 'Abandoned Town', 'Chest'),
+	HoVLocationMetaData(76, 4, 'Abandoned Town-Center Bourgeoisie-Bridge-4', 7604, 'Center Bourgeoisie', 'AbandonCenterRichRoom', '71', 'Abandoned Town', 'Bridge'),
+	HoVLocationMetaData(77, 1, 'Abandoned Town-East Bourgeoisie-Chest-1', 7701, 'East Bourgeoisie', 'AbandonEastRichRoom', '71', 'Abandoned Town', 'Chest', True),
+	HoVLocationMetaData(77, 2, 'Abandoned Town-East Bourgeoisie-Chest-2', 7702, 'East Bourgeoisie', 'AbandonEastRichRoom', '71', 'Abandoned Town', 'Chest', True),
+	HoVLocationMetaData(77, 3, 'Abandoned Town-East Bourgeoisie-Bridge-3', 7703, 'East Bourgeoisie', 'AbandonEastRichRoom', '71', 'Abandoned Town', 'Bridge'),
+	HoVLocationMetaData(77, 4, 'Abandoned Town-East Bourgeoisie-Chest-4', 7704, 'East Bourgeoisie', 'AbandonEastRichRoom', '71', 'Abandoned Town', 'Chest'),
+	HoVLocationMetaData(78, 1, 'Abandoned Town-West Sky-Chest-1', 7801, 'West Sky', 'AbandonWestSkyRoom', '71', 'Abandoned Town', 'Chest'),
+	HoVLocationMetaData(78, 2, 'Abandoned Town-West Sky-Chest-2', 7802, 'West Sky', 'AbandonWestSkyRoom', '71', 'Abandoned Town', 'Chest'),
+	HoVLocationMetaData(78, 3, 'Abandoned Town-West Sky-Chest-3', 7803, 'West Sky', 'AbandonWestSkyRoom', '71', 'Abandoned Town', 'Chest'),
+	HoVLocationMetaData(79, 1, 'Abandoned Town-East Entrance-Chest-1', 7901, 'East Entrance', 'AbandonExitRoom', '71', 'Abandoned Town', 'Chest'),
+	HoVLocationMetaData(79, 2, 'Abandoned Town-East Entrance-Chest-2', 7902, 'East Entrance', 'AbandonExitRoom', '71', 'Abandoned Town', 'Chest'),
+	HoVLocationMetaData(79, 3, 'Abandoned Town-East Entrance-Chest-3', 7903, 'East Entrance', 'AbandonExitRoom', '71', 'Abandoned Town', 'Chest'),
+	HoVLocationMetaData(80, 1, 'Abandoned Town-East Sky-Chest-1', 8001, 'East Sky', 'AbandonEastSkyRoom', '71', 'Abandoned Town', 'Chest'),
+	HoVLocationMetaData(80, 2, 'Abandoned Town-East Sky-Chest-2', 8002, 'East Sky', 'AbandonEastSkyRoom', '71', 'Abandoned Town', 'Chest'),
+	HoVLocationMetaData(80, 3, 'Abandoned Town-East Sky-Peg-3', 8003, 'East Sky', 'AbandonEastSkyRoom', '71', 'Abandoned Town', 'Peg'),
+	HoVLocationMetaData(80, 4, 'Abandoned Town-East Sky-Peg-4', 8004, 'East Sky', 'AbandonEastSkyRoom', '71', 'Abandoned Town', 'Peg'),
+	HoVLocationMetaData(80, 5, 'Abandoned Town-East Sky-Chest-5', 8005, 'East Sky', 'AbandonEastSkyRoom', '71', 'Abandoned Town', 'Chest'),
+	HoVLocationMetaData(81, 1, 'Abandoned Town-Drain-Chest-1', 8101, 'Drain', 'AbandonWestDrainRoom', '71', 'Abandoned Town Nest', 'Chest'),
+	HoVLocationMetaData(81, 2, 'Abandoned Town-Drain-Chest-2', 8102, 'Drain', 'AbandonWestDrainRoom', '71', 'Abandoned Town Nest', 'Chest'),
+	HoVLocationMetaData(81, 3, 'Abandoned Town-Drain-Chest-3', 8103, 'Drain', 'AbandonWestDrainRoom', '71', 'Abandoned Town Nest', 'Chest'),
+	HoVLocationMetaData(82, 1, 'Abandoned Town-Cold Tunnel-Stalactite-1', 8201, 'Cold Tunnel', 'AbandonTunnelRoom', '71', 'Abandoned Town Nest', 'Stalactite'),
+	HoVLocationMetaData(82, 2, 'Abandoned Town-Cold Tunnel-Chest-2', 8202, 'Cold Tunnel', 'AbandonTunnelRoom', '71', 'Abandoned Town Nest', 'Chest'),
+	HoVLocationMetaData(82, 3, 'Abandoned Town-Cold Tunnel-Chest-3', 8203, 'Cold Tunnel', 'AbandonTunnelRoom', '71', 'Abandoned Town Nest', 'Chest'),
+	HoVLocationMetaData(82, 4, 'Abandoned Town-Cold Tunnel-Chest-4', 8204, 'Cold Tunnel', 'AbandonTunnelRoom', '71', 'Abandoned Town Nest', 'Chest'),
+	HoVLocationMetaData(82, 5, 'Abandoned Town-Cold Tunnel-Stalactite-5', 8205, 'Cold Tunnel', 'AbandonTunnelRoom', '71', 'Abandoned Town Nest', 'Stalactite'),
+	HoVLocationMetaData(82, 6, 'Abandoned Town-Cold Tunnel-Wall?-6', 8206, 'Cold Tunnel', 'AbandonTunnelRoom', '71', 'Abandoned Town Nest', 'Wall?'),
+	HoVLocationMetaData(83, 1, 'Abandoned Town-Cold Drop-Stalactite-1', 8301, 'Cold Drop', 'AbandonDropRoom', '71', 'Abandoned Town Nest', 'Stalactite'),
+	HoVLocationMetaData(84, 1, 'Abandoned Town-Hidden-Chest-1', 8401, 'Hidden', 'AbandonHiddenRoom', '71', 'Abandoned Town Nest', 'Chest'),
+	HoVLocationMetaData(84, 2, 'Abandoned Town-Hidden-Chest-2', 8402, 'Hidden', 'AbandonHiddenRoom', '71', 'Abandoned Town Nest', 'Chest'),
+	HoVLocationMetaData(84, 3, 'Abandoned Town-Hidden-Chest-3', 8403, 'Hidden', 'AbandonHiddenRoom', '71', 'Abandoned Town Nest', 'Chest'),
+	HoVLocationMetaData(85, 1, 'Abandoned Town-Aqueduct-Chest Bottom-1', 8501, 'Aqueduct', 'AbandonSewerRoom', '71', 'Abandoned Town Nest', 'Chest Bottom'),
+	HoVLocationMetaData(85, 2, 'Abandoned Town-Aqueduct-Stalactite Left-2', 8502, 'Aqueduct', 'AbandonSewerRoom', '71', 'Abandoned Town Nest', 'Stalactite Left', True),
+	HoVLocationMetaData(85, 3, 'Abandoned Town-Aqueduct-Chest Left-3', 8503, 'Aqueduct', 'AbandonSewerRoom', '71', 'Abandoned Town', 'Chest Left', True),
+	HoVLocationMetaData(85, 4, 'Abandoned Town-Aqueduct-Chest Rights-4', 8504, 'Aqueduct', 'AbandonSewerRoom', '71', 'Abandoned Town', 'Chest Rights', True),
+	HoVLocationMetaData(85, 5, 'Abandoned Town-Aqueduct-Stalactite Center-5', 8505, 'Aqueduct', 'AbandonSewerRoom', '71', 'Abandoned Town Nest', 'Stalactite Center', True),
+	HoVLocationMetaData(85, 6, 'Abandoned Town-Aqueduct-Stalactite Right-6', 8506, 'Aqueduct', 'AbandonSewerRoom', '71', 'Abandoned Town Nest', 'Stalactite Right', True),
+	HoVLocationMetaData(86, 1, 'Abandoned Town-Cold Nest-Chest-1', 8601, 'Cold Nest', 'AbandonNestRoom', '71', 'Abandoned Town Nest', 'Chest'),
+	HoVLocationMetaData(86, 2, 'Abandoned Town-Cold Nest-Chest-2', 8602, 'Cold Nest', 'AbandonNestRoom', '71', 'Abandoned Town Nest', 'Chest'),
+	HoVLocationMetaData(86, 3, 'Abandoned Town-Cold Nest-Chest-3', 8603, 'Cold Nest', 'AbandonNestRoom', '71', 'Abandoned Town Nest', 'Chest'),
+	HoVLocationMetaData(86, 4, 'Abandoned Town-Cold Nest-Chest-4', 8604, 'Cold Nest', 'AbandonNestRoom', '71', 'Abandoned Town Nest', 'Chest'),
+	HoVLocationMetaData(86, 5, 'Abandoned Town-Cold Nest-Chest-5', 8605, 'Cold Nest', 'AbandonNestRoom', '71', 'Abandoned Town Nest', 'Chest'),
+	HoVLocationMetaData(86, 6, 'Abandoned Town-Cold Nest-Chest-6', 8606, 'Cold Nest', 'AbandonNestRoom', '71', 'Abandoned Town Nest', 'Chest'),
+	HoVLocationMetaData(86, 7, 'Abandoned Town-Cold Nest-Chest-7', 8607, 'Cold Nest', 'AbandonNestRoom', '71', 'Abandoned Town Nest', 'Chest'),
+	HoVLocationMetaData(86, 8, 'Abandoned Town-Cold Nest-Chest-8', 8608, 'Cold Nest', 'AbandonNestRoom', '71', 'Abandoned Town Nest', 'Chest'),
+	HoVLocationMetaData(86, 9, 'Abandoned Town-Cold Nest-Chest-9', 8609, 'Cold Nest', 'AbandonNestRoom', '71', 'Abandoned Town Nest', 'Chest'),
+	HoVLocationMetaData(86, 10, 'Abandoned Town-Cold Nest-Chest-10', 8610, 'Cold Nest', 'AbandonNestRoom', '71', 'Abandoned Town Nest', 'Chest'),
+	HoVLocationMetaData(86, 11, 'Abandoned Town-Cold Nest-Chest-11', 8611, 'Cold Nest', 'AbandonNestRoom', '71', 'Abandoned Town Nest', 'Chest'),
+	HoVLocationMetaData(86, 12, 'Abandoned Town-Cold Nest-Chest-12', 8612, 'Cold Nest', 'AbandonNestRoom', '71', 'Abandoned Town Nest', 'Chest'),
+	HoVLocationMetaData(87, 1, 'Kingdom Castle-Hidden Hidden Storage-Chest-1', 8701, 'Hidden Hidden Storage', 'CastleHiddenHiddenRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(87, 2, 'Kingdom Castle-Hidden Hidden Storage-Chest-2', 8702, 'Hidden Hidden Storage', 'CastleHiddenHiddenRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(87, 3, 'Kingdom Castle-Hidden Hidden Storage-Chest-3', 8703, 'Hidden Hidden Storage', 'CastleHiddenHiddenRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(88, 1, 'Kingdom Castle-Columns-Chest-1', 8801, 'Columns', 'CastleColumnRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(88, 2, 'Kingdom Castle-Columns-Chest-2', 8802, 'Columns', 'CastleColumnRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(88, 3, 'Kingdom Castle-Columns-Chest-3', 8803, 'Columns', 'CastleColumnRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(89, 1, 'Kingdom Castle-Overhang-Chest-1', 8901, 'Overhang', 'CastleDropRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(89, 2, 'Kingdom Castle-Overhang-Chest-2', 8902, 'Overhang', 'CastleDropRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(90, 1, 'Kingdom Castle-Top Ramparts-Chest-1', 9001, 'Top Ramparts', 'CastleTopRampartsRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(91, 1, 'Kingdom Castle-Lone Tower-Chest-1', 9101, 'Lone Tower', 'CastleSkyRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(91, 2, 'Kingdom Castle-Lone Tower-Chest-2', 9102, 'Lone Tower', 'CastleSkyRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(91, 3, 'Kingdom Castle-Lone Tower-Chest-3', 9103, 'Lone Tower', 'CastleSkyRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(91, 4, 'Kingdom Castle-Lone Tower-Chest-4', 9104, 'Lone Tower', 'CastleSkyRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(91, 5, 'Kingdom Castle-Lone Tower-Chest-5', 9105, 'Lone Tower', 'CastleSkyRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(91, 6, 'Kingdom Castle-Lone Tower-Chest-6', 9106, 'Lone Tower', 'CastleSkyRoom', '29', 'Kingdom Castle', 'Chest'),
+	HoVLocationMetaData(92, 1, 'Tepid Volcano-Lava Fall Top-Peg-1', 9201, 'Lava Fall Top', 'VolcanoLavaFallTopRoom', '49', 'Tepid Volcano', 'Peg'),
+	HoVLocationMetaData(93, 1, 'Tepid Volcano-Lava Fall Center-Chest-1', 9301, 'Lava Fall Center', 'VolcanoLavaFallCenterRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(94, 1, 'Tepid Volcano-Lava Fall Bottom-Chest-1', 9401, 'Lava Fall Bottom', 'VolcanoLavaFallBottomRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(94, 2, 'Tepid Volcano-Lava Fall Bottom-Chest-2', 9402, 'Lava Fall Bottom', 'VolcanoLavaFallBottomRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(94, 3, 'Tepid Volcano-Lava Fall Bottom-Chest-3', 9403, 'Lava Fall Bottom', 'VolcanoLavaFallBottomRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(95, 1, 'Tepid Volcano-Left Corner-Chest-1', 9501, 'Left Corner', 'VolcanoLeftCornerRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(96, 1, 'Tepid Volcano-Scaling Wall-Chest-1', 9601, 'Scaling Wall', 'VolcanoPlatformRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(97, 1, 'Tepid Volcano-Top Entrance-Chest-1', 9701, 'Top Entrance', 'VolcanoTopTopEntranceRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(98, 1, 'Tepid Volcano-Top Open-Chest-1', 9801, 'Top Open', 'VolcanoTopOpenRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(99, 1, 'Tepid Volcano-Top Hole-Chest-1', 9901, 'Top Hole', 'VolcanoTopHoleRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(100, 1, 'Tepid Volcano-Crater-Chest-1', 10001, 'Crater', 'VolcanoCraterRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(101, 1, 'Tepid Volcano-West Topside-Chest-1', 10101, 'West Topside', 'VolcanoOpenRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(101, 2, 'Tepid Volcano-West Topside-Chest-2', 10102, 'West Topside', 'VolcanoOpenRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(102, 1, 'Tepid Volcano-Upper Entrance-Chest-1', 10201, 'Upper Entrance', 'VolcanoCaveTopEntranceRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(103, 1, 'Tepid Volcano-Lava Drain-Chest-1', 10301, 'Lava Drain', 'VolcanoDrainRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(103, 2, 'Tepid Volcano-Lava Drain-Chest-2', 10302, 'Lava Drain', 'VolcanoDrainRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(103, 3, 'Tepid Volcano-Lava Drain-Peg-3', 10303, 'Lava Drain', 'VolcanoDrainRoom', '49', 'Tepid Volcano', 'Peg'),
+	HoVLocationMetaData(104, 1, 'Tepid Volcano-Crater Exit-Chest-1', 10401, 'Crater Exit', 'VolcanoCraterExitRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(104, 2, 'Tepid Volcano-Crater Exit-Peg-2', 10402, 'Crater Exit', 'VolcanoCraterExitRoom', '49', 'Tepid Volcano', 'Peg'),
+	HoVLocationMetaData(104, 3, 'Tepid Volcano-Crater Exit-Chest-3', 10403, 'Crater Exit', 'VolcanoCraterExitRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(105, 1, 'Tepid Volcano-Crater Under-Chest-1', 10501, 'Crater Under', 'VolcanoCraterUnderRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(105, 2, 'Tepid Volcano-Crater Under-Chest-2', 10502, 'Crater Under', 'VolcanoCraterUnderRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(105, 3, 'Tepid Volcano-Crater Under-Chest-3', 10503, 'Crater Under', 'VolcanoCraterUnderRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(106, 1, 'Tepid Volcano-Hopping Left-Chest-1', 10601, 'Hopping Left', 'VolcanoHop1Room', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(107, 1, 'Tepid Volcano-Hopping Center-Left-Chest-1', 10701, 'Hopping Center-Left', 'VolcanoHop2Room', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(108, 1, 'Tepid Volcano-Hopping Center-Right-Chest-1', 10801, 'Hopping Center-Right', 'VolcanoHop3Room', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(109, 1, 'Tepid Volcano-Hopping Right-Chest-1', 10901, 'Hopping Right', 'VolcanoHop4Room', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(110, 1, 'Tepid Volcano-Lava Rain Bottom-Chest-1', 11001, 'Lava Rain Bottom', 'VolcanoRainBottomRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(111, 1, 'Tepid Volcano-Lava Rain Center-Chest-1', 11101, 'Lava Rain Center', 'VolcanoRainCenterRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(112, 1, 'Tepid Volcano-Lava Rain Top-Peg-1', 11201, 'Lava Rain Top', 'VolcanoRainPegRoom', '49', 'Tepid Volcano', 'Peg'),
+	HoVLocationMetaData(115, 1, 'Cliffside Climb-Cliffside Climb-Chest-1', 11501, 'Cliffside Climb', 'CliffEntranceRoom', '115', 'Cliffside Climb', 'Chest'),
+	HoVLocationMetaData(115, 2, 'Cliffside Climb-Cliffside Climb-Stalactite-2', 11502, 'Cliffside Climb', 'CliffEntranceRoom', '115', 'Cliffside Climb', 'Stalactite'),
+	HoVLocationMetaData(116, 1, 'Cliffside Climb-Scalable Cliff-Chest-1', 11601, 'Scalable Cliff', 'CliffSideWallRoom', '115', 'Cliffside Climb', 'Chest'),
+	HoVLocationMetaData(117, 1, 'Cliffside Climb-Cliffside Entrance-Chest-1', 11701, 'Cliffside Entrance', 'CliffSideEntranceRoom', '115', 'Cliffside Climb', 'Chest'),
+	HoVLocationMetaData(118, 1, 'Cliffside Climb-Precipice Edge-Chest-1', 11801, 'Precipice Edge', 'CliffSkyWestTopSkyRoom', '115', 'Cliffside Climb', 'Chest'),
+	HoVLocationMetaData(119, 1, 'Cliffside Climb-Wide Respite-Acciptridae-1', 11901, 'Wide Respite', 'CliffTopsideLeftRoom', '115', 'Cliffside Climb', 'Acciptridae'),
+	HoVLocationMetaData(119, 2, 'Cliffside Climb-Wide Respite-Chest-2', 11902, 'Wide Respite', 'CliffTopsideLeftRoom', '115', 'Cliffside Climb', 'Chest'),
+	HoVLocationMetaData(120, 1, 'Cliffside Climb-Topside Entrance-Chest-1', 12001, 'Topside Entrance', 'CliffTopsideMiddleRoom', '115', 'Cliffside Climb', 'Chest'),
+	HoVLocationMetaData(121, 1, 'Cliffside Climb-Clifftop-Chest-1', 12101, 'Clifftop', 'CliffTopsideRightRoom', '115', 'Cliffside Climb', 'Chest'),
+	HoVLocationMetaData(122, 1, 'Cliffside Climb-Curving Exit-Chest-1', 12201, 'Curving Exit', 'CliffSkyTopRightRoom', '115', 'Cliffside Climb', 'Chest'),
+	HoVLocationMetaData(123, 1, 'Cliffside Climb-Nest Bastion-Stalactite-1', 12301, 'Nest Bastion', 'CliffBossEntranceRoom', '115', 'Cliffside Climb', 'Stalactite'),
+	HoVLocationMetaData(124, 1, 'Cliffside Climb-Broken Nest-Eggshell-1', 12401, 'Broken Nest', 'CliffBossRoom', '115', 'Cliffside Climb', 'Eggshell'),
+	HoVLocationMetaData(125, 1, 'Cliffside Climb-Underpass-Chest-1', 12501, 'Underpass', 'CliffUnderpassRoom', '115', 'Cliffside Climb', 'Chest'),
+	HoVLocationMetaData(126, 1, 'Cliffside Climb-Entrance Underpass-Chest-1', 12601, 'Entrance Underpass', 'CliffUnderEntranceRoom', '115', 'Cliffside Climb', 'Chest'),
+	HoVLocationMetaData(126, 2, 'Cliffside Climb-Entrance Underpass-Real Hidden Stalactite-2', 12602, 'Entrance Underpass', 'CliffUnderEntranceRoom', '115', 'Cliffside Climb', 'Real Hidden Stalactite'),
+	HoVLocationMetaData(127, 1, 'Cliffside Climb-Small Underpass-Chest-1', 12701, 'Small Underpass', 'CliffSmallUnderpassRoom', '115', 'Cliffside Climb', 'Chest'),
+	HoVLocationMetaData(128, 1, 'Cliffside Climb-Spiked Underpass-Chest-1', 12801, 'Spiked Underpass', 'CliffSpikeRoom', '115', 'Cliffside Climb', 'Chest'),
+	HoVLocationMetaData(129, 1, 'Cliffside Climb-Hidden Respite-Acciptridae-1', 12901, 'Hidden Respite', 'CliffFreeBossRightHitRoom', '115', 'Cliffside Climb', 'Acciptridae'),
+	HoVLocationMetaData(130, 1, 'Cliffside Climb-Cliff Fissure-Stalactite-1', 13001, 'Cliff Fissure', 'CliffPegBreakRoom', '115', 'Cliffside Climb', 'Stalactite'),
+	HoVLocationMetaData(131, 1, 'Cliffside Climb-Cliffside Campsite-Chest-1', 13101, 'Cliffside Campsite', 'CliffSaveRoom', '115', 'Cliffside Climb', 'Chest'),
+	HoVLocationMetaData(132, 1, 'Cliffside Climb-Elevator-Wall?-1', 13201, 'Elevator', 'CliffElevatorRoom', '115', 'Cliffside Climb', 'Wall?'),
+	HoVLocationMetaData(132, 2, 'Cliffside Climb-Elevator-Chest-2', 13202, 'Elevator', 'CliffElevatorRoom', '115', 'Cliffside Climb', 'Chest'),
+	HoVLocationMetaData(132, 3, 'Cliffside Climb-Elevator-Stalactite-3', 13203, 'Elevator', 'CliffElevatorRoom', '115', 'Cliffside Climb', 'Stalactite'),
+	HoVLocationMetaData(133, 1, 'Cliffside Climb-Hidden-Chest-1', 13301, 'Hidden', 'CliffHiddenRoom', '115', 'Cliffside Climb', 'Chest'),
+	HoVLocationMetaData(133, 2, 'Cliffside Climb-Hidden-Chest-2', 13302, 'Hidden', 'CliffHiddenRoom', '115', 'Cliffside Climb', 'Chest'),
+	HoVLocationMetaData(133, 3, 'Cliffside Climb-Hidden-Chest-3', 13303, 'Hidden', 'CliffHiddenRoom', '115', 'Cliffside Climb', 'Chest'),
+	HoVLocationMetaData(134, 1, 'Cliffside Climb-Dangerous Respite-Acciptridae-1', 13401, 'Dangerous Respite', 'CliffFreeBossLeftHitRoom', '115', 'Cliffside Climb', 'Acciptridae'),
+	HoVLocationMetaData(134, 2, 'Cliffside Climb-Dangerous Respite-Stalactite-2', 13402, 'Dangerous Respite', 'CliffFreeBossLeftHitRoom', '115', 'Cliffside Climb', 'Stalactite'),
+	HoVLocationMetaData(135, 1, 'Cliffside Climb-Roundabout Stealth-Acciptridae-1', 13501, 'Roundabout Stealth', 'CliffHideLeftRoom', '115', 'Cliffside Climb', 'Acciptridae'),
+	HoVLocationMetaData(136, 1, 'Cliffside Climb-Exposed Stealth-Acciptridae-1', 13601, 'Exposed Stealth', 'CliffHideMiddleRoom', '115', 'Cliffside Climb', 'Acciptridae'),
+	HoVLocationMetaData(137, 1, 'Cliffside Climb-Stealth Underneath-Chest-1', 13701, 'Stealth Underneath', 'CliffHideUnderRoom', '115', 'Cliffside Climb', 'Chest'),
+	HoVLocationMetaData(138, 1, 'Cliffside Climb-Stealth Halfpipe-Acciptridae-1', 13801, 'Stealth Halfpipe', 'CliffHideRightRoom', '115', 'Cliffside Climb', 'Acciptridae'),
+	HoVLocationMetaData(139, 1, 'Cliffside Climb-Overtop Stealth-Acciptridae-1', 13901, 'Overtop Stealth', 'CliffHideTopRoom', '115', 'Cliffside Climb', 'Acciptridae'),
+	HoVLocationMetaData(140, 1, 'Cliffside Climb-Shining Exit-Chest-1', 14001, 'Shining Exit', 'CliffMiddleExitRoom', '115', 'Cliffside Climb', 'Chest'),
+	HoVLocationMetaData(140, 2, 'Cliffside Climb-Shining Exit-Chest-2', 14002, 'Shining Exit', 'CliffMiddleExitRoom', '115', 'Cliffside Climb', 'Chest'),
+	HoVLocationMetaData(140, 3, 'Cliffside Climb-Shining Exit-Chest-3', 14003, 'Shining Exit', 'CliffMiddleExitRoom', '115', 'Cliffside Climb', 'Chest'),
+	HoVLocationMetaData(140, 4, 'Cliffside Climb-Shining Exit-Hidden Real Stalactite-4', 14004, 'Shining Exit', 'CliffMiddleExitRoom', '115', 'Cliffside Climb', 'Hidden Real Stalactite'),
+	HoVLocationMetaData(141, 1, 'Cliffside Climb-Cliff Exit-Chest-1', 14101, 'Cliff Exit', 'CliffRightExitRoom', '115', 'Cliffside Climb', 'Chest'),
+	HoVLocationMetaData(141, 2, 'Cliffside Climb-Cliff Exit-Chest-2', 14102, 'Cliff Exit', 'CliffRightExitRoom', '115', 'Cliffside Climb', 'Chest'),
+	HoVLocationMetaData(141, 3, 'Cliffside Climb-Cliff Exit-Chest-3', 14103, 'Cliff Exit', 'CliffRightExitRoom', '115', 'Cliffside Climb', 'Chest'),
+	HoVLocationMetaData(142, 1, 'Crater-Stormcloud Crater-Chest-1', 14201, 'Stormcloud Crater', 'StormCloudCrater1Room', '100', 'Crater', 'Chest'),
+	HoVLocationMetaData(143, 1, 'Crater-Stormcloud Crater 2-Chest-1', 14301, 'Stormcloud Crater 2', 'StormCloudCrater2Room', '100', 'Crater', 'Chest'),
+	HoVLocationMetaData(144, 1, 'Crater-Stormcloud Crater 3-Chest-1', 14401, 'Stormcloud Crater 3', 'StormCloudCrater3Room', '100', 'Crater', 'Chest'),
+	HoVLocationMetaData(146, 1, 'Viscount Manor-Viscount Manor-Wall?-1', 14601, 'Viscount Manor', 'ManorEntranceRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(147, 1, 'Viscount Manor-Manor 2nd Foyer-Stalactite-1', 14701, 'Manor 2nd Foyer', 'ManorIntroFight2Room', '68', 'Viscount Manor', 'Stalactite'),
+	HoVLocationMetaData(148, 1, 'Viscount Manor-Right Barricade Stud Path-Chest-1', 14801, 'Right Barricade Stud Path', 'ManorRightPrePuzzleRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(148, 2, 'Viscount Manor-Right Barricade Stud Path-Chest-2', 14802, 'Right Barricade Stud Path', 'ManorRightPrePuzzleRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(149, 1, 'Viscount Manor-Center Barricade Stud Path-Chest-1', 14901, 'Center Barricade Stud Path', 'ManorCenterPrePuzzleRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(150, 1, 'Viscount Manor-Lab Top Cache-Chest-1', 15001, 'Lab Top Cache', 'ManorTopRightHiddenRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(150, 2, 'Viscount Manor-Lab Top Cache-Chest-2', 15002, 'Lab Top Cache', 'ManorTopRightHiddenRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(150, 3, 'Viscount Manor-Lab Top Cache-Chest-3', 15003, 'Lab Top Cache', 'ManorTopRightHiddenRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(151, 1, 'Viscount Manor-First Barricade-Barricade Stud-1', 15101, 'First Barricade', 'ManorLearnRoom', '68', 'Viscount Manor', 'Barricade Stud'),
+	HoVLocationMetaData(152, 1, 'Viscount Manor-Manor Cache-Chest-1', 15201, 'Manor Cache', 'ManorHiddenRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(152, 2, 'Viscount Manor-Manor Cache-Chest-2', 15202, 'Manor Cache', 'ManorHiddenRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(153, 1, 'Viscount Manor-Left Barricade Stud-Barricade Stud-1', 15301, 'Left Barricade Stud', 'ManorLeftPuzzleRoom', '68', 'Viscount Manor', 'Barricade Stud'),
+	HoVLocationMetaData(154, 1, 'Viscount Manor-Lab Checkpoint-Barricade Stud-1', 15401, 'Lab Checkpoint', 'ManorCapsuleTopDropRoom', '68', 'Viscount Manor', 'Barricade Stud'),
+	HoVLocationMetaData(155, 1, 'Viscount Manor-Top Lab Entrance-Chest-1', 15501, 'Top Lab Entrance', 'ManorAroundTop7Room', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(156, 1, 'Viscount Manor-Manor Containment-Chest-1', 15601, 'Manor Containment', 'ManorBossExitRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(157, 1, 'Viscount Manor-Testing Room Entrance-Chest-1', 15701, 'Testing Room Entrance', 'ManorExitRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(157, 2, 'Viscount Manor-Testing Room Entrance-Chest-2', 15702, 'Testing Room Entrance', 'ManorExitRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(157, 3, 'Viscount Manor-Testing Room Entrance-Chest-3', 15703, 'Testing Room Entrance', 'ManorExitRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(158, 1, 'Viscount Manor-Lab Exit-Wall?-1', 15801, 'Lab Exit', 'ManorBottomRightDropRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(159, 1, 'Viscount Manor-Lab Entrance-Wall?-1', 15901, 'Lab Entrance', 'ManorCapsuleEntranceRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(160, 1, 'Viscount Manor-Barbed Hidden Room-Chest-1', 16001, 'Barbed Hidden Room', 'ManorBallHiddenRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(160, 2, 'Viscount Manor-Barbed Hidden Room-Chest-2', 16002, 'Barbed Hidden Room', 'ManorBallHiddenRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(160, 3, 'Viscount Manor-Barbed Hidden Room-Chest-3', 16003, 'Barbed Hidden Room', 'ManorBallHiddenRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(161, 1, 'Viscount Manor-Manor Barricade-Chest-1', 16101, 'Manor Barricade', 'ManorBlock1Room', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(162, 1, 'Viscount Manor-Crimson Cove Entrance-Chest-1', 16201, 'Crimson Cove Entrance', 'ManorHubUnderRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(163, 1, 'Viscount Manor-Path to Attic-Chest-1', 16301, 'Path to Attic', 'ManorAroundTop1Room', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(164, 1, 'Viscount Manor-Attic Entrance-Chest-1', 16401, 'Attic Entrance', 'ManorAroundTop2Room', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(165, 1, 'Viscount Manor-Left Attic-Chest-1', 16501, 'Left Attic', 'ManorAroundTop3Room', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(166, 1, 'Viscount Manor-Middle Attic-Chest-1', 16601, 'Middle Attic', 'ManorAroundTop4Room', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(167, 1, 'Viscount Manor-Right Attic-Chest-1', 16701, 'Right Attic', 'ManorAroundTop5Room', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(168, 1, 'Viscount Manor-Attic Exit-Chest-1', 16801, 'Attic Exit', 'ManorAroundTop6Room', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(169, 1, 'Viscount Manor-Manor Left Underbelly-Chest-1', 16901, 'Manor Left Underbelly', 'ManorHiddenBottomRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(170, 1, 'Viscount Manor-Manor Center Underbelly-Chest-1', 17001, 'Manor Center Underbelly', 'ManorHiddenBottom2Room', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(170, 2, 'Viscount Manor-Manor Center Underbelly-Chest-2', 17002, 'Manor Center Underbelly', 'ManorHiddenBottom2Room', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(170, 3, 'Viscount Manor-Manor Center Underbelly-Chest-3', 17003, 'Manor Center Underbelly', 'ManorHiddenBottom2Room', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(171, 1, 'Viscount Manor-Lab Basement Level-Wall?-1', 17101, 'Lab Basement Level', 'ManorBottomCapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(171, 2, 'Viscount Manor-Lab Basement Level-Wall?-2', 17102, 'Lab Basement Level', 'ManorBottomCapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(171, 3, 'Viscount Manor-Lab Basement Level-Wall?-3', 17103, 'Lab Basement Level', 'ManorBottomCapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(171, 4, 'Viscount Manor-Lab Basement Level-Wall?-4', 17104, 'Lab Basement Level', 'ManorBottomCapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(171, 5, 'Viscount Manor-Lab Basement Level-Wall?-5', 17105, 'Lab Basement Level', 'ManorBottomCapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(171, 6, 'Viscount Manor-Lab Basement Level-Wall?-6', 17106, 'Lab Basement Level', 'ManorBottomCapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(171, 7, 'Viscount Manor-Lab Basement Level-Wall?-7', 17107, 'Lab Basement Level', 'ManorBottomCapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(171, 8, 'Viscount Manor-Lab Basement Level-Wall?-8', 17108, 'Lab Basement Level', 'ManorBottomCapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(172, 1, 'Viscount Manor-Barbed Squam Room-Barricade Stud-1', 17201, 'Barbed Squam Room', 'ManorBall2Room', '68', 'Viscount Manor', 'Barricade Stud'),
+	HoVLocationMetaData(173, 1, 'Viscount Manor-Right Barricade-Chest-1', 17301, 'Right Barricade', 'ManorBlock3Room', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(174, 1, 'Viscount Manor-Path Top-Wall?-1', 17401, 'Path Top', 'ManorPathTopRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(175, 1, 'Viscount Manor-Path Hidden-Chest-1', 17501, 'Path Hidden', 'ManorPathHiddenRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(175, 2, 'Viscount Manor-Path Hidden-Chest-2', 17502, 'Path Hidden', 'ManorPathHiddenRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(175, 3, 'Viscount Manor-Path Hidden-Chest-3', 17503, 'Path Hidden', 'ManorPathHiddenRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(176, 1, 'Viscount Manor-Center Barricade-Chest-1', 17601, 'Center Barricade', 'ManorBlock2Room', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(177, 1, 'Viscount Manor-Center Barricade Stud-Barricade Stud-1', 17701, 'Center Barricade Stud', 'ManorCenterPuzzleRoom', '68', 'Viscount Manor', 'Barricade Stud'),
+	HoVLocationMetaData(177, 2, 'Viscount Manor-Center Barricade Stud-Barricade Stud-2', 17702, 'Center Barricade Stud', 'ManorCenterPuzzleRoom', '68', 'Viscount Manor', 'Barricade Stud'),
+	HoVLocationMetaData(178, 1, 'Viscount Manor-Right Barricade Stud-Barricade Stud-1', 17801, 'Right Barricade Stud', 'ManorRightPuzzleRoom', '68', 'Viscount Manor', 'Barricade Stud'),
+	HoVLocationMetaData(179, 1, 'Viscount Manor-Lab Bottom Cache-Chest-1', 17901, 'Lab Bottom Cache', 'ManorBottomRightHiddenRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(179, 2, 'Viscount Manor-Lab Bottom Cache-Chest-2', 17902, 'Lab Bottom Cache', 'ManorBottomRightHiddenRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(179, 3, 'Viscount Manor-Lab Bottom Cache-Chest-3', 17903, 'Lab Bottom Cache', 'ManorBottomRightHiddenRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(180, 1, 'Viscount Manor-Left Barricade Stud Path-Chest-1', 18001, 'Left Barricade Stud Path', 'ManorLeftPrePuzzleRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(181, 1, 'Viscount Manor-Left Barbed Hallway-Chest-1', 18101, 'Left Barbed Hallway', 'ManorBall4Room', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(182, 1, 'Viscount Manor-Lower Hallway to Lab-Chest-1', 18201, 'Lower Hallway to Lab', 'ManorPathBottomRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(183, 1, 'Viscount Manor-Right Barbed Hallway-Chest-1', 18301, 'Right Barbed Hallway', 'ManorBall1Room', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(183, 2, 'Viscount Manor-Right Barbed Hallway-Chest-2', 18302, 'Right Barbed Hallway', 'ManorBall1Room', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(184, 1, 'Viscount Manor-Manor Right Underbelly-Chest-1', 18401, 'Manor Right Underbelly', 'ManorHiddenBottom3Room', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(184, 2, 'Viscount Manor-Manor Right Underbelly-Chest-2', 18402, 'Manor Right Underbelly', 'ManorHiddenBottom3Room', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(184, 3, 'Viscount Manor-Manor Right Underbelly-Chest-3', 18403, 'Manor Right Underbelly', 'ManorHiddenBottom3Room', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(185, 1, 'Viscount Manor-Containment-Chest-1', 18501, 'Containment', 'ManorBossRushRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(186, 1, 'Viscount Manor-Lab Upper Level-Wall?-1', 18601, 'Lab Upper Level', 'ManorTopCapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(186, 2, 'Viscount Manor-Lab Upper Level-Wall?-2', 18602, 'Lab Upper Level', 'ManorTopCapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(186, 3, 'Viscount Manor-Lab Upper Level-Wall?-3', 18603, 'Lab Upper Level', 'ManorTopCapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(186, 4, 'Viscount Manor-Lab Upper Level-Wall?-4', 18604, 'Lab Upper Level', 'ManorTopCapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(186, 5, 'Viscount Manor-Lab Upper Level-Wall?-5', 18605, 'Lab Upper Level', 'ManorTopCapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(186, 6, 'Viscount Manor-Lab Upper Level-Wall?-6', 18606, 'Lab Upper Level', 'ManorTopCapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(186, 7, 'Viscount Manor-Lab Upper Level-Wall?-7', 18607, 'Lab Upper Level', 'ManorTopCapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(186, 8, 'Viscount Manor-Lab Upper Level-Wall?-8', 18608, 'Lab Upper Level', 'ManorTopCapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(186, 9, 'Viscount Manor-Lab Upper Level-Wall?-9', 18609, 'Lab Upper Level', 'ManorTopCapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(186, 10, 'Viscount Manor-Lab Upper Level-Wall?-10', 18610, 'Lab Upper Level', 'ManorTopCapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(187, 1, 'Viscount Manor-Lab Center Level-Wall?-1', 18701, 'Lab Center Level', 'ManorMiddle1CapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(187, 2, 'Viscount Manor-Lab Center Level-Wall?-2', 18702, 'Lab Center Level', 'ManorMiddle1CapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(187, 3, 'Viscount Manor-Lab Center Level-Wall?-3', 18703, 'Lab Center Level', 'ManorMiddle1CapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(187, 4, 'Viscount Manor-Lab Center Level-Wall?-4', 18704, 'Lab Center Level', 'ManorMiddle1CapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(187, 5, 'Viscount Manor-Lab Center Level-Wall?-5', 18705, 'Lab Center Level', 'ManorMiddle1CapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(187, 6, 'Viscount Manor-Lab Center Level-Wall?-6', 18706, 'Lab Center Level', 'ManorMiddle1CapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(187, 7, 'Viscount Manor-Lab Center Level-Wall?-7', 18707, 'Lab Center Level', 'ManorMiddle1CapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(187, 8, 'Viscount Manor-Lab Center Level-Wall?-8', 18708, 'Lab Center Level', 'ManorMiddle1CapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(187, 9, 'Viscount Manor-Lab Center Level-Wall?-9', 18709, 'Lab Center Level', 'ManorMiddle1CapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(187, 10, 'Viscount Manor-Lab Center Level-Wall?-10', 18710, 'Lab Center Level', 'ManorMiddle1CapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(188, 1, 'Viscount Manor-Lab Second Level-Wall?-1', 18801, 'Lab Second Level', 'ManorMiddle2CapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(188, 2, 'Viscount Manor-Lab Second Level-Wall?-2', 18802, 'Lab Second Level', 'ManorMiddle2CapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(188, 3, 'Viscount Manor-Lab Second Level-Wall?-3', 18803, 'Lab Second Level', 'ManorMiddle2CapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(188, 4, 'Viscount Manor-Lab Second Level-Wall?-4', 18804, 'Lab Second Level', 'ManorMiddle2CapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(188, 5, 'Viscount Manor-Lab Second Level-Wall?-5', 18805, 'Lab Second Level', 'ManorMiddle2CapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(188, 6, 'Viscount Manor-Lab Second Level-Wall?-6', 18806, 'Lab Second Level', 'ManorMiddle2CapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(188, 7, 'Viscount Manor-Lab Second Level-Wall?-7', 18807, 'Lab Second Level', 'ManorMiddle2CapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(188, 8, 'Viscount Manor-Lab Second Level-Wall?-8', 18808, 'Lab Second Level', 'ManorMiddle2CapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(189, 1, 'Viscount Manor-Lab First Level-Wall?-1', 18901, 'Lab First Level', 'ManorMiddle3CapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(189, 2, 'Viscount Manor-Lab First Level-Wall?-2', 18902, 'Lab First Level', 'ManorMiddle3CapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(189, 3, 'Viscount Manor-Lab First Level-Wall?-3', 18903, 'Lab First Level', 'ManorMiddle3CapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(189, 4, 'Viscount Manor-Lab First Level-Wall?-4', 18904, 'Lab First Level', 'ManorMiddle3CapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(189, 5, 'Viscount Manor-Lab First Level-Wall?-5', 18905, 'Lab First Level', 'ManorMiddle3CapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(189, 6, 'Viscount Manor-Lab First Level-Wall?-6', 18906, 'Lab First Level', 'ManorMiddle3CapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(189, 7, 'Viscount Manor-Lab First Level-Wall?-7', 18907, 'Lab First Level', 'ManorMiddle3CapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(189, 8, 'Viscount Manor-Lab First Level-Wall?-8', 18908, 'Lab First Level', 'ManorMiddle3CapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(189, 9, 'Viscount Manor-Lab First Level-Wall?-9', 18909, 'Lab First Level', 'ManorMiddle3CapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(189, 10, 'Viscount Manor-Lab First Level-Wall?-10', 18910, 'Lab First Level', 'ManorMiddle3CapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(189, 11, 'Viscount Manor-Lab First Level-Wall?-11', 18911, 'Lab First Level', 'ManorMiddle3CapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(189, 12, 'Viscount Manor-Lab First Level-Wall?-12', 18912, 'Lab First Level', 'ManorMiddle3CapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(189, 13, 'Viscount Manor-Lab First Level-Wall?-13', 18913, 'Lab First Level', 'ManorMiddle3CapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(189, 14, 'Viscount Manor-Lab First Level-Wall?-14', 18914, 'Lab First Level', 'ManorMiddle3CapsuleRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(190, 1, 'Viscount Manor-Corner Barbed Hallway-Wall?-1', 19001, 'Corner Barbed Hallway', 'ManorBall3Room', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(191, 1, 'Viscount Manor-Manor Foyer-Wall?-1', 19101, 'Manor Foyer', 'ManorIntroFightRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(191, 2, 'Viscount Manor-Manor Foyer-Wall?-2', 19102, 'Manor Foyer', 'ManorIntroFightRoom', '68', 'Viscount Manor', 'Wall?'),
+	HoVLocationMetaData(192, 1, 'Viscount Manor-Hallway to Lab-Chest-1', 19201, 'Hallway to Lab', 'ManorPathCenterRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(192, 2, 'Viscount Manor-Hallway to Lab-Chest-2', 19202, 'Hallway to Lab', 'ManorPathCenterRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(192, 3, 'Viscount Manor-Hallway to Lab-Chest-3', 19203, 'Hallway to Lab', 'ManorPathCenterRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(193, 1, 'Viscount Manor-Bottom Path to Attic-Chest-1', 19301, 'Bottom Path to Attic', 'ManorAroundBottomRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(194, 1, 'Viscount Manor-Around Middle-Chest-1', 19401, 'Around Middle', 'ManorAroundMiddleRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(194, 2, 'Viscount Manor-Around Middle-Chest-2', 19402, 'Around Middle', 'ManorAroundMiddleRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(194, 3, 'Viscount Manor-Around Middle-Chest-3', 19403, 'Around Middle', 'ManorAroundMiddleRoom', '68', 'Viscount Manor', 'Chest'),
+	HoVLocationMetaData(198, 1, 'Viscount Lab-Credits Overlook-Chest-1', 19801, 'Credits Overlook', 'LabCreditsEntranceRoom', '195', 'Viscount Lab', 'Chest'),
+	HoVLocationMetaData(201, 1, 'World Map-Knife Challenge C-Chest-1', 20101, 'Knife Challenge C', 'Knife3PuzzleRoom', '4', 'World Map', 'Chest'),
+	HoVLocationMetaData(205, 1, 'World Map-Caltrop Challenge C-Chest-1', 20501, 'Caltrop Challenge C', 'Caltrop3PuzzleRoom', '4', 'World Map East', 'Chest'),
+	HoVLocationMetaData(208, 1, 'World Map-Axe Challenge C-Chest-1', 20801, 'Axe Challenge C', 'Axe3PuzzleRoom', '4', 'World Map East', 'Chest'),
+	HoVLocationMetaData(211, 1, 'World Map-Cleat Challenge C-Chest-1', 21101, 'Cleat Challenge C', 'Cleat3PuzzleRoom', '4', 'World Map East', 'Chest'),
+	HoVLocationMetaData(214, 1, 'Tepid Volcano-Bomb Challenge C-Chest-1', 21401, 'Bomb Challenge C', 'Bomb3PuzzleRoom', '49', 'Tepid Volcano', 'Chest'),
+	HoVLocationMetaData(217, 1, 'Castle Town-Wing Challenge C-Chest-1', 21701, 'Wing Challenge C', 'Wing3PuzzleRoom', '38', 'Castle Town', 'Chest'),
+	HoVLocationMetaData(227, 1, 'Credits Peak-Credits Peak-Chest-1', 22701, 'Credits Peak', 'CreditsParentRoom', '227', 'Credits Peak', 'Chest'),
+	HoVLocationMetaData(227, 2, 'Credits Peak-Credits Peak-Chest-2', 22702, 'Credits Peak', 'CreditsParentRoom', '227', 'Credits Peak', 'Chest'),
+
+	HoVLocationMetaData(227, 0, 'Ending A Location', 1000001, 'Credits Peak', 'CreditsParentRoom', '227', 'Credits Peak', 'Ending Event'),
+	HoVLocationMetaData(227, 0, 'Ending B Location', 1000002, 'Credits Peak', 'CreditsParentRoom', '227', 'Credits Peak', 'Ending Event'),
+	HoVLocationMetaData(227, 0, 'Ending C Location', 1000003, 'Credits Peak', 'CreditsParentRoom', '227', 'Credits Peak', 'Ending Event'),
+	HoVLocationMetaData(227, 0, 'Ending D Location', 1000004, 'Credits Peak', 'CreditsParentRoom', '227', 'Credits Peak', 'Ending Event'),
+
+]
+
+if TYPE_CHECKING:
+	from .world import HoVWorld
+
+
+AP_LOCATION_NAME_TO_ROOM_ID = {location.ap_location_name: location.room_id for location in LOCATION_DATA_LIST}
+
+ROOM_ID_TO_AP_LOCATION_NAME_LIST_LIST = [[] for _ in range(244)]
+for locationName, roomId in AP_LOCATION_NAME_TO_ROOM_ID.items():
+    ROOM_ID_TO_AP_LOCATION_NAME_LIST_LIST[roomId].append(locationName)
+
+# Every location must have a unique integer ID associated with it.
+# We will have a lookup from location name to ID here that, in world.py, we will import and bind to the world class.
+# Even if a location doesn't exist on specific options, it must be present in this lookup.
+LOCATION_NAME_TO_ID =  {location.ap_location_name: location.ap_location_id for location in LOCATION_DATA_LIST}
+
+location_name_to_region_name = {location.ap_location_name: location.parent_name for location in LOCATION_DATA_LIST}
+
+
+
+
+# Each Location instance must correctly report the "game" it belongs to.
+# To make this simple, it is common practice to subclass the basic Location class and override the "game" field.
+class HoVLocation(Location):
+    game = "Horde of Viscount"
+
+
+# Let's make one more helper method before we begin actually creating locations.
+# Later on in the code, we'll want specific subsections of LOCATION_NAME_TO_ID.
+# To reduce the chance of copy-paste errors writing something like {"Chest": LOCATION_NAME_TO_ID["Chest"]},
+# let's make a helper method that takes a list of location names and returns them as a dict with their IDs.
+# Note: There is a minor typing quirk here. Some functions want location addresses to be an "int | None",
+# so while our function here only ever returns dict[str, int], we annotate it as dict[str, int | None].
+def get_location_names_with_ids(location_names: list[str]) -> dict[str, int | None]:
+    return {location_name: LOCATION_NAME_TO_ID[location_name] for location_name in location_names}
+
+
+def create_all_locations(world: HoVWorld) -> None:
+    create_regular_locations(world)
+    create_events(world)
+
+
+def create_regular_locations(world: HoVWorld) -> None:
+    for location_name in world.location_name_to_id.keys():
+        region_name = location_name_to_region_name[location_name]
+        regionInstance = world.get_region(region_name)
+        location = HoVLocation(
+            world.player, location_name, world.location_name_to_id[location_name], regionInstance
+        )
+        regionInstance.locations.append(location)
+        
+        # Add victory items
+        if location.address == 1000001:
+            location.place_locked_item(HoVItem("Ending A Victory", ItemClassification.progression, 1000001, world.player))
+            
+        elif location.address == 1000002:
+            # Default win condition
+            location.place_locked_item(HoVItem("Ending B Victory", ItemClassification.progression, 1000002, world.player))
+            
+        elif location.address == 1000004:
+            location.place_locked_item(HoVItem("Ending D Victory", ItemClassification.progression, 1000004, world.player))
+            
+        elif location.address == 1000003:
+            location.place_locked_item(HoVItem("Ending C Victory", ItemClassification.progression, 1000003, world.player))
+
+        
+
+
+def create_events(world: HoVWorld) -> None:
+	hoVRegionSet = get_region_set(world)
+	# hoVRegionSet.viscount_lab.locations.append(HoVLocation(world.player, "Credits Peak Event", None, hoVRegionSet.viscount_lab))
+
+	# hoVRegionSet.viscount_lab.add_event(
+	#     "Credits Peak Event", "Credits Peak Event", location_type=HoVLocation, item_type=HoVItem
+	# )
+
+	# hoVRegionSet.map_rando_rogue_world.add_event(
+	#     "All Chests Opened", "Victory", location_type=HoVLocation, item_type=items.HoVItem
+	# )
+	# world.get_location("Ending A Location").place_locked_item(next(item for item in world.multiworld.get_items() if item.name == "Ending A Victory"))
+	# world.get_location("Ending B Location").place_locked_item(next(item for item in world.multiworld.get_items() if item.name == "Ending B Victory"))
+	# world.get_location("Ending C Location").place_locked_item(next(item for item in world.multiworld.get_items() if item.name == "Ending C Victory"))
+	# world.get_location("Ending D Location").place_locked_item(next(item for item in world.multiworld.get_items() if item.name == "Ending D Victory"))
+	
+	# ending = HoVLocation(world.player, name='Ending B Location', address=1000002)
+	# hoVRegionSet.credits_overlook.locations.append(ending)
+	# ending.place_locked_item(HoVItem(world.player, "Ending B Victory", ItemClassification.progression, 1000002))
+
+	# if world.options.ending.value == world.options.ending.option_A:
+	# 	hoVRegionSet.credits_peak.add_event(
+	# 		"Ending A Event", "Ending A Victory", location_type=HoVLocation, item_type=HoVItem
+	# 	)
+	# elif world.options.ending.value == world.options.ending.option_B:
+	# 	hoVRegionSet.credits_peak.add_event(
+	# 		"Ending B Event", "Ending B Victory", location_type=HoVLocation, item_type=HoVItem
+	# 	)
+	# elif world.options.ending.value == world.options.ending.option_C:
+	# 	hoVRegionSet.credits_peak.add_event(
+	# 		"Ending C Event", "Ending C Victory", location_type=HoVLocation, item_type=HoVItem
+	# 	)
+	# elif world.options.ending.value == world.options.ending.option_D:
+	# 	hoVRegionSet.credits_peak.add_event(
+	# 		"Ending D Event", "Ending D Victory", location_type=HoVLocation, item_type=HoVItem
+	# 	)
