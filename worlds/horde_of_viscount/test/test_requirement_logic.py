@@ -6,10 +6,8 @@ from worlds.horde_of_viscount.rules import CreditsParentRoom
 from .bases import HoVTestBase
 
 
-class TestHardMode(HoVTestBase):
+class TestRequirementLogic(HoVTestBase):
     options: HoVOptions = {
-        "hard_mode": True,
-        "level_up_progression": 100,
     }
 
     def test_hard_mode_access(self) -> None:

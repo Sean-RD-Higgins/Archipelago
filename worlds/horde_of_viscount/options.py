@@ -113,7 +113,6 @@ class ExpiredBusPass(Toggle):
     # EQUIP.NO_MAP_WARP
     default = False
 
-
 class LevelUpProgression(Range):
     """
     Smaller number means materials required for leveling up is easier to find. Larger number means the materials required will not be as easily obtainable.
