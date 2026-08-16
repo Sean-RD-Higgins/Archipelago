@@ -960,6 +960,11 @@ def set_all_location_rules(world: HoVWorld) -> None:
                 lootRule = HasAll(*roomMetadataItem.lootRequiredList)
                 world.set_rule(location, lootRule)
 
+    # Misc rules not in the map rando
+    world.set_rule(world.get_location("World Map-World Map-Bridge-1"), Has(ITEM.FEATHER))
+    world.set_rule(world.get_location("World Map-World Map-Bridge-2"), Has(ITEM.MUTAGEN))
+    world.set_rule(world.get_location("World Map-World Map-Bridge-3"), Has(ITEM.BONE))
+    world.set_rule(world.get_location("World Map-World Map-Bridge-4"), Has(ITEM.METAL))
 
 def set_completion_condition(world: HoVWorld) -> None:
     # In our case, we went for the Victory event design pattern (see create_events() in locations.py).
