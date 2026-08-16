@@ -40,7 +40,6 @@ class EQUIP():
     EP9 = "Spirit Oin'mnt"
     EP10 = "Spirit Lather"
 
-
 class SUBWEAPON():
     BOMB = "Launch Bomb"
     CALTROP = "Backflip Caltrop"

@@ -283,7 +283,6 @@ def get_region_item_required_list(world: HoVWorld) -> list[list[str]]:
             if item_progression_index >= item_list_length:
                 return ruleList
             item = ITEM_RANK_LIST[item_progression_index]
-            console(f"Adding {item} to region {region_progression_index} in ruleList")
             ruleList[-1].append(item)
             item_progression_index += 1
 
