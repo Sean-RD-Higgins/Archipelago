@@ -803,15 +803,15 @@ def set_all_location_rules(world: HoVWorld) -> None:
     # Puzzle Room loot requirements for the items to spawn
     roomMetadata[Knife3PuzzleRoom].lootRequiredList = [ITEM.WOOD, ITEM.HERB, ITEM.ROCK]
     # Hospital + Butcher + Tinkerer Upgrade
-    roomMetadata[Caltrop3PuzzleRoom].itemRequiredList = [ITEM.WOOD, ITEM.HERB, ITEM.ROCK, ITEM.TARSUS, ITEM.EYE, ITEM.FLOUR, ITEM.YEAST]
+    roomMetadata[Caltrop3PuzzleRoom].lootRequiredList = [ITEM.WOOD, ITEM.HERB, ITEM.ROCK, ITEM.TARSUS, ITEM.EYE, ITEM.FLOUR, ITEM.YEAST]
     # Hospital + Butcher + Tinkerer + Apprentice Upgrade
-    roomMetadata[Axe3PuzzleRoom].itemRequiredList = [ITEM.WOOD, ITEM.HERB, ITEM.ROCK, ITEM.TARSUS, ITEM.EYE, ITEM.FIBER, ITEM.FLOUR, ITEM.YEAST]
+    roomMetadata[Axe3PuzzleRoom].lootRequiredList = [ITEM.WOOD, ITEM.HERB, ITEM.ROCK, ITEM.TARSUS, ITEM.EYE, ITEM.FIBER, ITEM.FLOUR, ITEM.YEAST]
     # Hospital + Butcher + Tinkerer + Apprentice + Shoemaker Upgrade
-    roomMetadata[Cleat3PuzzleRoom].itemRequiredList = [ITEM.WOOD, ITEM.HERB, ITEM.ROCK, ITEM.TARSUS, ITEM.EYE, ITEM.FIBER, ITEM.METAL, ITEM.FLOUR, ITEM.YEAST]
+    roomMetadata[Cleat3PuzzleRoom].lootRequiredList = [ITEM.WOOD, ITEM.HERB, ITEM.ROCK, ITEM.TARSUS, ITEM.EYE, ITEM.FIBER, ITEM.METAL, ITEM.FLOUR, ITEM.YEAST]
     # Hospital + Butcher + Tinkerer + Apprentice + Shoemaker + Seamstress Upgrade
-    roomMetadata[Wing3PuzzleRoom].itemRequiredList = [ITEM.WOOD, ITEM.HERB, ITEM.ROCK, ITEM.TARSUS, ITEM.EYE, ITEM.FIBER, ITEM.METAL, ITEM.FEATHER, ITEM.FLOUR, ITEM.YEAST, ITEM.FRESHWATER]
+    roomMetadata[Wing3PuzzleRoom].lootRequiredList = [ITEM.WOOD, ITEM.HERB, ITEM.ROCK, ITEM.TARSUS, ITEM.EYE, ITEM.FIBER, ITEM.METAL, ITEM.FEATHER, ITEM.FLOUR, ITEM.YEAST, ITEM.FRESHWATER]
     # Hospital + Butcher + Tinkerer + Apprentice + Shoemaker + Seamstress + Boomer Upgrade
-    roomMetadata[Bomb3PuzzleRoom].itemRequiredList = [ITEM.WOOD, ITEM.HERB, ITEM.ROCK, ITEM.TARSUS, ITEM.EYE, ITEM.FIBER, ITEM.METAL, ITEM.FEATHER, ITEM.BONE, ITEM.FLOUR, ITEM.YEAST, ITEM.FRESHWATER]
+    roomMetadata[Bomb3PuzzleRoom].lootRequiredList = [ITEM.WOOD, ITEM.HERB, ITEM.ROCK, ITEM.TARSUS, ITEM.EYE, ITEM.FIBER, ITEM.METAL, ITEM.FEATHER, ITEM.BONE, ITEM.FLOUR, ITEM.YEAST, ITEM.FRESHWATER]
     
 
     # Has no chest
