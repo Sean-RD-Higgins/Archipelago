@@ -12,8 +12,8 @@ class EQUIP():
     SUB_REFILL = "Sub Refill"
     SUB_REFILL_FREE = "Sub Free-fill"
     WINGS_ONE_FREE = "Double Jump"
-    WHIP_DURABLE_A = "Whip Durable A"
-    WHIP_DURABLE_B = "Whip Durable B"
+    WHIP_RANK_UP = "Whip Durable A"
+    WHIP_RANK_UP_2 = "Whip Durable B"
     CHEST_BREAKER = "Chest Breaker"
     SHOW_DAMAGE = "Nerd Glasses"
     CUSTOM_COMMANDS = "Custom Command"
@@ -369,8 +369,8 @@ ITEM_NAME_TO_ID = {
     EQUIP.SUB_REFILL_FREE: 4184,
     "Food Refill": 4185,
     "Food Free-fill": 4186,
-    EQUIP.WHIP_DURABLE_A: 4187,
-    EQUIP.WHIP_DURABLE_B: 4188,
+    EQUIP.WHIP_RANK_UP: 4187,
+    EQUIP.WHIP_RANK_UP_2: 4188,
     EQUIP.CHEST_BREAKER: 4189,
     "Full Whip Sling": 4190,
 
@@ -648,8 +648,8 @@ DEFAULT_ITEM_CLASSIFICATIONS = {
     EQUIP.SUB_REFILL_FREE: ItemClassification.progression | ItemClassification.useful,
     "Food Refill": ItemClassification.filler,
     "Food Free-fill": ItemClassification.filler,
-    EQUIP.WHIP_DURABLE_A: ItemClassification.progression | ItemClassification.useful,
-    EQUIP.WHIP_DURABLE_B: ItemClassification.progression | ItemClassification.useful,
+    EQUIP.WHIP_RANK_UP: ItemClassification.progression | ItemClassification.useful,
+    EQUIP.WHIP_RANK_UP_2: ItemClassification.progression | ItemClassification.useful,
     EQUIP.CHEST_BREAKER: ItemClassification.progression | ItemClassification.useful,
     "Full Whip Sling": ItemClassification.useful,
 }
@@ -825,7 +825,7 @@ FILLER_ITEM_NAME_LIST = [
 ]
 
 HARDMODE_FILLER_LIST = [
-    EQUIP.WHIP_DURABLE_B,
+    EQUIP.WHIP_RANK_UP_2,
     EQUIP.SUB_REFILL,
 ]
 
@@ -857,8 +857,8 @@ PROGRESSION_ITEM_NAME_LIST = [
     EQUIP.WINGS_ONE_FREE,
     EQUIP.SUB_REFILL,
     EQUIP.SUB_REFILL_FREE,
-    EQUIP.WHIP_DURABLE_A,
-    EQUIP.WHIP_DURABLE_B,
+    EQUIP.WHIP_RANK_UP,
+    EQUIP.WHIP_RANK_UP_2,
     EQUIP.CHEST_BREAKER,
     EQUIP.EP1,
     EQUIP.EP2,
@@ -1030,10 +1030,10 @@ def create_all_items(world: HoVWorld) -> None:
         custom_attacks = next(item for item in itempool if item.name == EQUIP.CUSTOM_ATTACKS)
         world.push_precollected(custom_attacks)
     if world.options.whip_rank2:
-        whip_rank2 = next(item for item in itempool if item.name == EQUIP.WHIP_DURABLE_A)
+        whip_rank2 = next(item for item in itempool if item.name == EQUIP.WHIP_RANK_UP)
         world.push_precollected(whip_rank2)
     if world.options.whip_rank3:
-        whip_rank3 = next(item for item in itempool if item.name == EQUIP.WHIP_DURABLE_B)
+        whip_rank3 = next(item for item in itempool if item.name == EQUIP.WHIP_RANK_UP_2)
         world.push_precollected(whip_rank3)
     if world.options.heal_hub:
         heal_hub = next(item for item in itempool if item.name == EQUIP.MAP_HEAL_MAX)
@@ -1042,7 +1042,7 @@ def create_all_items(world: HoVWorld) -> None:
         easyModeRibbon = next(item for item in itempool if item.name == EQUIP.EASYMODE)
         world.push_precollected(easyModeRibbon)
     if world.options.fiberPills:
-        fiberPills = next(item for item in itempool if item.name == EQUIP.FIBER_PILLS)
+        fiberPills = next(item for item in itempool if item.name == EQUIP.MAX_SATIATION_DOWN)
         world.push_precollected(fiberPills)
     if world.options.restartStageBow:
         restartStageBow = next(item for item in itempool if item.name == EQUIP.RESTART_STAGE)

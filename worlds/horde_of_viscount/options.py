@@ -187,6 +187,15 @@ class DoubleJump(Toggle):
     display_name = "Double Jump"
     default = False
 
+class DeathLink(Toggle): 
+    """
+    When any player falls in their game, you will instantly hit zero HP.
+    """
+    
+    display_name = "Death Link"
+    
+    default = False
+
 class HardMode(Toggle):
     """
     In hard mode, you will NOT have Sub Refill; only Sub FreeFill, and less powerful EQUIPs. Might be impossible.
@@ -346,6 +355,7 @@ class HoVOptions(PerGameCommonOptions):
 
     easyModeRibbon: EasyModeRibbon
     fiberPills: FiberPills
+    death_link: DeathLink
     restartStageBow: RestartStageBow
     permaLossHairpin: PermaLossHairpin
     amnesiaMed: AmnesiaMed
@@ -390,7 +400,7 @@ option_groups = [
     ),
     OptionGroup(
         "Much Harder Mode",
-        [RestartStageBow, AmnesiaMed, IronRings, IronGlove, ExpiredBusPass, BadEquipChance],
+        [DeathLink, RestartStageBow, AmnesiaMed, IronRings, IronGlove, ExpiredBusPass, BadEquipChance],
     ),
     OptionGroup(
         "Customize",
@@ -424,6 +434,7 @@ option_presets = {
 
         "sub_refill": True,
         "sub_freefill": True,
+        "deathLink": False,
         "restartStageBow": False,
         "permaLossHairpin": False,
         "amnesiaMed": False,
@@ -462,13 +473,14 @@ option_presets = {
 
         "sub_refill": True,
         "sub_freefill": True,
+        "deathLink": False,
         "restartStageBow": True,
         "permaLossHairpin": False,
         "amnesiaMed": False,
         "ironRings": False,
         "ironGlove": False,
         "expiredBusPass": False,
-        
+
         "hard_mode": False,
         # "subweapon_spawn": False,
         # "heal_hub": False,
@@ -500,6 +512,7 @@ option_presets = {
 
         "sub_refill": True,
         "sub_freefill": True,
+        "deathLink": False,
         "restartStageBow": True,
         "permaLossHairpin": False,
         "amnesiaMed": True,
@@ -538,6 +551,7 @@ option_presets = {
 
         "sub_refill": False,
         "sub_freefill": False,
+        "deathLink": True,
         "restartStageBow": True,
         "permaLossHairpin": True,
         "amnesiaMed": True,

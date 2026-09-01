@@ -12,8 +12,8 @@ class TestRequirementLogic(HoVTestBase):
 
     def test_hard_mode_access(self) -> None:
         with self.subTest("Test that Whip Durable B in Item Pool"):
-            whip_durable_b_in_itempool = self.get_items_by_name("Whip Durable B")
-            self.assertTrue(len(whip_durable_b_in_itempool) == 1)
+            WHIP_RANK_UP_2_in_itempool = self.get_items_by_name("Whip Durable B")
+            self.assertTrue(len(WHIP_RANK_UP_2_in_itempool) == 1)
 
         with self.subTest("Test that the final area isn't reachable without all required items"):
             self.assertAccessDependency(
