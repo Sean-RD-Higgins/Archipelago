@@ -84,30 +84,31 @@ class HoVWorld(World):
     def fill_slot_data(self) -> Mapping[str, Any]:
         # If you need access to the player's chosen options on the client side, there is a helper for that.
         return self.options.as_dict(
-            "ending", 
+            "ending",
 
-            "custom_command_equips", 
-            "nerd_glasses", 
-            "whip_oil", 
-            "arcade_credit_fill", 
-            "level_up_progression", 
+            "custom_command_equips",
+            "nerd_glasses",
+            "whip_oil",
+            "arcade_credit_fill",
+            "level_up_progression",
+
+            "heal_hub",
+            "double_jump",
+            "whip_rank2",
+            "whip_rank3",
+            "dash_knife",
+            "easyModeRibbon",
+            "fiberPills",
+
+            "sub_refill",
+            "sub_freefill",
+            "deathLink",
+            "restartStageBow",
+            "permaLossHairpin",
+            "amnesiaMed",
+            "ironRings",
+            "ironGlove",
+            "expiredBusPass",
             
-            "whip_rank2", 
-            "whip_rank3", 
-            "heal_hub", 
-            "double_jump", 
-            "dash_knife", 
-            "easyModeRibbon", 
-            "fiberPills", 
-            
-            "sub_refill", 
-            "sub_freefill", 
-            "restartStageBow", 
-            "permaLossHairpin", 
-            "amnesiaMed", 
-            "ironRings", 
-            "ironGlove", 
-            "expiredBusPass", 
-            
-            "hard_mode", 
+            "hard_mode",
         )
