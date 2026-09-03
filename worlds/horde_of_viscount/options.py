@@ -355,7 +355,7 @@ class HoVOptions(PerGameCommonOptions):
 
     easyModeRibbon: EasyModeRibbon
     fiberPills: FiberPills
-    death_link: DeathLink
+    deathLink: DeathLink
     restartStageBow: RestartStageBow
     permaLossHairpin: PermaLossHairpin
     amnesiaMed: AmnesiaMed
