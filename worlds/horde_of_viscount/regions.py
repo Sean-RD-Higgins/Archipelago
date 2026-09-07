@@ -139,6 +139,7 @@ def connect_regions(world: HoVWorld) -> None:
     hoVRegionSet = get_region_set(world)
     level_up_rule_list = get_region_item_required_list(world)
     specificRuleList = [ hoVRegionSet.world_map_west.name, hoVRegionSet.abandoned_town.name, hoVRegionSet.world_map_southwest.name, hoVRegionSet.crimson_cove_entrance.name ]
+    itemList = []
     for i in range(len(hoVRegionSet.list) - 1):
         region = hoVRegionSet.list[i]
         nextRegion = hoVRegionSet.list[i + 1]
@@ -147,11 +148,13 @@ def connect_regions(world: HoVWorld) -> None:
         if region.name in specificRuleList:
             continue
         else:
-            if len(level_up_rule_list) == 0:
+            if len(level_up_rule_list) != 0:
+                itemList.extend(level_up_rule_list.pop(0))
+
+            if len(itemList) == 0:
                 region.connect(nextRegion, 
                     region.name + " to " + nextRegion.name)
             else:
-                itemList = level_up_rule_list.pop(0)
                 region.connect(nextRegion, 
                     region.name + " to " + nextRegion.name, 
                     HasAll(*itemList))
@@ -268,7 +271,7 @@ def get_region_item_required_list(world: HoVWorld) -> list[list[str]]:
     elif level_up_progression_percent == 99:
         region_item_counts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16]
     else:
-        region_item_counts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        region_item_counts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16]
 
     item_progression_index = 0
 
