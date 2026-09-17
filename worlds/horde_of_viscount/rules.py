@@ -750,21 +750,22 @@ def set_all_location_rules(world: HoVWorld) -> None:
     roomMetadata[CreditsParentRoom].subweaponRequiredList = [SUBWEAPON.KNIFE, SUBWEAPON.AXE, SUBWEAPON.BOMB, SUBWEAPON.WINGS, SUBWEAPON.CLEATS, SUBWEAPON.CALTROP]
     
     
-    roomMetadata[DeadlandRoad1Room].subweaponRequiredList = [SUBWEAPON.KNIFE]
-    roomMetadata[DeadlandRoad2Room].subweaponRequiredList = [SUBWEAPON.KNIFE]
-    roomMetadata[DeadlandRoad3Room].subweaponRequiredList = [SUBWEAPON.KNIFE]
+    roomMetadata[DeadlandRoad1Room].subweaponRequiredList = [SUBWEAPON.KNIFE, SUBWEAPON.BOMB, SUBWEAPON.CALTROP, SUBWEAPON.WINGS]
+    roomMetadata[DeadlandRoad2Room].subweaponRequiredList = [SUBWEAPON.KNIFE, SUBWEAPON.BOMB, SUBWEAPON.CALTROP, SUBWEAPON.WINGS]
+    roomMetadata[DeadlandRoad3Room].subweaponRequiredList = [SUBWEAPON.KNIFE, SUBWEAPON.BOMB, SUBWEAPON.CALTROP, SUBWEAPON.WINGS]
     if "DeadlandRoad Rooms Damage Boost" in techEnabled:
         roomMetadata[DeadlandRoad1Room].subweaponRequiredList = []
         roomMetadata[DeadlandRoad2Room].subweaponRequiredList = []
         roomMetadata[DeadlandRoad3Room].subweaponRequiredList = []
     
     
-    roomMetadata[LarvelForest1Room].subweaponRequiredList = [SUBWEAPON.KNIFE]
+    roomMetadata[LarvelForest1Room].subweaponRequiredList = [SUBWEAPON.KNIFE, SUBWEAPON.BOMB, SUBWEAPON.CALTROP, SUBWEAPON.WINGS]
     roomMetadata[LarvelForest2Room].subweaponRequiredList = [SUBWEAPON.BOMB]
-    roomMetadata[LarvelForest3Room].subweaponRequiredList = [SUBWEAPON.KNIFE]
+    roomMetadata[LarvelForest3Room].subweaponRequiredList = [SUBWEAPON.KNIFE, SUBWEAPON.BOMB, SUBWEAPON.CALTROP, SUBWEAPON.WINGS]
     roomMetadata[IronRock1Room].subweaponRequiredList = [SUBWEAPON.BOMB, SUBWEAPON.CALTROP]
     roomMetadata[ToxicJungle2Room].subweaponRequiredList = [SUBWEAPON.AXE, SUBWEAPON.WINGS]
     roomMetadata[QuenchyDesert2Room].subweaponRequiredList = [SUBWEAPON.BOMB]
+    roomMetadata[MushroomClouds3Room].subweaponRequiredList = [SUBWEAPON.BOMB, SUBWEAPON.CALTROP, SUBWEAPON.KNIFE, SUBWEAPON.WINGS]
     
     chestBreakerList = [
         AbandonCenterRichRoom, AbandonEastRichRoom, AbandonWestRichRoom, ManorExitRoom, LabCreditsEntranceRoom, 

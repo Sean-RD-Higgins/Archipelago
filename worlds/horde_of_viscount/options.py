@@ -115,7 +115,7 @@ class ExpiredBusPass(Toggle):
 
 class LevelUpProgression(Range):
     """
-    Smaller number means materials required for leveling up is easier to find. Larger number means the materials required will not be as easily obtainable.
+    Smaller number means materials required for leveling up are easier to find. Larger number means the materials required will not be as easily obtainable.
     """
 
     display_name = "Level Up Progression"
@@ -396,11 +396,11 @@ option_groups = [
     ),
     OptionGroup(
         "Much Easier Mode",
-        [HealHub, DoubleJump, WhipRank2, WhipRank3, DashKnife, FiberPills, EasyModeRibbon],
+        [HealHub, DoubleJump, WhipRank2, WhipRank3, DashKnife, EasyModeRibbon],
     ),
     OptionGroup(
         "Much Harder Mode",
-        [DeathLink, RestartStageBow, AmnesiaMed, IronRings, IronGlove, ExpiredBusPass, BadEquipChance],
+        [DeathLink, RestartStageBow, AmnesiaMed, IronRings, IronGlove, FiberPills, ExpiredBusPass, BadEquipChance],
     ),
     OptionGroup(
         "Customize",
@@ -430,7 +430,6 @@ option_presets = {
         "double_jump": True,
         "dash_knife": True,
         "easyModeRibbon": True,
-        "fiberPills": True,
 
         "sub_refill": True,
         "sub_freefill": True,
@@ -440,6 +439,7 @@ option_presets = {
         "amnesiaMed": False,
         "ironRings": False,
         "ironGlove": False,
+        "fiberPills": True,
         "expiredBusPass": False,
 
         "hard_mode": False,
@@ -469,7 +469,6 @@ option_presets = {
         "whip_rank3": False,
         "dash_knife": True,
         "easyModeRibbon": False,
-        "fiberPills": False,
 
         "sub_refill": True,
         "sub_freefill": True,
@@ -479,6 +478,7 @@ option_presets = {
         "amnesiaMed": False,
         "ironRings": False,
         "ironGlove": False,
+        "fiberPills": False,
         "expiredBusPass": False,
 
         "hard_mode": False,
@@ -508,7 +508,6 @@ option_presets = {
         "whip_rank3": False,
         "dash_knife": False,
         "easyModeRibbon": False,
-        "fiberPills": False,
 
         "sub_refill": True,
         "sub_freefill": True,
@@ -518,6 +517,7 @@ option_presets = {
         "amnesiaMed": True,
         "ironRings": False,
         "ironGlove": False,
+        "fiberPills": False,
         "expiredBusPass": False,
 
         "hard_mode": True,
@@ -547,7 +547,6 @@ option_presets = {
         "whip_rank3": False,
         "dash_knife": False,
         "easyModeRibbon": False,
-        "fiberPills": False,
 
         "sub_refill": False,
         "sub_freefill": False,
@@ -557,6 +556,7 @@ option_presets = {
         "amnesiaMed": True,
         "ironRings": True,
         "ironGlove": True,
+        "fiberPills": False,
         "expiredBusPass": True,
         
         "hard_mode": True,
