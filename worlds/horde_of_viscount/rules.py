@@ -762,7 +762,7 @@ def set_all_location_rules(world: HoVWorld) -> None:
     roomMetadata[LarvelForest1Room].subweaponRequiredList = [SUBWEAPON.KNIFE, SUBWEAPON.BOMB, SUBWEAPON.CALTROP, SUBWEAPON.WINGS]
     roomMetadata[LarvelForest2Room].subweaponRequiredList = [SUBWEAPON.BOMB]
     roomMetadata[LarvelForest3Room].subweaponRequiredList = [SUBWEAPON.KNIFE, SUBWEAPON.BOMB, SUBWEAPON.CALTROP, SUBWEAPON.WINGS]
-    roomMetadata[IronRock1Room].subweaponRequiredList = [SUBWEAPON.BOMB, SUBWEAPON.CALTROP]
+    roomMetadata[IronRock1Room].subweaponRequiredList = [SUBWEAPON.BOMB, SUBWEAPON.CALTROP, SUBWEAPON.WINGS]
     roomMetadata[ToxicJungle2Room].subweaponRequiredList = [SUBWEAPON.AXE, SUBWEAPON.WINGS]
     roomMetadata[QuenchyDesert2Room].subweaponRequiredList = [SUBWEAPON.BOMB]
     roomMetadata[MushroomClouds3Room].subweaponRequiredList = [SUBWEAPON.BOMB, SUBWEAPON.CALTROP, SUBWEAPON.KNIFE, SUBWEAPON.WINGS]
