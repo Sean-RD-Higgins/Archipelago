@@ -180,6 +180,13 @@ class SubFreefill(Toggle):
     display_name = "Sub Freefill"
     default = True
 
+class SubweaponCrafting(Toggle):
+    """
+    When Unchecked, Merchants will craft your subweapons ONLY if you have unlocked the subweapon first. When Checked, you only require the materials.
+    """
+    display_name = "Subweapon Crafting"
+    default = True
+
 class DoubleJump(Toggle):
     """
     Start with the Double Jump Equip
@@ -362,6 +369,7 @@ class HoVOptions(PerGameCommonOptions):
     ironRings: IronRings
     ironGlove: IronGlove
     expiredBusPass: ExpiredBusPass
+    subweaponCrafting: SubweaponCrafting
 
     heal_hub: HealHub
     whip_rank2: WhipRank2
@@ -396,7 +404,7 @@ option_groups = [
     ),
     OptionGroup(
         "Much Easier Mode",
-        [HealHub, DoubleJump, WhipRank2, WhipRank3, DashKnife, EasyModeRibbon],
+        [HealHub, DoubleJump, WhipRank2, WhipRank3, DashKnife, EasyModeRibbon, SubweaponCrafting],
     ),
     OptionGroup(
         "Much Harder Mode",
@@ -430,6 +438,7 @@ option_presets = {
         "double_jump": True,
         "dash_knife": True,
         "easyModeRibbon": True,
+        "subweaponCrafting": True,
 
         "sub_refill": True,
         "sub_freefill": True,
@@ -469,6 +478,7 @@ option_presets = {
         "whip_rank3": False,
         "dash_knife": True,
         "easyModeRibbon": False,
+        "subweaponCrafting": True,
 
         "sub_refill": True,
         "sub_freefill": True,
@@ -508,6 +518,7 @@ option_presets = {
         "whip_rank3": False,
         "dash_knife": False,
         "easyModeRibbon": False,
+        "subweaponCrafting": False,
 
         "sub_refill": True,
         "sub_freefill": True,
@@ -547,6 +558,7 @@ option_presets = {
         "whip_rank3": False,
         "dash_knife": False,
         "easyModeRibbon": False,
+        "subweaponCrafting": False,
 
         "sub_refill": False,
         "sub_freefill": False,
