@@ -863,7 +863,13 @@ def get_random_filler_item_name(world: HoVWorld) -> str:
     
     maxFillerIndex = len(FILLER_ITEM_NAME_LIST)
     fillerIndex = world.random.randint(0, maxFillerIndex - 1)
-    return FILLER_ITEM_NAME_LIST[fillerIndex]
+    itemName = FILLER_ITEM_NAME_LIST[fillerIndex]
+
+    # Exclude easy mode ribbone if it is disabled.
+    if(itemName == EQUIP.EASYMODE and not world.options.easyModeRibbon):
+        return get_random_filler_item_name(world)
+    
+    return itemName
 
 
 def create_item_with_correct_classification(world: HoVWorld, name: str) -> HoVItem:
@@ -895,8 +901,8 @@ def create_all_items(world: HoVWorld) -> None:
     
     for itemName in DEFAULT_ITEM_CLASSIFICATIONS.keys():
 
-        # Exclude Easy Mode ribbon completely if it is disabled.        
-        if not world.options.easyModeRibbon and itemName == EQUIP.EASYMODE:
+        # Exclude Easy Mode ribbon completely if it is disabled.
+        if (not world.options.easyModeRibbon) and itemName == EQUIP.EASYMODE:
             continue
 
         itempool += world.create_item(itemName),
