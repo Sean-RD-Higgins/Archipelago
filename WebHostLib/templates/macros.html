@@ -35,6 +35,13 @@
                             {% elif patch.game == "Factorio" %}
                             <a href="{{ url_for("download_slot_file", room_id=room.id, player_id=patch.player_id) }}" download>
                                 Download Factorio Mod...</a>
+                            {% elif patch.game == "Horde of Viscount" and patch.game | is_applayercontainer(patch.data, patch.player_id) %}
+                            {% if room.last_port and room.last_port > 0 %}
+                            <a href="{{ url_for("download_patch", patch_id=patch.id, room_id=room.id) }}" download>
+                                Download Connection File...</a>
+                            {% else %}
+                                Connection file available when the room is running.
+                            {% endif %}
                             {% elif patch.game | is_applayercontainer(patch.data, patch.player_id) %}
                             <a href="{{ url_for("download_patch", patch_id=patch.id, room_id=room.id) }}" download>
                                 Download Patch File...</a>

@@ -1,4 +1,5 @@
 from collections.abc import Mapping
+import os
 from typing import Any
 
 # Imports of base Archipelago modules must be absolute.
@@ -8,6 +9,7 @@ from worlds.AutoWorld import World
 # Imports of your world's files must be relative.
 from . import items, locations, regions, rules, web_world
 from . import options as hov_options  # rename due to a name conflict with World.options
+from .connection import HoVConnectionFile
 
 # APQuest will go through all the parts of the world api one step at a time,
 # with many examples and comments across multiple files.
@@ -77,6 +79,18 @@ class HoVWorld(World):
     # In our case, we defined a function called get_random_filler_item_name for this purpose in our items.py.
     def get_filler_item_name(self) -> str:
         return items.get_random_filler_item_name(self)
+
+    def generate_output(self, output_directory: str) -> None:
+        output_path = os.path.join(
+            output_directory,
+            f"{self.multiworld.get_out_file_name_base(self.player)}{HoVConnectionFile.patch_file_ending}",
+        )
+        HoVConnectionFile(
+            output_path,
+            player=self.player,
+            player_name=self.multiworld.get_player_name(self.player),
+            server="archipelago.gg:43653",
+        ).write()
 
     # There may be data that the game client will need to modify the behavior of the game.
     # This is what slot_data exists for. Upon every client connection, the slot's slot_data is sent to the client.
